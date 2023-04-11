@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ClothesStoreManagement {
     /// <summary>
@@ -21,5 +12,77 @@ namespace ClothesStoreManagement {
         public MainWindow() {
             InitializeComponent();
         }
+
+        public SqlConnection connection = new SqlConnection();
+        private Table? CurrentTable = null;
+
+        private void Window_Loaded( object sender, RoutedEventArgs e ) {
+            ConnectToDatabase();
+            foreach (Table table in Enum.GetValues(typeof(Table)))
+                comboBoxSelectTable.Items.Add(table);
+            LoadData();
+        }
+
+        private void ConnectToDatabase() {
+            connection.ConnectionString = @"Data Source=.;Initial Catalog=QlyShopQuanAo;Integrated Security=True;";
+            try {
+                connection.Open();
+            }
+            catch (Exception) {
+                if (connection.State != ConnectionState.Open)
+                    MessageBox.Show("Couldn't connect to Database");
+            }
+        }
+
+        private void GetTable( string tableName ) {
+            string GetTableQuery = "select * from " + tableName;
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(GetTableQuery, connection);
+            DataSet dataSet = new DataSet();
+            sqlDataAdapter.Fill(dataSet);
+            DataTable dataTable = dataSet.Tables[0];
+            dataView.ItemsSource = dataTable.DefaultView;
+        }
+        private void LoadData() {
+            if (connection.State != ConnectionState.Open || CurrentTable == null)
+                return;
+            GetTable(CurrentTable.ToString());
+        }
+        private void comboBoxSelectTable_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
+            //MessageBox.Show(Table.KhachHang.ToString() );
+            CurrentTable = (Table) Enum.ToObject(typeof(Table), comboBoxSelectTable.SelectedIndex);
+            LoadData();
+        }
+    
+        // currently this is for reference only
+        private void Insert_Click( object sender, RoutedEventArgs e ) {
+            try {
+                string InsertString = "insert into ChiTietHoaDon (MaHDBan,MaHang,SoLuong,DonGia,GiamGia,ThanhTien)" +
+                    "values (N'mahd1',N'mahang1',2,34000,0.1,30600);";
+                new SqlCommand(InsertString, connection).ExecuteNonQuery();
+            }
+            catch (SqlException ex) {
+                MessageBox.Show(ex.GetType().Name);
+            }
+            catch (Exception) {
+                MessageBox.Show("other err");
+            }
+
+            if (connection.State != ConnectionState.Open) {
+                MessageBox.Show("Couldn't establish a connection to Database");
+                return;
+            }
+            try {
+                string GetTableQuery = "select * from ChiTietHoaDon";
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(GetTableQuery, connection);
+                DataSet dataSet = new DataSet();
+                sqlDataAdapter.Fill(dataSet);
+                DataTable dataTable = dataSet.Tables[0];
+                ( (MainWindow) Application.Current.MainWindow ).dataView.ItemsSource = dataTable.DefaultView;
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
     }
 }
