@@ -8,27 +8,474 @@
     Title="Home"
     Width="800"
     Height="450"
+    ContentRendered="Window_ContentRendered"
     Loaded="Window_Loaded"
     SizeToContent="WidthAndHeight"
     mc:Ignorable="d">
-    <Grid Width="800" Height="450">
+    <Grid x:Name="grid" Width="800" Height="450">
         <DataGrid
-            Name="dataView"
+            x:Name="dataView"
             Margin="10,222,10,10"
             d:ItemsSource="{d:SampleData ItemCount=2}"
-            IsReadOnly="True" />
+            CanUserResizeColumns="False"
+            IsReadOnly="True"
+            SelectionChanged="dataView_SelectionChanged" />
         <ComboBox
             Name="comboBoxSelectTable"
             Width="120"
             Margin="670,193,0,0"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top" SelectionChanged="comboBoxSelectTable_SelectionChanged" />
+            VerticalAlignment="Top"
+            SelectionChanged="comboBoxSelectTable_SelectionChanged" />
         <Label
+            Name="labelChooseTable"
             Margin="585,191,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             Content="Choose Table" />
+        <TextBox
+            Name="textboxMaChatLieu"
+            Width="120"
+            Height="25"
+            Margin="120,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            Name="labelMaChatLieu"
+            Margin="36,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ma Chat Lieu" />
+        <TextBox
+            Name="textboxTenChatLieu"
+            Width="120"
+            Height="25"
+            Margin="378,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            Name="labelTenChatLieu"
+            Margin="292,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ten Chat Lieu" />
+        <TextBox
+            x:Name="textboxMaKhach"
+            Width="120"
+            Height="25"
+            Margin="639,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelMaKhach"
+            Margin="572,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ma Khach" />
+        <TextBox
+            x:Name="textboxMaHang"
+            Width="120"
+            Height="25"
+            Margin="120,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelMaHang"
+            Margin="56,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ma Hang" />
+        <TextBox
+            x:Name="textboxDonGia"
+            Width="120"
+            Height="25"
+            Margin="378,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelDonGia"
+            Margin="320,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Don Gia" />
+        <TextBox
+            x:Name="textboxGiamGia"
+            Width="120"
+            Height="25"
+            Margin="639,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelGiamGia"
+            Margin="576,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Giam Gia" />
+        <TextBox
+            x:Name="textboxThanhTien"
+            Width="120"
+            Height="25"
+            Margin="639,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelThanhTien"
+            Margin="566,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Thanh Tien" />
+        <TextBox
+            x:Name="textboxMaHDBan"
+            Width="120"
+            Height="25"
+            Margin="120,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            Name="labelMaHDBan"
+            Margin="38,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ma Hoa Don" />
+        <TextBox
+            x:Name="textboxSoLuong"
+            Width="120"
+            Height="25"
+            Margin="378,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelSoLuong"
+            Margin="313,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="So Luong" />
+        <TextBox
+            x:Name="textboxMaNhanVien"
+            Width="120"
+            Height="25"
+            Margin="378,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <TextBox
+            x:Name="textboxNgayBan"
+            Width="120"
+            Height="25"
+            Margin="120,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelNgayBan"
+            Margin="53,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ngay Ban" />
+        <Label
+            x:Name="labelMaNhanVien"
+            Margin="287,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ma Nhan Vien" />
+        <TextBox
+            x:Name="textboxTongTien"
+            Width="120"
+            Height="25"
+            Margin="378,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelTongTien"
+            Margin="311,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Tong Tien" />
+        <TextBox
+            x:Name="textboxMaKhachHang"
+            Width="120"
+            Height="25"
+            Margin="120,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelMaKhachHang"
+            Margin="21,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ma Khach Hang" />
+        <Label
+            x:Name="labelTenKhachHang"
+            Margin="277,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ten Khach Hang" />
+        <TextBox
+            x:Name="textboxTenKhachHang"
+            Width="120"
+            Height="25"
+            Margin="378,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelSDTKH"
+            Margin="603,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="SDT" />
+        <TextBox
+            x:Name="textboxSDTKH"
+            Width="120"
+            Height="25"
+            Margin="639,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelDiaChiKH"
+            Margin="67,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Dia Chi" />
+        <TextBox
+            x:Name="textboxDiaChiKH"
+            Width="639"
+            Height="25"
+            Margin="120,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelTenNhanVien"
+            Margin="28,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ten Nhan Vien" />
+        <TextBox
+            x:Name="textboxTenNhanVien"
+            Width="120"
+            Height="25"
+            Margin="120,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelDiaChiNV"
+            Margin="66,140,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Dia Chi" />
+        <TextBox
+            x:Name="textboxDiaChiNV"
+            Width="639"
+            Height="25"
+            Margin="120,140,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelSDTNV"
+            Margin="603,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="SDT" />
+        <TextBox
+            x:Name="textboxSDTNV"
+            Width="120"
+            Height="25"
+            Margin="639,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelGioiTinh"
+            Margin="57,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Gioi Tinh" />
+        <TextBox
+            x:Name="textboxGioiTinh"
+            Width="120"
+            Height="25"
+            Margin="120,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelNgaySinh"
+            Margin="308,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ngay Sinh" />
+        <TextBox
+            x:Name="textboxNgaySinh"
+            Width="120"
+            Height="25"
+            Margin="378,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelMaSanPham"
+            Margin="31,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ma San Pham" />
+        <TextBox
+            x:Name="textboxMaSanPham"
+            Width="120"
+            Height="25"
+            Margin="120,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelTenSanPham"
+            Margin="289,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ten San Pham" />
+        <TextBox
+            x:Name="textboxTenSanPham"
+            Width="120"
+            Height="25"
+            Margin="378,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelGhiChu"
+            Margin="61,140,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Ghi Chu" />
+        <TextBox
+            x:Name="textboxGhiChu"
+            Width="639"
+            Height="25"
+            Margin="120,140,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelDonGiaNhap"
+            Margin="549,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Don Gia Nhap" />
+        <TextBox
+            x:Name="textboxDonGiaNhap"
+            Width="120"
+            Height="25"
+            Margin="639,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="labelDonGiaBan"
+            Margin="549,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Don Gia Ban" />
+        <TextBox
+            x:Name="textboxDonGiaBan"
+            Width="120"
+            Height="25"
+            Margin="639,78,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            TextWrapping="Wrap" />
     </Grid>
 </Window>

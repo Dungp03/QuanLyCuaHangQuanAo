@@ -1,44 +1,44 @@
 # Notes for the database
 
 - ChatLieu
-  - MaChatLieu &rarr; nvarchar
-  - TenChatLieu &rarr; nvarchar
+  - MaChatLieu: nvarchar
+  - TenChatLieu: nvarchar
 
 - ChiTietHoaDon
-  - MaHDBan &rarr; nvarchar
-  - MaHang &rarr; nvarchar
-  - SoLuong &rarr; float ?maybe int
-  - DonGia &rarr; float
-  - GiamGia &rarr; float
-  - ThanhTien &rarr; float
+  - MaHDBan: nvarchar
+  - MaHang: nvarchar
+  - SoLuong: float ?maybe int
+  - DonGia: float
+  - GiamGia: float
+  - ThanhTien: float
 
 - HoaDonBan
-  - MaHDBan &rarr; nvarchar
-  - MaNhanVien &rarr; nvarchar
-  - NgayBan &rarr; datetime
-  - MaKhach &rarr; nvarchar
-  - TongTien &rarr; float
+  - MaHDBan: nvarchar
+  - MaNhanVien: nvarchar
+  - NgayBan: datetime
+  - MaKhach: nvarchar
+  - TongTien: float
 
 - KhachHang
-  - MaKhachHang &rarr; nvarchar
-  - TenKhachHang &rarr; nvarchar
-  - DiaChi &rarr; nvarchar
-  - SDT &rarr; nvarchar
+  - MaKhachHang: nvarchar
+  - TenKhachHang: nvarchar
+  - DiaChi: nvarchar
+  - SDT: nvarchar
 
 - NhanVien
-  - MaNhanVien &rarr; nvarchar
-  - TenNhanVien &rarr; nvarchar
-  - GioiTinh &rarr; nvarchar
-  - NgaySinh &rarr; datetime
-  - DiaChi &rarr; nvarchar
-  - SDT &rarr; nvarchar
+  - MaNhanVien: nvarchar
+  - TenNhanVien: nvarchar
+  - GioiTinh: nvarchar
+  - NgaySinh: datetime
+  - DiaChi: nvarchar
+  - SDT: nvarchar
 
 - SanPham
-  - MaSanPham &rarr; nvarchar
-  - TenSanPham &rarr; nvarchar
-  - MaChatLieu &rarr; nvarchar
-  - SoLuong &rarr; float ?maybe int
-  - DonGiaNhap &rarr; float
-  - DonGiaBan &rarr; float
-  - Anh &rarr; nvarchar
-  - GhiChu &rarr; nvarchar
+  - MaSanPham: nvarchar
+  - TenSanPham: nvarchar
+  - MaChatLieu: nvarchar
+  - SoLuong: float ?maybe int
+  - DonGiaNhap: float
+  - DonGiaBan: float
+  - Anh: nvarchar
+  - GhiChu: nvarchar
