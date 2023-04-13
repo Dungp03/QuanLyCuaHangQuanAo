@@ -10,9 +10,13 @@
     Height="450"
     ContentRendered="Window_ContentRendered"
     Loaded="Window_Loaded"
+    ResizeMode="CanMinimize"
     SizeToContent="WidthAndHeight"
     mc:Ignorable="d">
-    <Grid x:Name="grid" Width="800" Height="450">
+    <Grid
+        x:Name="grid"
+        Width="800"
+        Height="450">
         <DataGrid
             x:Name="dataView"
             Margin="10,222,10,10"
@@ -23,13 +27,13 @@
         <ComboBox
             Name="comboBoxSelectTable"
             Width="120"
-            Margin="670,193,0,0"
+            Margin="639,185,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             SelectionChanged="comboBoxSelectTable_SelectionChanged" />
         <Label
             Name="labelChooseTable"
-            Margin="585,191,0,0"
+            Margin="553,184,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
@@ -477,5 +481,45 @@
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             TextWrapping="Wrap" />
+        <Button
+            Name="buttonDelete"
+            Width="64"
+            Margin="424,187,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="ActionButton_Click"
+            Content="Delete" />
+        <Button
+            x:Name="buttonModify"
+            Width="64"
+            Margin="237,187,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="ActionButton_Click"
+            Content="Modify" />
+        <Button
+            x:Name="buttonInsert"
+            Width="64"
+            Margin="49,187,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="ActionButton_Click"
+            Content="Insert" />
+        <Button
+            x:Name="buttonConfirm"
+            Width="64"
+            Margin="142,187,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="EditingButton_Click"
+            Content="Confirm" />
+        <Button
+            x:Name="buttonCancel"
+            Width="64"
+            Margin="330,187,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="EditingButton_Click"
+            Content="Cancel" />
     </Grid>
 </Window>

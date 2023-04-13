@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace ClothesStoreManagement {
     public enum Table {
@@ -11,8 +12,7 @@ namespace ClothesStoreManagement {
         NhanVien,
         SanPham
     }
-    public class MenuUtils {
-
+    public class Utils {
         static readonly MainWindow mainWindow = (MainWindow) Application.Current.MainWindow;
 
         public static void HideAllMenu() {
@@ -29,12 +29,104 @@ namespace ClothesStoreManagement {
             }
         }
         public static void UnloadAllFields() {
-            foreach (var element in mainWindow.grid.Children) {
+            foreach (var element in mainWindow.grid.Children)
                 if (element is TextBox) {
                     TextBox tb = element as TextBox;
                     tb.Text = string.Empty;
                 }
+        }
+        public static void DisableAllFields() {
+            foreach (var element in mainWindow.grid.Children)
+                if (element is TextBox tb)
+                    tb.IsEnabled = false;
+        }
+        public static void EnableAllFields() {
+            foreach (var element in mainWindow.grid.Children)
+                if (element is TextBox tb)
+                    tb.IsEnabled = true;
+        }
+        public static void HideButtons() {
+            foreach (var element in mainWindow.grid.Children)
+                if (element is Button bt)
+                    bt.Visibility = Visibility.Hidden;
+        }
+        public static void EnableButtons() {
+            foreach (var element in mainWindow.grid.Children)
+                if (element is Button bt)
+                    bt.IsEnabled = true;
+        }
+        public static void DisableButtons() {
+            foreach (var element in mainWindow.grid.Children)
+                if (element is Button bt)
+                    if (bt.Name != "buttonInsert")
+                        bt.IsEnabled = false;
+        }
+        public static void ChangeButtonState( bool IsEditing ) {
+            if (!IsEditing) {
+                mainWindow.buttonInsert.Visibility = Visibility.Visible;
+                mainWindow.buttonModify.Visibility = Visibility.Visible;
+                mainWindow.buttonDelete.Visibility = Visibility.Visible;
+
+                mainWindow.buttonConfirm.Visibility = Visibility.Hidden;
+                mainWindow.buttonCancel.Visibility = Visibility.Hidden;
             }
+            else {
+                mainWindow.buttonInsert.Visibility = Visibility.Hidden;
+                mainWindow.buttonModify.Visibility = Visibility.Hidden;
+                mainWindow.buttonDelete.Visibility = Visibility.Hidden;
+
+                mainWindow.buttonConfirm.Visibility = Visibility.Visible;
+                mainWindow.buttonCancel.Visibility = Visibility.Visible;
+            }
+        }
+        public static void InsertToDatabase( Table? table, string[] data, int index = -1 ) { }
+        public static string[] GetFields( Table? table ) {
+            List<string> fieldData = new List<string>();
+            switch (table) {
+                case Table.ChatLieu:
+                    fieldData.Add(mainWindow.textboxMaChatLieu.Text);
+                    fieldData.Add(mainWindow.textboxTenChatLieu.Text);
+                    break;
+                case Table.ChiTietHoaDon:
+                    fieldData.Add(mainWindow.textboxMaHDBan.Text);
+                    fieldData.Add(mainWindow.textboxMaHang.Text);
+                    fieldData.Add(mainWindow.textboxSoLuong.Text);
+                    fieldData.Add(mainWindow.textboxDonGia.Text);
+                    fieldData.Add(mainWindow.textboxGiamGia.Text);
+                    fieldData.Add(mainWindow.textboxThanhTien.Text);
+                    break;
+                case Table.HoaDonBan:
+                    fieldData.Add(mainWindow.textboxMaHDBan.Text);
+                    fieldData.Add(mainWindow.textboxMaNhanVien.Text);
+                    fieldData.Add(mainWindow.textboxNgayBan.Text);
+                    fieldData.Add(mainWindow.textboxMaKhach.Text);
+                    fieldData.Add(mainWindow.textboxTongTien.Text);
+                    break;
+                case Table.KhachHang:
+                    fieldData.Add(mainWindow.textboxMaKhachHang.Text);
+                    fieldData.Add(mainWindow.textboxTenKhachHang.Text);
+                    fieldData.Add(mainWindow.textboxDiaChiKH.Text);
+                    fieldData.Add(mainWindow.textboxSDTKH.Text);
+                    break;
+                case Table.NhanVien:
+                    fieldData.Add(mainWindow.textboxMaNhanVien.Text);
+                    fieldData.Add(mainWindow.textboxTenNhanVien.Text);
+                    fieldData.Add(mainWindow.textboxDiaChiNV.Text);
+                    fieldData.Add(mainWindow.textboxSDTNV.Text);
+                    fieldData.Add(mainWindow.textboxNgaySinh.Text);
+                    fieldData.Add(mainWindow.textboxGioiTinh.Text);
+                    break;
+                case Table.SanPham:
+                    fieldData.Add(mainWindow.textboxMaSanPham.Text);
+                    fieldData.Add(mainWindow.textboxTenSanPham.Text);
+                    fieldData.Add(mainWindow.textboxMaChatLieu.Text);
+                    fieldData.Add(mainWindow.textboxSoLuong.Text);
+                    fieldData.Add(mainWindow.textboxDonGiaNhap.Text);
+                    fieldData.Add(mainWindow.textboxDonGiaBan.Text);
+                    fieldData.Add(mainWindow.textboxGhiChu.Text);
+                    break;
+            }
+            return fieldData.ToArray();
         }
         public static void LoadMenu( Table? table ) {
             if (mainWindow.connection.State != ConnectionState.Open || table == null)
@@ -126,7 +218,6 @@ namespace ClothesStoreManagement {
                     break;
             }
         }
-
         public static void LoadFields( Table? table, DataRowView row ) {
             try {
                 switch (table) {

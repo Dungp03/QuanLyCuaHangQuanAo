@@ -17,7 +17,9 @@ namespace ClothesStoreManagement {
         private Table? CurrentTable = null;
 
         private void Window_Loaded( object sender, RoutedEventArgs e ) {
-            MenuUtils.HideAllMenu();
+            Utils.HideAllMenu();
+            Utils.HideButtons();
+            Utils.DisableButtons();
         }
 
         private void Window_ContentRendered( object sender, EventArgs e ) {
@@ -25,6 +27,7 @@ namespace ClothesStoreManagement {
             foreach (Table table in Enum.GetValues(typeof(Table)))
                 comboBoxSelectTable.Items.Add(table);
             LoadData();
+            Utils.DisableAllFields();
         }
         private void ConnectToDatabase() {
             connection.ConnectionString = @"Data Source=.;Initial Catalog=QlyShopQuanAo;Integrated Security=True;";
@@ -51,10 +54,11 @@ namespace ClothesStoreManagement {
         }
         private void comboBoxSelectTable_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
             //MessageBox.Show(Table.KhachHang.ToString() );
+            Utils.ChangeButtonState(false);
             CurrentTable = (Table) Enum.ToObject(typeof(Table), comboBoxSelectTable.SelectedIndex);
-            LoadData();
-            MenuUtils.UnloadAllFields();
-            MenuUtils.LoadMenu(CurrentTable);
+            GetTable(CurrentTable.ToString());
+            Utils.UnloadAllFields();
+            Utils.LoadMenu(CurrentTable);
             foreach (var column in dataView.Columns) {
                 column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
@@ -62,9 +66,60 @@ namespace ClothesStoreManagement {
 
         private void dataView_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
             DataRowView row = (DataRowView) dataView.CurrentItem;
-            if ( row == null )
+            if ( row == null ) {
+                Utils.DisableButtons();
                 return;
-            MenuUtils.LoadFields(CurrentTable, row);
+            }
+            Utils.LoadFields(CurrentTable, row);
+            Utils.EnableButtons();
+        }
+
+        private void InsertData() {
+            Utils.EnableAllFields();
+            Utils.ChangeButtonState(true);
+            string[] data = Utils.GetFields(CurrentTable);
+            string dataString = string.Empty;
+            foreach (string field in data)
+                dataString+= field + "\n";
+            MessageBox.Show(dataString);
+        }
+        private void ModifyData() {
+            Utils.EnableAllFields();
+            Utils.ChangeButtonState(true);
+            string[] data = Utils.GetFields(CurrentTable);
+            string dataString = string.Empty;
+            foreach (string field in data)
+                dataString+= field + "\n";
+            MessageBox.Show(dataString);
+        }
+        private void DeleteData() {
+
+        }
+
+        private void ActionButton_Click( object sender, RoutedEventArgs e ) {
+            Button actionButton = (Button) sender;
+            switch (actionButton.Name) {
+                case "buttonInsert":
+                    InsertData();
+                    break;
+                case "buttonModify":
+                    ModifyData();
+                    break;
+                case "buttonDelete":
+                    DeleteData();
+                    break;
+            }
+        }
+
+        private void EditingButton_Click( object sender, RoutedEventArgs e ) {
+            if (((Button) sender).Name == "buttonConfirm") {
+                string[] data = Utils.GetFields(CurrentTable);
+                string dataString = string.Empty;
+                foreach (string field in data)
+                    dataString += field + "\n";
+                MessageBox.Show(dataString); 
+            }
+            Utils.ChangeButtonState(false);
         }
 
         // currently this is for reference only
