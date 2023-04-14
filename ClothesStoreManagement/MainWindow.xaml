@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:ClothesStoreManagement"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Home"
+    Title="Trang Chủ"
     Width="800"
     Height="450"
     ContentRendered="Window_ContentRendered"
@@ -33,12 +33,12 @@
             SelectionChanged="comboBoxSelectTable_SelectionChanged" />
         <Label
             Name="labelChooseTable"
-            Margin="553,184,0,0"
+            Margin="565,183,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Choose Table" />
+            Content="Chọn Bảng" />
         <TextBox
             Name="textboxMaChatLieu"
             Width="120"
@@ -50,12 +50,13 @@
             TextWrapping="Wrap" />
         <Label
             Name="labelMaChatLieu"
-            Margin="36,20,0,0"
+            Margin="34,20,0,0"
             HorizontalAlignment="Left"
+            FontWeight="DemiBold"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ma Chat Lieu" />
+            Content="Mã Chất Liệu" />
         <TextBox
             Name="textboxTenChatLieu"
             Width="120"
@@ -67,12 +68,12 @@
             TextWrapping="Wrap" />
         <Label
             Name="labelTenChatLieu"
-            Margin="292,20,0,0"
+            Margin="291,20,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ten Chat Lieu" />
+            Content="Tên Chất Liệu" />
         <TextBox
             x:Name="textboxMaKhach"
             Width="120"
@@ -84,46 +85,48 @@
             TextWrapping="Wrap" />
         <Label
             x:Name="labelMaKhach"
-            Margin="572,20,0,0"
+            Margin="570,20,0,0"
+            FontWeight="DemiBold"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ma Khach" />
+            Content="Mã Khách" />
         <TextBox
             x:Name="textboxMaHang"
             Width="120"
             Height="25"
-            Margin="120,78,0,0"
+            Margin="120,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             TextWrapping="Wrap" />
         <Label
             x:Name="labelMaHang"
-            Margin="56,78,0,0"
+            Margin="55,75,0,0"
+            FontWeight="DemiBold"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ma Hang" />
+            Content="Mã Hàng" />
         <TextBox
             x:Name="textboxDonGia"
             Width="120"
             Height="25"
-            Margin="378,78,0,0"
+            Margin="378,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             TextWrapping="Wrap" />
         <Label
             x:Name="labelDonGia"
-            Margin="320,78,0,0"
+            Margin="320,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Don Gia" />
+            Content="Đơn Giá" />
         <TextBox
             x:Name="textboxGiamGia"
             Width="120"
@@ -140,24 +143,24 @@
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Giam Gia" />
+            Content="Giảm Giá" />
         <TextBox
             x:Name="textboxThanhTien"
             Width="120"
             Height="25"
-            Margin="639,78,0,0"
+            Margin="639,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             TextWrapping="Wrap" />
         <Label
             x:Name="labelThanhTien"
-            Margin="566,78,0,0"
+            Margin="566,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Thanh Tien" />
+            Content="Thành Tiền" />
         <TextBox
             x:Name="textboxMaHDBan"
             Width="120"
@@ -169,12 +172,13 @@
             TextWrapping="Wrap" />
         <Label
             Name="labelMaHDBan"
-            Margin="38,20,0,0"
+            FontWeight="DemiBold"
+            Margin="36,20,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ma Hoa Don" />
+            Content="Mã Hoá Đơn" />
         <TextBox
             x:Name="textboxSoLuong"
             Width="120"
@@ -191,7 +195,7 @@
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="So Luong" />
+            Content="Số Lượng" />
         <TextBox
             x:Name="textboxMaNhanVien"
             Width="120"
@@ -205,44 +209,45 @@
             x:Name="textboxNgayBan"
             Width="120"
             Height="25"
-            Margin="120,78,0,0"
+            Margin="120,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             TextWrapping="Wrap" />
         <Label
             x:Name="labelNgayBan"
-            Margin="53,78,0,0"
+            Margin="53,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ngay Ban" />
+            Content="Ngày Bán" />
         <Label
             x:Name="labelMaNhanVien"
-            Margin="287,20,0,0"
+            FontWeight="DemiBold"
+            Margin="285,20,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ma Nhan Vien" />
+            Content="Mã Nhân Viên" />
         <TextBox
             x:Name="textboxTongTien"
             Width="120"
             Height="25"
-            Margin="378,78,0,0"
+            Margin="378,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             TextWrapping="Wrap" />
         <Label
             x:Name="labelTongTien"
-            Margin="311,78,0,0"
+            Margin="310,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Tong Tien" />
+            Content="Tổng Tiền" />
         <TextBox
             x:Name="textboxMaKhachHang"
             Width="120"
@@ -254,12 +259,13 @@
             TextWrapping="Wrap" />
         <Label
             x:Name="labelMaKhachHang"
-            Margin="21,20,0,0"
+            Margin="19,20,0,0"
+            FontWeight="DemiBold"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ma Khach Hang" />
+            Content="Mã Khách Hàng" />
         <Label
             x:Name="labelTenKhachHang"
             Margin="277,20,0,0"
@@ -267,7 +273,7 @@
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ten Khach Hang" />
+            Content="Tên Khách Hàng" />
         <TextBox
             x:Name="textboxTenKhachHang"
             Width="120"
@@ -284,7 +290,7 @@
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="SDT" />
+            Content="SĐT" />
         <TextBox
             x:Name="textboxSDTKH"
             Width="120"
@@ -296,17 +302,17 @@
             TextWrapping="Wrap" />
         <Label
             x:Name="labelDiaChiKH"
-            Margin="67,78,0,0"
+            Margin="67,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Dia Chi" />
+            Content="Địa Chỉ" />
         <TextBox
             x:Name="textboxDiaChiKH"
             Width="639"
             Height="25"
-            Margin="120,78,0,0"
+            Margin="120,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
@@ -318,7 +324,7 @@
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ten Nhan Vien" />
+            Content="Tên Nhân Viên" />
         <TextBox
             x:Name="textboxTenNhanVien"
             Width="120"
@@ -330,17 +336,17 @@
             TextWrapping="Wrap" />
         <Label
             x:Name="labelDiaChiNV"
-            Margin="66,140,0,0"
+            Margin="67,130,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Dia Chi" />
+            Content="Địa Chỉ" />
         <TextBox
             x:Name="textboxDiaChiNV"
             Width="639"
             Height="25"
-            Margin="120,140,0,0"
+            Margin="120,130,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
@@ -352,7 +358,7 @@
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="SDT" />
+            Content="SĐT" />
         <TextBox
             x:Name="textboxSDTNV"
             Width="120"
@@ -364,85 +370,86 @@
             TextWrapping="Wrap" />
         <Label
             x:Name="labelGioiTinh"
-            Margin="57,78,0,0"
+            Margin="57,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Gioi Tinh" />
+            Content="Giới Tính" />
         <TextBox
             x:Name="textboxGioiTinh"
             Width="120"
             Height="25"
-            Margin="120,78,0,0"
+            Margin="120,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             TextWrapping="Wrap" />
         <Label
             x:Name="labelNgaySinh"
-            Margin="308,78,0,0"
+            Margin="309,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ngay Sinh" />
+            Content="Ngày Sinh" />
         <TextBox
             x:Name="textboxNgaySinh"
             Width="120"
             Height="25"
-            Margin="378,78,0,0"
+            Margin="378,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             TextWrapping="Wrap" />
         <Label
             x:Name="labelMaSanPham"
-            Margin="31,78,0,0"
+            Margin="30,75,0,0"
+            FontWeight="DemiBold"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ma San Pham" />
+            Content="Mã Sản Phẩm" />
         <TextBox
             x:Name="textboxMaSanPham"
             Width="120"
             Height="25"
-            Margin="120,78,0,0"
+            Margin="120,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             TextWrapping="Wrap" />
         <Label
             x:Name="labelTenSanPham"
-            Margin="289,78,0,0"
+            Margin="289,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ten San Pham" />
+            Content="Tên Sản Phẩm" />
         <TextBox
             x:Name="textboxTenSanPham"
             Width="120"
             Height="25"
-            Margin="378,78,0,0"
+            Margin="378,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             TextWrapping="Wrap" />
         <Label
             x:Name="labelGhiChu"
-            Margin="61,140,0,0"
+            Margin="62,130,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Ghi Chu" />
+            Content="Ghi Chú" />
         <TextBox
             x:Name="textboxGhiChu"
             Width="639"
             Height="25"
-            Margin="120,140,0,0"
+            Margin="120,130,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
@@ -454,7 +461,7 @@
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Don Gia Nhap" />
+            Content="Đơn Giá Nhập" />
         <TextBox
             x:Name="textboxDonGiaNhap"
             Width="120"
@@ -466,17 +473,17 @@
             TextWrapping="Wrap" />
         <Label
             x:Name="labelDonGiaBan"
-            Margin="549,78,0,0"
+            Margin="558,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Don Gia Ban" />
+            Content="Đơn Giá Bán" />
         <TextBox
             x:Name="textboxDonGiaBan"
             Width="120"
             Height="25"
-            Margin="639,78,0,0"
+            Margin="639,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
@@ -488,7 +495,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="ActionButton_Click"
-            Content="Delete" />
+            Content="Xóa" />
         <Button
             x:Name="buttonModify"
             Width="64"
@@ -496,7 +503,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="ActionButton_Click"
-            Content="Modify" />
+            Content="Sửa" />
         <Button
             x:Name="buttonInsert"
             Width="64"
@@ -504,7 +511,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="ActionButton_Click"
-            Content="Insert" />
+            Content="Thêm" />
         <Button
             x:Name="buttonConfirm"
             Width="64"
@@ -512,7 +519,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="EditingButton_Click"
-            Content="Confirm" />
+            Content="Xác Nhận" />
         <Button
             x:Name="buttonCancel"
             Width="64"
@@ -520,6 +527,6 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="EditingButton_Click"
-            Content="Cancel" />
+            Content="Hủy" />
     </Grid>
 </Window>

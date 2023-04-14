@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace ClothesStoreManagement {
     /// <summary>
@@ -15,6 +16,7 @@ namespace ClothesStoreManagement {
 
         public SqlConnection connection = new SqlConnection();
         private Table? CurrentTable = null;
+        private bool IsNew = false;
 
         private void Window_Loaded( object sender, RoutedEventArgs e ) {
             Utils.HideAllMenu();
@@ -35,91 +37,83 @@ namespace ClothesStoreManagement {
                 connection.Open();
             }
             catch (Exception) {
-                if (connection.State != ConnectionState.Open)
+                if (connection.State != ConnectionState.Open) {
                     MessageBox.Show("Couldn't connect to Database");
+                    comboBoxSelectTable.IsEnabled = false;
+                }
             }
         }
         private void LoadData() {
             if (connection.State != ConnectionState.Open || CurrentTable == null)
                 return;
-            GetTable(CurrentTable.ToString());
+            GetTable(CurrentTable);
         }
-        private void GetTable( string tableName ) {
-            string GetTableQuery = "select * from " + tableName;
+        private void GetTable(Table? table) {
+            string GetTableQuery = "select * from " + table.ToString();
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(GetTableQuery, connection);
             DataSet dataSet = new DataSet();
             sqlDataAdapter.Fill(dataSet);
             DataTable dataTable = dataSet.Tables[0];
             dataView.ItemsSource = dataTable.DefaultView;
+            foreach (var column in dataView.Columns) {
+                column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            }
         }
         private void comboBoxSelectTable_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
             //MessageBox.Show(Table.KhachHang.ToString() );
             Utils.ChangeButtonState(false);
             CurrentTable = (Table) Enum.ToObject(typeof(Table), comboBoxSelectTable.SelectedIndex);
-            GetTable(CurrentTable.ToString());
+            GetTable(CurrentTable);
             Utils.UnloadAllFields();
             Utils.LoadMenu(CurrentTable);
-            foreach (var column in dataView.Columns) {
-                column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
-            }
         }
 
         private void dataView_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
             DataRowView row = (DataRowView) dataView.CurrentItem;
             if ( row == null ) {
                 Utils.DisableButtons();
+                Utils.UnloadAllFields();
                 return;
             }
             Utils.LoadFields(CurrentTable, row);
             Utils.EnableButtons();
         }
 
-        private void InsertData() {
-            Utils.EnableAllFields();
-            Utils.ChangeButtonState(true);
-            string[] data = Utils.GetFields(CurrentTable);
-            string dataString = string.Empty;
-            foreach (string field in data)
-                dataString+= field + "\n";
-            MessageBox.Show(dataString);
-        }
-        private void ModifyData() {
-            Utils.EnableAllFields();
-            Utils.ChangeButtonState(true);
-            string[] data = Utils.GetFields(CurrentTable);
-            string dataString = string.Empty;
-            foreach (string field in data)
-                dataString+= field + "\n";
-            MessageBox.Show(dataString);
-        }
-        private void DeleteData() {
-
-        }
-
         private void ActionButton_Click( object sender, RoutedEventArgs e ) {
             Button actionButton = (Button) sender;
             switch (actionButton.Name) {
                 case "buttonInsert":
-                    InsertData();
+                    Utils.EnableAllFields();
+                    Utils.ChangeButtonState(true);
+                    Utils.UnloadAllFields();
+                    dataView.SelectedIndex = -1;
+                    IsNew = true;
                     break;
                 case "buttonModify":
-                    ModifyData();
+                    Utils.EnableAllFields();
+                    Utils.ChangeButtonState(true);
+                    IsNew = false;
                     break;
                 case "buttonDelete":
-                    DeleteData();
+                    if (MessageBox.Show("Bạn chắc chắn muốn xóa?", "Xác Nhận", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                        return;
+                    Utils.DeleteFromDatabase(CurrentTable, Utils.GetFields(CurrentTable));
+                    Utils.UnloadAllFields();
+                    GetTable(CurrentTable);
                     break;
             }
         }
 
         private void EditingButton_Click( object sender, RoutedEventArgs e ) {
             if (((Button) sender).Name == "buttonConfirm") {
-                string[] data = Utils.GetFields(CurrentTable);
-                string dataString = string.Empty;
-                foreach (string field in data)
-                    dataString += field + "\n";
-                MessageBox.Show(dataString); 
+                Utils.InsertToDatabase(CurrentTable, Utils.GetFields(CurrentTable), IsNew);
+                GetTable(CurrentTable);
+                if (IsNew)
+                    Utils.UnloadAllFields();
             }
             Utils.ChangeButtonState(false);
+            Utils.DisableAllFields();
+            IsNew = false;
         }
 
         // currently this is for reference only

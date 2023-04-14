@@ -1,7 +1,9 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace ClothesStoreManagement {
     public enum Table {
@@ -38,12 +40,12 @@ namespace ClothesStoreManagement {
         public static void DisableAllFields() {
             foreach (var element in mainWindow.grid.Children)
                 if (element is TextBox tb)
-                    tb.IsEnabled = false;
+                    tb.IsReadOnly = true;
         }
         public static void EnableAllFields() {
             foreach (var element in mainWindow.grid.Children)
                 if (element is TextBox tb)
-                    tb.IsEnabled = true;
+                    tb.IsReadOnly = false;
         }
         public static void HideButtons() {
             foreach (var element in mainWindow.grid.Children)
@@ -58,7 +60,7 @@ namespace ClothesStoreManagement {
         public static void DisableButtons() {
             foreach (var element in mainWindow.grid.Children)
                 if (element is Button bt)
-                    if (bt.Name != "buttonInsert")
+                    if (bt.Name.Contains("Modify") || bt.Name.Contains("Delete"))
                         bt.IsEnabled = false;
         }
         public static void ChangeButtonState( bool IsEditing ) {
@@ -79,7 +81,108 @@ namespace ClothesStoreManagement {
                 mainWindow.buttonCancel.Visibility = Visibility.Visible;
             }
         }
-        public static void InsertToDatabase( Table? table, string[] data, int index = -1 ) { }
+        private static bool IsKeyPresent( string[] keys ) {
+            foreach ( var key in keys )
+                if (key == string.Empty)
+                    return false;
+            return true;
+        }
+        public static void InsertToDatabase( Table? table, string[] data, bool isNew ) {
+            string updateStatement = "";
+            if (isNew) {
+                switch (table) {
+                    case Table.ChatLieu:
+                        if (IsKeyPresent(new string[] { data[0] }))
+                            updateStatement += $"(MaChatLieu, TenChatlieu) values " +
+                                $"(N'{data[0]}',N'{data[1]}')";
+                        break;
+                    case Table.ChiTietHoaDon:
+                        if (IsKeyPresent(new string[] { data[0], data[1] }))
+                            updateStatement += $"(MaHDBan,MaHang,SoLuong,DonGia,GiamGia,ThanhTien) values " +
+                                $"(N'{data[0]}',N'{data[1]}',{data[2]},{data[3]},{data[4]},{data[5]})";
+                        break;
+                    case Table.HoaDonBan:
+                        if (IsKeyPresent(new string[] { data[0] }))
+                            updateStatement += $"(MaHDBan,MaNhanVien,NgayBan,MaKhach,TongTien) values " +
+                                $"(N'{data[0]}',N'{data[1]}',N'{data[2]}',N'{data[3]}',{data[4]})";
+                        break;
+                    case Table.KhachHang:
+                        if (IsKeyPresent(new string[] { data[0] }))
+                            updateStatement += $"(MaKhachHang,TenKhachHang,DiaChi,SDT) values " +
+                            $"(N'{data[0]}',N'{data[1]}',N'{data[2]}',N'{data[3]}')";
+                        break;
+                    case Table.NhanVien:
+                        if (IsKeyPresent(new string[] { data[0] }))
+                            updateStatement += $"(MaNhanVien,TenNhanVien,DiaChi,SDT,NgaySinh,GioiTinh) values " +
+                                $"(N'{data[0]}',N'{data[1]}',N'{data[2]}',N'{data[3]}',N'{data[4]}',N'{data[5]}')";
+                        
+                        break;
+                    case Table.SanPham:
+                        if (IsKeyPresent(new string[] { data[0] }))
+                            updateStatement += $"(MaSanPham,TenSanPham,MaChatLieu,SoLuong,DonGiaNhap,DonGiaBan,Anh,GhiChu) values " + $"(N'{data[0]}',N'{data[1]}',N'{data[2]}',{data[3]},{data[4]},{data[5]},N'Anh',N'{data[6]}')";
+                        break;
+                }
+                updateStatement = "insert into " + table.ToString() + " " + updateStatement;
+            }
+            else {
+                switch (table) {
+                    case Table.ChatLieu:
+                        updateStatement += $"MaChatLieu=N'{data[0]}',TenChatlieu=N'{data[1]}' where MaChatLieu=N'{data[0]}'";
+                        break;
+                    case Table.ChiTietHoaDon:
+                        updateStatement += $"MaHDBan=N'{data[0]}',MaHang=N'{data[1]}',SoLuong={data[2]},DonGia={data[3]},GiamGia={data[4]},ThanhTien={data[5]} where MaHDBan=N'{data[0]}' and MaHang=N'{data[1]}'";
+                        break;
+                    case Table.HoaDonBan:
+                        updateStatement += $"MaHDBan=N'{data[0]}',MaNhanVien=N'{data[1]}',NgayBan=N'{data[2]}',MaKhach=N'{data[3]}',TongTien={data[4]} where MaHDBan=N'{data[0]}'";
+                        break;
+                    case Table.KhachHang:
+                        updateStatement += $"MaKhachHang=N'{data[0]}',TenKhachHang=N'{data[1]}',DiaChi=N'{data[2]}',SDT=N'{data[3]}' where MaKhachHang=N'{data[0]}'";
+                        break;
+                    case Table.NhanVien:
+                        updateStatement += $"MaNhanVien=N'{data[0]}',TenNhanVien=N'{data[1]}',DiaChi=N'{data[2]}',SDT=N'{data[3]}',NgaySinh=N'{data[4]}',GioiTinh=N'{data[5]}' where MaNhanVien=N'{data[0]}'";
+                        break;
+                    case Table.SanPham:
+                        updateStatement += $"MaSanPham=N'{data[0]}',TenSanPham=N'{data[1]}',MaChatLieu=N'{data[2]}',SoLuong={data[3]},DonGiaNhap={data[4]},DonGiaBan={data[5]},Anh=N'Anh',GhiChu=N'{data[6]}' where MaSanPham=N'{data[0]}'";
+                        break;
+                }
+                updateStatement = "update " + table.ToString() + " set " + updateStatement;
+            }
+            try {
+                new SqlCommand(updateStatement, mainWindow.connection).ExecuteNonQuery();
+            }
+            catch (Exception) {
+                MessageBox.Show("Đã xảy ra lỗi với dữ liệu.\nXin hãy kiểm tra lại.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        public static void DeleteFromDatabase( Table? table, string[] data) {
+            string deleteStatement = "delete from " + table.ToString() + " where ";
+            switch (table) {
+                case Table.ChatLieu:
+                    deleteStatement += $"MaChatLieu=N'{data[0]}'";
+                    break;
+                case Table.ChiTietHoaDon:
+                    deleteStatement += $"MaHDBan=N'{data[0]}' and MaHang=N'{data[1]}'";
+                    break;
+                case Table.HoaDonBan:
+                    deleteStatement += $"MaHDBan=N'{data[0]}'";
+                    break;
+                case Table.KhachHang:
+                    deleteStatement += $"MaKhachHang=N'{data[0]}'";
+                    break;
+                case Table.NhanVien:
+                    deleteStatement += $"MaNhanVien=N'{data[0]}'";
+                    break;
+                case Table.SanPham:
+                    deleteStatement += $"MaSanPham=N'{data[0]}'";
+                    break;
+            }
+            try {
+                new SqlCommand(deleteStatement, mainWindow.connection).ExecuteNonQuery();
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
+            }
+        }
         public static string[] GetFields( Table? table ) {
             List<string> fieldData = new List<string>();
             switch (table) {
@@ -265,7 +368,7 @@ namespace ClothesStoreManagement {
                         break;
                 }
             }
-            catch (System.Exception ex) {
+            catch (Exception ex) {
                 MessageBox.Show(ex.ToString());
             }
         }
