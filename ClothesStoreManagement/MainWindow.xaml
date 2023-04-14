@@ -52,11 +52,11 @@
             Name="labelMaChatLieu"
             Margin="34,20,0,0"
             HorizontalAlignment="Left"
-            FontWeight="DemiBold"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Mã Chất Liệu" />
+            Content="Mã Chất Liệu"
+            FontWeight="DemiBold" />
         <TextBox
             Name="textboxTenChatLieu"
             Width="120"
@@ -86,12 +86,12 @@
         <Label
             x:Name="labelMaKhach"
             Margin="570,20,0,0"
-            FontWeight="DemiBold"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Mã Khách" />
+            Content="Mã Khách"
+            FontWeight="DemiBold" />
         <TextBox
             x:Name="textboxMaHang"
             Width="120"
@@ -104,12 +104,12 @@
         <Label
             x:Name="labelMaHang"
             Margin="55,75,0,0"
-            FontWeight="DemiBold"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Mã Hàng" />
+            Content="Mã Hàng"
+            FontWeight="DemiBold" />
         <TextBox
             x:Name="textboxDonGia"
             Width="120"
@@ -172,13 +172,13 @@
             TextWrapping="Wrap" />
         <Label
             Name="labelMaHDBan"
-            FontWeight="DemiBold"
             Margin="36,20,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Mã Hoá Đơn" />
+            Content="Mã Hoá Đơn"
+            FontWeight="DemiBold" />
         <TextBox
             x:Name="textboxSoLuong"
             Width="120"
@@ -224,13 +224,13 @@
             Content="Ngày Bán" />
         <Label
             x:Name="labelMaNhanVien"
-            FontWeight="DemiBold"
             Margin="285,20,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Mã Nhân Viên" />
+            Content="Mã Nhân Viên"
+            FontWeight="DemiBold" />
         <TextBox
             x:Name="textboxTongTien"
             Width="120"
@@ -260,12 +260,12 @@
         <Label
             x:Name="labelMaKhachHang"
             Margin="19,20,0,0"
-            FontWeight="DemiBold"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Mã Khách Hàng" />
+            Content="Mã Khách Hàng"
+            FontWeight="DemiBold" />
         <Label
             x:Name="labelTenKhachHang"
             Margin="277,20,0,0"
@@ -405,12 +405,12 @@
         <Label
             x:Name="labelMaSanPham"
             Margin="30,75,0,0"
-            FontWeight="DemiBold"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Mã Sản Phẩm" />
+            Content="Mã Sản Phẩm"
+            FontWeight="DemiBold" />
         <TextBox
             x:Name="textboxMaSanPham"
             Width="120"
@@ -528,5 +528,13 @@
             VerticalAlignment="Top"
             Click="EditingButton_Click"
             Content="Hủy" />
+        <Button
+            x:Name="buttonReconnect"
+            Width="64"
+            Margin="493,187,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="buttonReconnect_Click"
+            Content="Kết Nối" />
     </Grid>
 </Window>

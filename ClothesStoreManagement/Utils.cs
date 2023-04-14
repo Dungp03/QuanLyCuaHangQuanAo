@@ -22,11 +22,11 @@ namespace ClothesStoreManagement {
                 if (element is Label l) {
                     if (l.Name == "labelChooseTable")
                         continue;
-                    l.Visibility = Visibility.Hidden;
+                    l.Visibility = Visibility.Collapsed;
                 }
                 if (element is TextBox) {
                     TextBox tb = element as TextBox;
-                    tb.Visibility = Visibility.Hidden;
+                    tb.Visibility = Visibility.Collapsed;
                 }
             }
         }
@@ -50,7 +50,7 @@ namespace ClothesStoreManagement {
         public static void HideButtons() {
             foreach (var element in mainWindow.grid.Children)
                 if (element is Button bt)
-                    bt.Visibility = Visibility.Hidden;
+                    bt.Visibility = Visibility.Collapsed;
         }
         public static void EnableButtons() {
             foreach (var element in mainWindow.grid.Children)
@@ -69,13 +69,13 @@ namespace ClothesStoreManagement {
                 mainWindow.buttonModify.Visibility = Visibility.Visible;
                 mainWindow.buttonDelete.Visibility = Visibility.Visible;
 
-                mainWindow.buttonConfirm.Visibility = Visibility.Hidden;
-                mainWindow.buttonCancel.Visibility = Visibility.Hidden;
+                mainWindow.buttonConfirm.Visibility = Visibility.Collapsed;
+                mainWindow.buttonCancel.Visibility = Visibility.Collapsed;
             }
             else {
-                mainWindow.buttonInsert.Visibility = Visibility.Hidden;
-                mainWindow.buttonModify.Visibility = Visibility.Hidden;
-                mainWindow.buttonDelete.Visibility = Visibility.Hidden;
+                mainWindow.buttonInsert.Visibility = Visibility.Collapsed;
+                mainWindow.buttonModify.Visibility = Visibility.Collapsed;
+                mainWindow.buttonDelete.Visibility = Visibility.Collapsed;
 
                 mainWindow.buttonConfirm.Visibility = Visibility.Visible;
                 mainWindow.buttonCancel.Visibility = Visibility.Visible;
@@ -339,7 +339,7 @@ namespace ClothesStoreManagement {
                     case Table.HoaDonBan:
                         mainWindow.textboxMaHDBan.Text = row["MaHDBan"].ToString();
                         mainWindow.textboxMaNhanVien.Text = row["MaNhanVien"].ToString();
-                        mainWindow.textboxNgayBan.Text = row["NgayBan"].ToString();
+                        mainWindow.textboxNgayBan.Text = row["NgayBan"].ToString().Split(' ')[0];
                         mainWindow.textboxMaKhach.Text = row["MaKhach"].ToString();
                         mainWindow.textboxTongTien.Text = row["TongTien"].ToString();
                         break;
@@ -354,7 +354,7 @@ namespace ClothesStoreManagement {
                         mainWindow.textboxTenNhanVien.Text = row["TenNhanVien"].ToString();
                         mainWindow.textboxDiaChiNV.Text = row["DiaChi"].ToString();
                         mainWindow.textboxSDTNV.Text = row["SDT"].ToString();
-                        mainWindow.textboxNgaySinh.Text = row["NgaySinh"].ToString();
+                        mainWindow.textboxNgaySinh.Text = row["NgaySinh"].ToString().Split(' ')[0];
                         mainWindow.textboxGioiTinh.Text = row["GioiTinh"].ToString();
                         break;
                     case Table.SanPham:

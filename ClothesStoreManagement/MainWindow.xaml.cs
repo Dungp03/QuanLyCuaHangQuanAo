@@ -24,6 +24,10 @@ namespace ClothesStoreManagement {
             Utils.DisableButtons();
         }
 
+        private void buttonReconnect_Click( object sender, RoutedEventArgs e ) {
+            ConnectToDatabase();
+        }
+
         private void Window_ContentRendered( object sender, EventArgs e ) {
             ConnectToDatabase();
             foreach (Table table in Enum.GetValues(typeof(Table)))
@@ -35,10 +39,16 @@ namespace ClothesStoreManagement {
             connection.ConnectionString = @"Data Source=.;Initial Catalog=QlyShopQuanAo;Integrated Security=True;";
             try {
                 connection.Open();
+                if (connection.State == ConnectionState.Open) {
+                    buttonReconnect.Visibility = Visibility.Collapsed;
+                    buttonReconnect.IsEnabled = false;
+                    comboBoxSelectTable.IsEnabled = true;
+                }
             }
             catch (Exception) {
                 if (connection.State != ConnectionState.Open) {
-                    MessageBox.Show("Couldn't connect to Database");
+                    MessageBox.Show("Không thể kết nối với Cơ sở dữ liệu.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Information);
+                    buttonReconnect.Visibility = Visibility.Visible;
                     comboBoxSelectTable.IsEnabled = false;
                 }
             }
@@ -48,7 +58,7 @@ namespace ClothesStoreManagement {
                 return;
             GetTable(CurrentTable);
         }
-        private void GetTable(Table? table) {
+        private void GetTable( Table? table ) {
             string GetTableQuery = "select * from " + table.ToString();
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(GetTableQuery, connection);
             DataSet dataSet = new DataSet();
@@ -87,6 +97,12 @@ namespace ClothesStoreManagement {
                     Utils.ChangeButtonState(true);
                     Utils.UnloadAllFields();
                     dataView.SelectedIndex = -1;
+                    foreach (var element in grid.Children)
+                        if (element is TextBox tb)
+                            if (tb.Visibility == Visibility.Visible) {
+                                tb.Focus();
+                                break;
+                            }
                     IsNew = true;
                     break;
                 case "buttonModify":
@@ -108,43 +124,10 @@ namespace ClothesStoreManagement {
             if (((Button) sender).Name == "buttonConfirm") {
                 Utils.InsertToDatabase(CurrentTable, Utils.GetFields(CurrentTable), IsNew);
                 GetTable(CurrentTable);
-                if (IsNew)
-                    Utils.UnloadAllFields();
             }
             Utils.ChangeButtonState(false);
             Utils.DisableAllFields();
             IsNew = false;
         }
-
-        // currently this is for reference only
-        //private void Insert_Click( object sender, RoutedEventArgs e ) {
-        //    try {
-        //        string InsertString = "insert into ChiTietHoaDon (MaHDBan,MaHang,SoLuong,DonGia,GiamGia,ThanhTien)" +
-        //            "values (N'mahd1',N'mahang1',2,34000,0.1,30600);";
-        //        new SqlCommand(InsertString, connection).ExecuteNonQuery();
-        //    }
-        //    catch (SqlException ex) {
-        //        MessageBox.Show(ex.ToString());
-        //    }
-        //    catch (Exception) {
-        //        MessageBox.Show("other err");
-        //    }
-
-        //    if (connection.State != ConnectionState.Open) {
-        //        MessageBox.Show("Couldn't establish a connection to Database");
-        //        return;
-        //    }
-        //    try {
-        //        string GetTableQuery = "select * from ChiTietHoaDon";
-        //        SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(GetTableQuery, connection);
-        //        DataSet dataSet = new DataSet();
-        //        sqlDataAdapter.Fill(dataSet);
-        //        DataTable dataTable = dataSet.Tables[0];
-        //        ( (MainWindow) Application.Current.MainWindow ).dataView.ItemsSource = dataTable.DefaultView;
-        //    }
-        //    catch (Exception ex) {
-        //        MessageBox.Show(ex.ToString());
-        //    }
-        //}
     }
 }
