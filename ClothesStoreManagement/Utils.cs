@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Windows.Markup;
 
 namespace ClothesStoreManagement {
     public enum Table {
@@ -15,10 +16,12 @@ namespace ClothesStoreManagement {
         SanPham
     }
     public class Utils {
-        static readonly MainWindow mainWindow = (MainWindow) Application.Current.MainWindow;
+        public static DatabaseWindow databaseWindow = null;
+        //public static DatabaseWindow databaseWindow = ( (DatabaseWindow) Application.Current.MainWindow ).databaseWindow;
+        //static readonly MainWindow databaseWindow = (MainWindow) Application.Current.MainWindow;
 
         public static void HideAllMenu() {
-            foreach (var element in mainWindow.grid.Children) {
+            foreach (var element in databaseWindow.grid.Children) {
                 if (element is Label l) {
                     if (l.Name == "labelChooseTable")
                         continue;
@@ -31,55 +34,90 @@ namespace ClothesStoreManagement {
             }
         }
         public static void UnloadAllFields() {
-            foreach (var element in mainWindow.grid.Children)
+            foreach (var element in databaseWindow.grid.Children)
                 if (element is TextBox) {
                     TextBox tb = element as TextBox;
                     tb.Text = string.Empty;
                 }
         }
         public static void DisableAllFields() {
-            foreach (var element in mainWindow.grid.Children)
+            foreach (var element in databaseWindow.grid.Children)
                 if (element is TextBox tb)
                     tb.IsReadOnly = true;
         }
         public static void EnableAllFields() {
-            foreach (var element in mainWindow.grid.Children)
+            foreach (var element in databaseWindow.grid.Children)
                 if (element is TextBox tb)
                     tb.IsReadOnly = false;
         }
         public static void HideButtons() {
-            foreach (var element in mainWindow.grid.Children)
+            foreach (var element in databaseWindow.grid.Children)
                 if (element is Button bt)
                     bt.Visibility = Visibility.Collapsed;
         }
         public static void EnableButtons() {
-            foreach (var element in mainWindow.grid.Children)
+            foreach (var element in databaseWindow.grid.Children)
                 if (element is Button bt)
                     bt.IsEnabled = true;
         }
         public static void DisableButtons() {
-            foreach (var element in mainWindow.grid.Children)
+            foreach (var element in databaseWindow.grid.Children)
                 if (element is Button bt)
                     if (bt.Name.Contains("Modify") || bt.Name.Contains("Delete"))
                         bt.IsEnabled = false;
         }
         public static void ChangeButtonState( bool IsEditing ) {
-            if (!IsEditing) {
-                mainWindow.buttonInsert.Visibility = Visibility.Visible;
-                mainWindow.buttonModify.Visibility = Visibility.Visible;
-                mainWindow.buttonDelete.Visibility = Visibility.Visible;
+            if (IsEditing) {
+                databaseWindow.buttonInsert.Visibility = Visibility.Collapsed;
+                databaseWindow.buttonModify.Visibility = Visibility.Collapsed;
+                databaseWindow.buttonDelete.Visibility = Visibility.Collapsed;
 
-                mainWindow.buttonConfirm.Visibility = Visibility.Collapsed;
-                mainWindow.buttonCancel.Visibility = Visibility.Collapsed;
+                databaseWindow.buttonConfirm.Visibility = Visibility.Visible;
+                databaseWindow.buttonCancel.Visibility = Visibility.Visible;
             }
             else {
-                mainWindow.buttonInsert.Visibility = Visibility.Collapsed;
-                mainWindow.buttonModify.Visibility = Visibility.Collapsed;
-                mainWindow.buttonDelete.Visibility = Visibility.Collapsed;
+                databaseWindow.buttonInsert.Visibility = Visibility.Visible;
+                databaseWindow.buttonModify.Visibility = Visibility.Visible;
+                databaseWindow.buttonDelete.Visibility = Visibility.Visible;
 
-                mainWindow.buttonConfirm.Visibility = Visibility.Visible;
-                mainWindow.buttonCancel.Visibility = Visibility.Visible;
+                databaseWindow.buttonConfirm.Visibility = Visibility.Collapsed;
+                databaseWindow.buttonCancel.Visibility = Visibility.Collapsed;
             }
+        }
+        public static bool IsUsernameValid( string username, DataRow[] data ) {
+            if (username == string.Empty || username == "Username") {
+                MessageBox.Show("username is empty");
+                return false;
+            }
+            if (username.Length > 75) {
+                MessageBox.Show("username too long");
+                return false;
+            }
+            foreach (var item in data)
+                if (username == item[1].ToString()) {
+                    MessageBox.Show("used username");
+                    return false;
+                }
+            return true;
+        }
+        public static bool IsPasswordValid( string password ) { // for signing up
+            if (password.Length < 8) {
+                MessageBox.Show("password too short");
+                return false;
+            }
+            if (password.Length > 30) {
+                MessageBox.Show("password too long");
+                return false;
+            }
+            if (password.IndexOfAny(new char[] { '~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '[', '}', ']', '|', '\\', ':', ';', '\'', '"', '<', ',', '>', '.', '?', '/' }) == -1) {
+                MessageBox.Show("Must contain special character");
+                return false;
+            }
+            if (password.IndexOfAny(new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' }) == -1) {
+                MessageBox.Show("Must contain number");
+                return false;
+            }
+            return true;
         }
         private static bool IsKeyPresent( string[] keys ) {
             foreach ( var key in keys )
@@ -87,71 +125,122 @@ namespace ClothesStoreManagement {
                     return false;
             return true;
         }
+        private static string VerifyDate( string date ) {
+            bool error = false;
+            bool isCheckingDay = true, isCheckingMonth = false, isCheckingYear = false;
+            string dayString = "", monthString = "", yearString = "";
+            string formattedDate = "";
+            while (!error) {
+                foreach (var c in date) {
+                    if (int.TryParse(c.ToString(), out int num)) {
+                        if (isCheckingDay)
+                            dayString += c;
+                        if (isCheckingMonth)
+                            monthString += c;
+                        if (isCheckingYear)
+                            yearString += c;
+                        formattedDate += c;
+                    }
+                    else {
+                        if (isCheckingDay) { isCheckingDay = false; isCheckingMonth = true; }
+                        else if (isCheckingMonth) { isCheckingMonth = false; isCheckingYear = true; }
+                        else isCheckingYear = false;
+                        formattedDate += '/';
+                    }
+                }
+                // check format
+                int countSeparator = 0;
+                foreach (var c in formattedDate) {
+                    if (c.ToString().CompareTo("/") == 0)
+                        countSeparator++;
+                }
+                if (countSeparator != 2) {
+                    error = true;
+                    break;
+                }
+                // check time validity
+                int day = int.Parse(dayString), month = int.Parse(monthString), year = int.Parse(yearString);
+                if (month < 1 || month > 12 || day < 1 || year < 1 || year > 10000 ||
+                    ( month == 2 && ( ( year % 4 == 0 && day > 29 ) || ( year % 4 != 0 && day > 28 ) ) ) ||
+                    ( ( ( month < 8 && month % 2 != 0 ) || ( month > 7 && month % 2 == 0 ) ) && day > 31 ) ||
+                    ( ( ( month < 8 && month % 2 == 0 ) || ( month > 7 && month % 2 != 0 ) ) && day > 30 )) {
+                    error = true;
+                    break;
+                }
+                break;
+            }
+            if (error)
+                throw new DateFormatException("Wrong date format");
+            return formattedDate;
+        }
         public static void InsertToDatabase( Table? table, string[] data, bool isNew ) {
             string updateStatement = "";
-            if (isNew) {
-                switch (table) {
-                    case Table.ChatLieu:
-                        if (IsKeyPresent(new string[] { data[0] }))
-                            updateStatement += $"(MaChatLieu, TenChatlieu) values " +
-                                $"(N'{data[0]}',N'{data[1]}')";
-                        break;
-                    case Table.ChiTietHoaDon:
-                        if (IsKeyPresent(new string[] { data[0], data[1] }))
-                            updateStatement += $"(MaHDBan,MaHang,SoLuong,DonGia,GiamGia,ThanhTien) values " +
-                                $"(N'{data[0]}',N'{data[1]}',{data[2]},{data[3]},{data[4]},{data[5]})";
-                        break;
-                    case Table.HoaDonBan:
-                        if (IsKeyPresent(new string[] { data[0] }))
-                            updateStatement += $"(MaHDBan,MaNhanVien,NgayBan,MaKhach,TongTien) values " +
-                                $"(N'{data[0]}',N'{data[1]}',N'{data[2]}',N'{data[3]}',{data[4]})";
-                        break;
-                    case Table.KhachHang:
-                        if (IsKeyPresent(new string[] { data[0] }))
-                            updateStatement += $"(MaKhachHang,TenKhachHang,DiaChi,SDT) values " +
-                            $"(N'{data[0]}',N'{data[1]}',N'{data[2]}',N'{data[3]}')";
-                        break;
-                    case Table.NhanVien:
-                        if (IsKeyPresent(new string[] { data[0] }))
-                            updateStatement += $"(MaNhanVien,TenNhanVien,DiaChi,SDT,NgaySinh,GioiTinh) values " +
-                                $"(N'{data[0]}',N'{data[1]}',N'{data[2]}',N'{data[3]}',N'{data[4]}',N'{data[5]}')";
-                        
-                        break;
-                    case Table.SanPham:
-                        if (IsKeyPresent(new string[] { data[0] }))
-                            updateStatement += $"(MaSanPham,TenSanPham,MaChatLieu,SoLuong,DonGiaNhap,DonGiaBan,Anh,GhiChu) values " + $"(N'{data[0]}',N'{data[1]}',N'{data[2]}',{data[3]},{data[4]},{data[5]},N'Anh',N'{data[6]}')";
-                        break;
-                }
-                updateStatement = "insert into " + table.ToString() + " " + updateStatement;
-            }
-            else {
-                switch (table) {
-                    case Table.ChatLieu:
-                        updateStatement += $"MaChatLieu=N'{data[0]}',TenChatlieu=N'{data[1]}' where MaChatLieu=N'{data[0]}'";
-                        break;
-                    case Table.ChiTietHoaDon:
-                        updateStatement += $"MaHDBan=N'{data[0]}',MaHang=N'{data[1]}',SoLuong={data[2]},DonGia={data[3]},GiamGia={data[4]},ThanhTien={data[5]} where MaHDBan=N'{data[0]}' and MaHang=N'{data[1]}'";
-                        break;
-                    case Table.HoaDonBan:
-                        updateStatement += $"MaHDBan=N'{data[0]}',MaNhanVien=N'{data[1]}',NgayBan=N'{data[2]}',MaKhach=N'{data[3]}',TongTien={data[4]} where MaHDBan=N'{data[0]}'";
-                        break;
-                    case Table.KhachHang:
-                        updateStatement += $"MaKhachHang=N'{data[0]}',TenKhachHang=N'{data[1]}',DiaChi=N'{data[2]}',SDT=N'{data[3]}' where MaKhachHang=N'{data[0]}'";
-                        break;
-                    case Table.NhanVien:
-                        updateStatement += $"MaNhanVien=N'{data[0]}',TenNhanVien=N'{data[1]}',DiaChi=N'{data[2]}',SDT=N'{data[3]}',NgaySinh=N'{data[4]}',GioiTinh=N'{data[5]}' where MaNhanVien=N'{data[0]}'";
-                        break;
-                    case Table.SanPham:
-                        updateStatement += $"MaSanPham=N'{data[0]}',TenSanPham=N'{data[1]}',MaChatLieu=N'{data[2]}',SoLuong={data[3]},DonGiaNhap={data[4]},DonGiaBan={data[5]},Anh=N'Anh',GhiChu=N'{data[6]}' where MaSanPham=N'{data[0]}'";
-                        break;
-                }
-                updateStatement = "update " + table.ToString() + " set " + updateStatement;
-            }
             try {
-                new SqlCommand(updateStatement, mainWindow.connection).ExecuteNonQuery();
+                if (isNew) {
+                    switch (table) {
+                        case Table.ChatLieu:
+                            if (IsKeyPresent(new string[] { data[0] }))
+                                updateStatement += $"(MaChatLieu, TenChatlieu) values " +
+                                    $"(N'{data[0]}',N'{data[1]}')";
+                            break;
+                        case Table.ChiTietHoaDon:
+                            if (IsKeyPresent(new string[] { data[0], data[1] }))
+                                updateStatement += $"(MaHDBan,MaHang,SoLuong,DonGia,GiamGia,ThanhTien) values " +
+                                    $"(N'{data[0]}',N'{data[1]}',{data[2]},{data[3]},{data[4]},{data[5]})";
+                            break;
+                        case Table.HoaDonBan:
+                            if (IsKeyPresent(new string[] { data[0] }))
+                                updateStatement += $"(MaHDBan,MaNhanVien,NgayBan,MaKhach,TongTien) values " +
+                                    $"(N'{data[0]}',N'{data[1]}',N'{VerifyDate(data[2])}',N'{data[3]}',{data[4]})";
+                            break;
+                        case Table.KhachHang:
+                            if (IsKeyPresent(new string[] { data[0] }))
+                                updateStatement += $"(MaKhachHang,TenKhachHang,DiaChi,SDT) values " +
+                                $"(N'{data[0]}',N'{data[1]}',N'{data[2]}',N'{data[3]}')";
+                            break;
+                        case Table.NhanVien:
+                            if (IsKeyPresent(new string[] { data[0] }))
+                                updateStatement += $"(MaNhanVien,TenNhanVien,DiaChi,SDT,NgaySinh,GioiTinh) values " +
+                                    $"(N'{data[0]}',N'{data[1]}',N'{data[2]}',N'{data[3]}',N'{VerifyDate(data[4])}',N'{data[5]}')";
+
+                            break;
+                        case Table.SanPham:
+                            if (IsKeyPresent(new string[] { data[0] }))
+                                updateStatement += $"(MaSanPham,TenSanPham,MaChatLieu,SoLuong,DonGiaNhap,DonGiaBan,Anh,GhiChu) values " + $"(N'{data[0]}',N'{data[1]}',N'{data[2]}',{data[3]},{data[4]},{data[5]},N'Anh',N'{data[6]}')";
+                            break;
+                    }
+                    updateStatement = "insert into " + table.ToString() + " " + updateStatement;
+                }
+                else {
+                    switch (table) {
+                        case Table.ChatLieu:
+                            updateStatement += $"MaChatLieu=N'{data[0]}',TenChatlieu=N'{data[1]}' where MaChatLieu=N'{data[0]}'";
+                            break;
+                        case Table.ChiTietHoaDon:
+                            updateStatement += $"MaHDBan=N'{data[0]}',MaHang=N'{data[1]}',SoLuong={data[2]},DonGia={data[3]},GiamGia={data[4]},ThanhTien={data[5]} where MaHDBan=N'{data[0]}' and MaHang=N'{data[1]}'";
+                            break;
+                        case Table.HoaDonBan:
+                            updateStatement += $"MaHDBan=N'{data[0]}',MaNhanVien=N'{data[1]}',NgayBan=N'{VerifyDate(data[2])}',MaKhach=N'{data[3]}',TongTien={data[4]} where MaHDBan=N'{data[0]}'";
+                            break;
+                        case Table.KhachHang:
+                            updateStatement += $"MaKhachHang=N'{data[0]}',TenKhachHang=N'{data[1]}',DiaChi=N'{data[2]}',SDT=N'{data[3]}' where MaKhachHang=N'{data[0]}'";
+                            break;
+                        case Table.NhanVien:
+                            updateStatement += $"MaNhanVien=N'{data[0]}',TenNhanVien=N'{data[1]}',DiaChi=N'{data[2]}',SDT=N'{data[3]}',NgaySinh=N'{VerifyDate(data[4])}',GioiTinh=N'{data[5]}' where MaNhanVien=N'{data[0]}'";
+                            break;
+                        case Table.SanPham:
+                            updateStatement += $"MaSanPham=N'{data[0]}',TenSanPham=N'{data[1]}',MaChatLieu=N'{data[2]}',SoLuong={data[3]},DonGiaNhap={data[4]},DonGiaBan={data[5]},Anh=N'Anh',GhiChu=N'{data[6]}' where MaSanPham=N'{data[0]}'";
+                            break;
+                    }
+                    updateStatement = "update " + table.ToString() + " set " + updateStatement;
+                }
+                new SqlCommand(updateStatement, databaseWindow.connection).ExecuteNonQuery();
             }
-            catch (Exception) {
-                MessageBox.Show("Đã xảy ra lỗi với dữ liệu.\nXin hãy kiểm tra lại.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            catch (Exception ex) {
+                string message = "Đã xảy ra lỗi với dữ liệu.\nXin hãy kiểm tra lại.";
+                if (ex is DateFormatException)
+                    message = ex.Message;
+                MessageBox.Show(message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         public static void DeleteFromDatabase( Table? table, string[] data) {
@@ -177,7 +266,7 @@ namespace ClothesStoreManagement {
                     break;
             }
             try {
-                new SqlCommand(deleteStatement, mainWindow.connection).ExecuteNonQuery();
+                new SqlCommand(deleteStatement, databaseWindow.connection).ExecuteNonQuery();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.ToString());
@@ -187,137 +276,137 @@ namespace ClothesStoreManagement {
             List<string> fieldData = new List<string>();
             switch (table) {
                 case Table.ChatLieu:
-                    fieldData.Add(mainWindow.textboxMaChatLieu.Text);
-                    fieldData.Add(mainWindow.textboxTenChatLieu.Text);
+                    fieldData.Add(databaseWindow.textboxMaChatLieu.Text);
+                    fieldData.Add(databaseWindow.textboxTenChatLieu.Text);
                     break;
                 case Table.ChiTietHoaDon:
-                    fieldData.Add(mainWindow.textboxMaHDBan.Text);
-                    fieldData.Add(mainWindow.textboxMaHang.Text);
-                    fieldData.Add(mainWindow.textboxSoLuong.Text);
-                    fieldData.Add(mainWindow.textboxDonGia.Text);
-                    fieldData.Add(mainWindow.textboxGiamGia.Text);
-                    fieldData.Add(mainWindow.textboxThanhTien.Text);
+                    fieldData.Add(databaseWindow.textboxMaHDBan.Text);
+                    fieldData.Add(databaseWindow.textboxMaHang.Text);
+                    fieldData.Add(databaseWindow.textboxSoLuong.Text);
+                    fieldData.Add(databaseWindow.textboxDonGia.Text);
+                    fieldData.Add(databaseWindow.textboxGiamGia.Text);
+                    fieldData.Add(databaseWindow.textboxThanhTien.Text);
                     break;
                 case Table.HoaDonBan:
-                    fieldData.Add(mainWindow.textboxMaHDBan.Text);
-                    fieldData.Add(mainWindow.textboxMaNhanVien.Text);
-                    fieldData.Add(mainWindow.textboxNgayBan.Text);
-                    fieldData.Add(mainWindow.textboxMaKhach.Text);
-                    fieldData.Add(mainWindow.textboxTongTien.Text);
+                    fieldData.Add(databaseWindow.textboxMaHDBan.Text);
+                    fieldData.Add(databaseWindow.textboxMaNhanVien.Text);
+                    fieldData.Add(databaseWindow.textboxNgayBan.Text);
+                    fieldData.Add(databaseWindow.textboxMaKhach.Text);
+                    fieldData.Add(databaseWindow.textboxTongTien.Text);
                     break;
                 case Table.KhachHang:
-                    fieldData.Add(mainWindow.textboxMaKhachHang.Text);
-                    fieldData.Add(mainWindow.textboxTenKhachHang.Text);
-                    fieldData.Add(mainWindow.textboxDiaChiKH.Text);
-                    fieldData.Add(mainWindow.textboxSDTKH.Text);
+                    fieldData.Add(databaseWindow.textboxMaKhachHang.Text);
+                    fieldData.Add(databaseWindow.textboxTenKhachHang.Text);
+                    fieldData.Add(databaseWindow.textboxDiaChiKH.Text);
+                    fieldData.Add(databaseWindow.textboxSDTKH.Text);
                     break;
                 case Table.NhanVien:
-                    fieldData.Add(mainWindow.textboxMaNhanVien.Text);
-                    fieldData.Add(mainWindow.textboxTenNhanVien.Text);
-                    fieldData.Add(mainWindow.textboxDiaChiNV.Text);
-                    fieldData.Add(mainWindow.textboxSDTNV.Text);
-                    fieldData.Add(mainWindow.textboxNgaySinh.Text);
-                    fieldData.Add(mainWindow.textboxGioiTinh.Text);
+                    fieldData.Add(databaseWindow.textboxMaNhanVien.Text);
+                    fieldData.Add(databaseWindow.textboxTenNhanVien.Text);
+                    fieldData.Add(databaseWindow.textboxDiaChiNV.Text);
+                    fieldData.Add(databaseWindow.textboxSDTNV.Text);
+                    fieldData.Add(databaseWindow.textboxNgaySinh.Text);
+                    fieldData.Add(databaseWindow.textboxGioiTinh.Text);
                     break;
                 case Table.SanPham:
-                    fieldData.Add(mainWindow.textboxMaSanPham.Text);
-                    fieldData.Add(mainWindow.textboxTenSanPham.Text);
-                    fieldData.Add(mainWindow.textboxMaChatLieu.Text);
-                    fieldData.Add(mainWindow.textboxSoLuong.Text);
-                    fieldData.Add(mainWindow.textboxDonGiaNhap.Text);
-                    fieldData.Add(mainWindow.textboxDonGiaBan.Text);
-                    fieldData.Add(mainWindow.textboxGhiChu.Text);
+                    fieldData.Add(databaseWindow.textboxMaSanPham.Text);
+                    fieldData.Add(databaseWindow.textboxTenSanPham.Text);
+                    fieldData.Add(databaseWindow.textboxMaChatLieu.Text);
+                    fieldData.Add(databaseWindow.textboxSoLuong.Text);
+                    fieldData.Add(databaseWindow.textboxDonGiaNhap.Text);
+                    fieldData.Add(databaseWindow.textboxDonGiaBan.Text);
+                    fieldData.Add(databaseWindow.textboxGhiChu.Text);
                     break;
             }
             return fieldData.ToArray();
         }
         public static void LoadMenu( Table? table ) {
-            if (mainWindow.connection.State != ConnectionState.Open || table == null)
+            if (databaseWindow.connection.State != ConnectionState.Open || table == null)
                 return;
             switch (table) {
                 case Table.ChatLieu:
                     HideAllMenu();
-                    mainWindow.labelMaChatLieu.Visibility = Visibility.Visible;
-                    mainWindow.labelTenChatLieu.Visibility = Visibility.Visible;
+                    databaseWindow.labelMaChatLieu.Visibility = Visibility.Visible;
+                    databaseWindow.labelTenChatLieu.Visibility = Visibility.Visible;
 
-                    mainWindow.textboxMaChatLieu.Visibility = Visibility.Visible;
-                    mainWindow.textboxTenChatLieu.Visibility = Visibility.Visible;
+                    databaseWindow.textboxMaChatLieu.Visibility = Visibility.Visible;
+                    databaseWindow.textboxTenChatLieu.Visibility = Visibility.Visible;
                     break;
                 case Table.ChiTietHoaDon:
                     HideAllMenu();
-                    mainWindow.labelMaHDBan.Visibility = Visibility.Visible;
-                    mainWindow.labelMaHang.Visibility = Visibility.Visible;
-                    mainWindow.labelSoLuong.Visibility = Visibility.Visible;
-                    mainWindow.labelDonGia.Visibility = Visibility.Visible;
-                    mainWindow.labelGiamGia.Visibility = Visibility.Visible;
-                    mainWindow.labelThanhTien.Visibility = Visibility.Visible;
+                    databaseWindow.labelMaHDBan.Visibility = Visibility.Visible;
+                    databaseWindow.labelMaHang.Visibility = Visibility.Visible;
+                    databaseWindow.labelSoLuong.Visibility = Visibility.Visible;
+                    databaseWindow.labelDonGia.Visibility = Visibility.Visible;
+                    databaseWindow.labelGiamGia.Visibility = Visibility.Visible;
+                    databaseWindow.labelThanhTien.Visibility = Visibility.Visible;
 
-                    mainWindow.textboxMaHDBan.Visibility = Visibility.Visible;
-                    mainWindow.textboxMaHang.Visibility = Visibility.Visible;
-                    mainWindow.textboxSoLuong.Visibility = Visibility.Visible;
-                    mainWindow.textboxDonGia.Visibility = Visibility.Visible;
-                    mainWindow.textboxGiamGia.Visibility = Visibility.Visible;
-                    mainWindow.textboxThanhTien.Visibility = Visibility.Visible;
+                    databaseWindow.textboxMaHDBan.Visibility = Visibility.Visible;
+                    databaseWindow.textboxMaHang.Visibility = Visibility.Visible;
+                    databaseWindow.textboxSoLuong.Visibility = Visibility.Visible;
+                    databaseWindow.textboxDonGia.Visibility = Visibility.Visible;
+                    databaseWindow.textboxGiamGia.Visibility = Visibility.Visible;
+                    databaseWindow.textboxThanhTien.Visibility = Visibility.Visible;
                     break;
                 case Table.HoaDonBan:
                     HideAllMenu();
-                    mainWindow.labelMaHDBan.Visibility = Visibility.Visible;
-                    mainWindow.labelMaNhanVien.Visibility = Visibility.Visible;
-                    mainWindow.labelNgayBan.Visibility = Visibility.Visible;
-                    mainWindow.labelMaKhach.Visibility = Visibility.Visible;
-                    mainWindow.labelTongTien.Visibility = Visibility.Visible;
+                    databaseWindow.labelMaHDBan.Visibility = Visibility.Visible;
+                    databaseWindow.labelMaNhanVien.Visibility = Visibility.Visible;
+                    databaseWindow.labelNgayBan.Visibility = Visibility.Visible;
+                    databaseWindow.labelMaKhach.Visibility = Visibility.Visible;
+                    databaseWindow.labelTongTien.Visibility = Visibility.Visible;
 
-                    mainWindow.textboxMaHDBan.Visibility = Visibility.Visible;
-                    mainWindow.textboxMaNhanVien.Visibility = Visibility.Visible;
-                    mainWindow.textboxNgayBan.Visibility = Visibility.Visible;
-                    mainWindow.textboxMaKhach.Visibility = Visibility.Visible;
-                    mainWindow.textboxTongTien.Visibility = Visibility.Visible;
+                    databaseWindow.textboxMaHDBan.Visibility = Visibility.Visible;
+                    databaseWindow.textboxMaNhanVien.Visibility = Visibility.Visible;
+                    databaseWindow.textboxNgayBan.Visibility = Visibility.Visible;
+                    databaseWindow.textboxMaKhach.Visibility = Visibility.Visible;
+                    databaseWindow.textboxTongTien.Visibility = Visibility.Visible;
                     break;
                 case Table.KhachHang:
                     HideAllMenu();
-                    mainWindow.labelMaKhachHang.Visibility = Visibility.Visible;
-                    mainWindow.labelTenKhachHang.Visibility = Visibility.Visible;
-                    mainWindow.labelDiaChiKH.Visibility = Visibility.Visible;
-                    mainWindow.labelSDTKH.Visibility = Visibility.Visible;
+                    databaseWindow.labelMaKhachHang.Visibility = Visibility.Visible;
+                    databaseWindow.labelTenKhachHang.Visibility = Visibility.Visible;
+                    databaseWindow.labelDiaChiKH.Visibility = Visibility.Visible;
+                    databaseWindow.labelSDTKH.Visibility = Visibility.Visible;
 
-                    mainWindow.textboxMaKhachHang.Visibility = Visibility.Visible;
-                    mainWindow.textboxTenKhachHang.Visibility = Visibility.Visible;
-                    mainWindow.textboxDiaChiKH.Visibility = Visibility.Visible;
-                    mainWindow.textboxSDTKH.Visibility = Visibility.Visible;
+                    databaseWindow.textboxMaKhachHang.Visibility = Visibility.Visible;
+                    databaseWindow.textboxTenKhachHang.Visibility = Visibility.Visible;
+                    databaseWindow.textboxDiaChiKH.Visibility = Visibility.Visible;
+                    databaseWindow.textboxSDTKH.Visibility = Visibility.Visible;
                     break;
                 case Table.NhanVien:
                     HideAllMenu();
-                    mainWindow.labelMaNhanVien.Visibility = Visibility.Visible;
-                    mainWindow.labelTenNhanVien.Visibility = Visibility.Visible;
-                    mainWindow.labelDiaChiNV.Visibility = Visibility.Visible;
-                    mainWindow.labelSDTNV.Visibility = Visibility.Visible;
-                    mainWindow.labelNgaySinh.Visibility = Visibility.Visible;
-                    mainWindow.labelGioiTinh.Visibility = Visibility.Visible;
+                    databaseWindow.labelMaNhanVien.Visibility = Visibility.Visible;
+                    databaseWindow.labelTenNhanVien.Visibility = Visibility.Visible;
+                    databaseWindow.labelDiaChiNV.Visibility = Visibility.Visible;
+                    databaseWindow.labelSDTNV.Visibility = Visibility.Visible;
+                    databaseWindow.labelNgaySinh.Visibility = Visibility.Visible;
+                    databaseWindow.labelGioiTinh.Visibility = Visibility.Visible;
 
-                    mainWindow.textboxMaNhanVien.Visibility = Visibility.Visible;
-                    mainWindow.textboxTenNhanVien.Visibility = Visibility.Visible;
-                    mainWindow.textboxDiaChiNV.Visibility = Visibility.Visible;
-                    mainWindow.textboxSDTNV.Visibility = Visibility.Visible;
-                    mainWindow.textboxNgaySinh.Visibility = Visibility.Visible;
-                    mainWindow.textboxGioiTinh.Visibility = Visibility.Visible;
+                    databaseWindow.textboxMaNhanVien.Visibility = Visibility.Visible;
+                    databaseWindow.textboxTenNhanVien.Visibility = Visibility.Visible;
+                    databaseWindow.textboxDiaChiNV.Visibility = Visibility.Visible;
+                    databaseWindow.textboxSDTNV.Visibility = Visibility.Visible;
+                    databaseWindow.textboxNgaySinh.Visibility = Visibility.Visible;
+                    databaseWindow.textboxGioiTinh.Visibility = Visibility.Visible;
                     break;
                 case Table.SanPham:
                     HideAllMenu();
-                    mainWindow.labelMaSanPham.Visibility = Visibility.Visible;
-                    mainWindow.labelTenSanPham.Visibility = Visibility.Visible;
-                    mainWindow.labelMaChatLieu.Visibility = Visibility.Visible;
-                    mainWindow.labelSoLuong.Visibility = Visibility.Visible;
-                    mainWindow.labelDonGiaNhap.Visibility = Visibility.Visible;
-                    mainWindow.labelDonGiaBan.Visibility = Visibility.Visible;
-                    mainWindow.labelGhiChu.Visibility = Visibility.Visible;
+                    databaseWindow.labelMaSanPham.Visibility = Visibility.Visible;
+                    databaseWindow.labelTenSanPham.Visibility = Visibility.Visible;
+                    databaseWindow.labelMaChatLieu.Visibility = Visibility.Visible;
+                    databaseWindow.labelSoLuong.Visibility = Visibility.Visible;
+                    databaseWindow.labelDonGiaNhap.Visibility = Visibility.Visible;
+                    databaseWindow.labelDonGiaBan.Visibility = Visibility.Visible;
+                    databaseWindow.labelGhiChu.Visibility = Visibility.Visible;
 
-                    mainWindow.textboxMaSanPham.Visibility = Visibility.Visible;
-                    mainWindow.textboxTenSanPham.Visibility = Visibility.Visible;
-                    mainWindow.textboxMaChatLieu.Visibility = Visibility.Visible;
-                    mainWindow.textboxSoLuong.Visibility = Visibility.Visible;
-                    mainWindow.textboxDonGiaNhap.Visibility = Visibility.Visible;
-                    mainWindow.textboxDonGiaBan.Visibility = Visibility.Visible;
-                    mainWindow.textboxGhiChu.Visibility = Visibility.Visible;
+                    databaseWindow.textboxMaSanPham.Visibility = Visibility.Visible;
+                    databaseWindow.textboxTenSanPham.Visibility = Visibility.Visible;
+                    databaseWindow.textboxMaChatLieu.Visibility = Visibility.Visible;
+                    databaseWindow.textboxSoLuong.Visibility = Visibility.Visible;
+                    databaseWindow.textboxDonGiaNhap.Visibility = Visibility.Visible;
+                    databaseWindow.textboxDonGiaBan.Visibility = Visibility.Visible;
+                    databaseWindow.textboxGhiChu.Visibility = Visibility.Visible;
                     break;
             }
         }
@@ -325,46 +414,46 @@ namespace ClothesStoreManagement {
             try {
                 switch (table) {
                     case Table.ChatLieu:
-                        mainWindow.textboxMaChatLieu.Text = row["MaChatLieu"].ToString();
-                        mainWindow.textboxTenChatLieu.Text = row["TenChatLieu"].ToString();
+                        databaseWindow.textboxMaChatLieu.Text = row["MaChatLieu"].ToString();
+                        databaseWindow.textboxTenChatLieu.Text = row["TenChatLieu"].ToString();
                         break;
                     case Table.ChiTietHoaDon:
-                        mainWindow.textboxMaHDBan.Text = row["MaHDBan"].ToString();
-                        mainWindow.textboxMaHang.Text = row["MaHang"].ToString();
-                        mainWindow.textboxSoLuong.Text = row["SoLuong"].ToString();
-                        mainWindow.textboxDonGia.Text = row["DonGia"].ToString();
-                        mainWindow.textboxGiamGia.Text = row["GiamGia"].ToString();
-                        mainWindow.textboxThanhTien.Text = row["ThanhTien"].ToString();
+                        databaseWindow.textboxMaHDBan.Text = row["MaHDBan"].ToString();
+                        databaseWindow.textboxMaHang.Text = row["MaHang"].ToString();
+                        databaseWindow.textboxSoLuong.Text = row["SoLuong"].ToString();
+                        databaseWindow.textboxDonGia.Text = row["DonGia"].ToString();
+                        databaseWindow.textboxGiamGia.Text = row["GiamGia"].ToString();
+                        databaseWindow.textboxThanhTien.Text = row["ThanhTien"].ToString();
                         break;
                     case Table.HoaDonBan:
-                        mainWindow.textboxMaHDBan.Text = row["MaHDBan"].ToString();
-                        mainWindow.textboxMaNhanVien.Text = row["MaNhanVien"].ToString();
-                        mainWindow.textboxNgayBan.Text = row["NgayBan"].ToString().Split(' ')[0];
-                        mainWindow.textboxMaKhach.Text = row["MaKhach"].ToString();
-                        mainWindow.textboxTongTien.Text = row["TongTien"].ToString();
+                        databaseWindow.textboxMaHDBan.Text = row["MaHDBan"].ToString();
+                        databaseWindow.textboxMaNhanVien.Text = row["MaNhanVien"].ToString();
+                        databaseWindow.textboxNgayBan.Text = row["NgayBan"].ToString().Split(' ')[0];
+                        databaseWindow.textboxMaKhach.Text = row["MaKhach"].ToString();
+                        databaseWindow.textboxTongTien.Text = row["TongTien"].ToString();
                         break;
                     case Table.KhachHang:
-                        mainWindow.textboxMaKhachHang.Text = row["MaKhachhang"].ToString();
-                        mainWindow.textboxTenKhachHang.Text = row["TenKhachHang"].ToString();
-                        mainWindow.textboxDiaChiKH.Text = row["DiaChi"].ToString();
-                        mainWindow.textboxSDTKH.Text = row["SDT"].ToString();
+                        databaseWindow.textboxMaKhachHang.Text = row["MaKhachhang"].ToString();
+                        databaseWindow.textboxTenKhachHang.Text = row["TenKhachHang"].ToString();
+                        databaseWindow.textboxDiaChiKH.Text = row["DiaChi"].ToString();
+                        databaseWindow.textboxSDTKH.Text = row["SDT"].ToString();
                         break;
                     case Table.NhanVien:
-                        mainWindow.textboxMaNhanVien.Text = row["MaNhanVien"].ToString();
-                        mainWindow.textboxTenNhanVien.Text = row["TenNhanVien"].ToString();
-                        mainWindow.textboxDiaChiNV.Text = row["DiaChi"].ToString();
-                        mainWindow.textboxSDTNV.Text = row["SDT"].ToString();
-                        mainWindow.textboxNgaySinh.Text = row["NgaySinh"].ToString().Split(' ')[0];
-                        mainWindow.textboxGioiTinh.Text = row["GioiTinh"].ToString();
+                        databaseWindow.textboxMaNhanVien.Text = row["MaNhanVien"].ToString();
+                        databaseWindow.textboxTenNhanVien.Text = row["TenNhanVien"].ToString();
+                        databaseWindow.textboxDiaChiNV.Text = row["DiaChi"].ToString();
+                        databaseWindow.textboxSDTNV.Text = row["SDT"].ToString();
+                        databaseWindow.textboxNgaySinh.Text = row["NgaySinh"].ToString().Split(' ')[0];
+                        databaseWindow.textboxGioiTinh.Text = row["GioiTinh"].ToString();
                         break;
                     case Table.SanPham:
-                        mainWindow.textboxMaSanPham.Text = row["MaSanPham"].ToString();
-                        mainWindow.textboxTenSanPham.Text = row["TenSanPham"].ToString();
-                        mainWindow.textboxMaChatLieu.Text = row["MaChatLieu"].ToString();
-                        mainWindow.textboxSoLuong.Text = row["SoLuong"].ToString();
-                        mainWindow.textboxDonGiaNhap.Text = row["DonGiaNhap"].ToString();
-                        mainWindow.textboxDonGiaBan.Text = row["DonGiaBan"].ToString();
-                        mainWindow.textboxGhiChu.Text = row["GhiChu"].ToString();
+                        databaseWindow.textboxMaSanPham.Text = row["MaSanPham"].ToString();
+                        databaseWindow.textboxTenSanPham.Text = row["TenSanPham"].ToString();
+                        databaseWindow.textboxMaChatLieu.Text = row["MaChatLieu"].ToString();
+                        databaseWindow.textboxSoLuong.Text = row["SoLuong"].ToString();
+                        databaseWindow.textboxDonGiaNhap.Text = row["DonGiaNhap"].ToString();
+                        databaseWindow.textboxDonGiaBan.Text = row["DonGiaBan"].ToString();
+                        databaseWindow.textboxGhiChu.Text = row["GhiChu"].ToString();
                         break;
                 }
             }
@@ -372,5 +461,8 @@ namespace ClothesStoreManagement {
                 MessageBox.Show(ex.ToString());
             }
         }
+    }
+    public class DateFormatException : Exception {
+        public DateFormatException( string message ) : base(message) { }
     }
 }

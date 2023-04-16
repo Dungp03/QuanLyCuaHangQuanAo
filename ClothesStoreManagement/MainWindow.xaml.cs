@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Data.SqlClient;
-using System.Data;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
 
 namespace ClothesStoreManagement {
     /// <summary>
@@ -14,120 +10,72 @@ namespace ClothesStoreManagement {
             InitializeComponent();
         }
 
-        public SqlConnection connection = new SqlConnection();
-        private Table? CurrentTable = null;
-        private bool IsNew = false;
+        public bool isLoggedIn = false;
+        public DatabaseWindow databaseWindow = null;
+        public LoginWindow loginWindow = null;
+        public string currentUsername = string.Empty;
 
-        private void Window_Loaded( object sender, RoutedEventArgs e ) {
-            Utils.HideAllMenu();
-            Utils.HideButtons();
-            Utils.DisableButtons();
+        private void mainWindow_Loaded( object sender, RoutedEventArgs e ) {
+            LoggedInState(false, "Not logged in");
+            buttonLogin.IsEnabled = true;
+            buttonLogin.Visibility = Visibility.Visible;
+        }
+        public void LoggedInState( bool _isLoggedIn, string username ) {
+            isLoggedIn = _isLoggedIn;
+            buttonToDatabase.IsEnabled = _isLoggedIn;
+            buttonLogOut.IsEnabled = _isLoggedIn;
+            buttonLogOut.Visibility = _isLoggedIn ? Visibility.Visible : Visibility.Collapsed;
+            buttonManageAccount.IsEnabled = _isLoggedIn;
+            buttonManageAccount.Visibility = _isLoggedIn ? Visibility.Visible : Visibility.Collapsed;
+            buttonLogin.IsEnabled = !_isLoggedIn;
+            currentUsername = username;
+            labelAccountInfo.Content = username;
         }
 
-        private void buttonReconnect_Click( object sender, RoutedEventArgs e ) {
-            ConnectToDatabase();
+        private void buttonLogOut_Click( object sender, RoutedEventArgs e ) {
+            LoggedInState(false, "Not logged in");
         }
 
-        private void Window_ContentRendered( object sender, EventArgs e ) {
-            ConnectToDatabase();
-            foreach (Table table in Enum.GetValues(typeof(Table)))
-                comboBoxSelectTable.Items.Add(table);
-            LoadData();
-            Utils.DisableAllFields();
-        }
-        private void ConnectToDatabase() {
-            connection.ConnectionString = @"Data Source=.;Initial Catalog=QlyShopQuanAo;Integrated Security=True;";
+        private void buttonManageAccount_Click( object sender, RoutedEventArgs e ) {
+            if (!isLoggedIn)
+                return;
             try {
-                connection.Open();
-                if (connection.State == ConnectionState.Open) {
-                    buttonReconnect.Visibility = Visibility.Collapsed;
-                    buttonReconnect.IsEnabled = false;
-                    comboBoxSelectTable.IsEnabled = true;
-                }
+                AccountManageWindow accountManageWindow = new AccountManageWindow {
+                    Owner = this
+                };
+                accountManageWindow.ShowDialog();
             }
-            catch (Exception) {
-                if (connection.State != ConnectionState.Open) {
-                    MessageBox.Show("Không thể kết nối với Cơ sở dữ liệu.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Information);
-                    buttonReconnect.Visibility = Visibility.Visible;
-                    comboBoxSelectTable.IsEnabled = false;
-                }
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
             }
         }
-        private void LoadData() {
-            if (connection.State != ConnectionState.Open || CurrentTable == null)
-                return;
-            GetTable(CurrentTable);
-        }
-        private void GetTable( Table? table ) {
-            string GetTableQuery = "select * from " + table.ToString();
-            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(GetTableQuery, connection);
-            DataSet dataSet = new DataSet();
-            sqlDataAdapter.Fill(dataSet);
-            DataTable dataTable = dataSet.Tables[0];
-            dataView.ItemsSource = dataTable.DefaultView;
-            foreach (var column in dataView.Columns) {
-                column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+        private void buttonToDatabase_Click( object sender, RoutedEventArgs e ) {
+            try {
+                Utils.databaseWindow = databaseWindow = new DatabaseWindow();
+                databaseWindow.Owner = this;
+                databaseWindow.ShowDialog();
             }
-        }
-        private void comboBoxSelectTable_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
-            //MessageBox.Show(Table.KhachHang.ToString() );
-            Utils.ChangeButtonState(false);
-            CurrentTable = (Table) Enum.ToObject(typeof(Table), comboBoxSelectTable.SelectedIndex);
-            GetTable(CurrentTable);
-            Utils.UnloadAllFields();
-            Utils.LoadMenu(CurrentTable);
-        }
-
-        private void dataView_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
-            DataRowView row = (DataRowView) dataView.CurrentItem;
-            if ( row == null ) {
-                Utils.DisableButtons();
-                Utils.UnloadAllFields();
-                return;
-            }
-            Utils.LoadFields(CurrentTable, row);
-            Utils.EnableButtons();
-        }
-
-        private void ActionButton_Click( object sender, RoutedEventArgs e ) {
-            Button actionButton = (Button) sender;
-            switch (actionButton.Name) {
-                case "buttonInsert":
-                    Utils.EnableAllFields();
-                    Utils.ChangeButtonState(true);
-                    Utils.UnloadAllFields();
-                    dataView.SelectedIndex = -1;
-                    foreach (var element in grid.Children)
-                        if (element is TextBox tb)
-                            if (tb.Visibility == Visibility.Visible) {
-                                tb.Focus();
-                                break;
-                            }
-                    IsNew = true;
-                    break;
-                case "buttonModify":
-                    Utils.EnableAllFields();
-                    Utils.ChangeButtonState(true);
-                    IsNew = false;
-                    break;
-                case "buttonDelete":
-                    if (MessageBox.Show("Bạn chắc chắn muốn xóa?", "Xác Nhận", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
-                        return;
-                    Utils.DeleteFromDatabase(CurrentTable, Utils.GetFields(CurrentTable));
-                    Utils.UnloadAllFields();
-                    GetTable(CurrentTable);
-                    break;
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
             }
         }
 
-        private void EditingButton_Click( object sender, RoutedEventArgs e ) {
-            if (((Button) sender).Name == "buttonConfirm") {
-                Utils.InsertToDatabase(CurrentTable, Utils.GetFields(CurrentTable), IsNew);
-                GetTable(CurrentTable);
+        private void buttonLogin_Click( object sender, RoutedEventArgs e ) {
+            try {
+                loginWindow = new LoginWindow {
+                    Owner = this
+                };
+                loginWindow.ShowDialog();
             }
-            Utils.ChangeButtonState(false);
-            Utils.DisableAllFields();
-            IsNew = false;
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void mainWindow_Closing( object sender, System.ComponentModel.CancelEventArgs e ) {
+            foreach (Window window in Application.Current.Windows)
+                if (window != Application.Current.MainWindow)
+                    window.Close();
         }
     }
 }
