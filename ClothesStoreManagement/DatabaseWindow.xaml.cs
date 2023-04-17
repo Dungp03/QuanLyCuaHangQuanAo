@@ -23,7 +23,6 @@ namespace ClothesStoreManagement {
             Utils.HideButtons();
             Utils.DisableButtons();
         }
-
         private void Window_ContentRendered( object sender, EventArgs e ) {
             ConnectToDatabase();
             foreach (Table table in Enum.GetValues(typeof(Table)))
@@ -31,11 +30,9 @@ namespace ClothesStoreManagement {
             LoadData();
             Utils.DisableAllFields();
         }
-
         private void buttonConnect_Click( object sender, RoutedEventArgs e ) {
             ConnectToDatabase();
         }
-
         private void buttonDisconnect_Click( object sender, RoutedEventArgs e ) {
             connection.Close();
             Utils.HideAllMenu();
@@ -94,7 +91,6 @@ namespace ClothesStoreManagement {
             Utils.UnloadAllFields();
             Utils.LoadMenu(CurrentTable);
         }
-
         private void dataView_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
             DataRowView row = (DataRowView) dataView.CurrentItem;
             if (row == null) {
@@ -105,7 +101,6 @@ namespace ClothesStoreManagement {
             Utils.LoadFields(CurrentTable, row);
             Utils.EnableButtons();
         }
-
         private void ActionButton_Click( object sender, RoutedEventArgs e ) {
             Button actionButton = (Button) sender;
             switch (actionButton.Name) {
@@ -136,7 +131,6 @@ namespace ClothesStoreManagement {
                     break;
             }
         }
-
         private void EditingButton_Click( object sender, RoutedEventArgs e ) {
             if (( (Button) sender ).Name == "buttonConfirm") {
                 Utils.InsertToDatabase(CurrentTable, Utils.GetFields(CurrentTable), IsNew);

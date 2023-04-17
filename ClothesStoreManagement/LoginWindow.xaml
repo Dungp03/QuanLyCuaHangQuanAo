@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:ClothesStoreManagement"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Name="loginWindow"
-    Title="Login"
+    Title="Đăng nhập"
     Width="360"
     Height="450"
     ContentRendered="accountWindow_ContentRendered"
@@ -24,7 +24,7 @@
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="USER LOGIN"
+            Content="ĐĂNG NHẬP"
             FontSize="30"
             FontWeight="Bold" />
         <TextBox
@@ -35,21 +35,22 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
+            FontSize="14"
             Foreground="Gray"
             GotFocus="textboxUsername_GotFocus"
             LostFocus="textboxUsername_LostFocus"
             Text="Username"
-            TextWrapping="Wrap" FontSize="14" />
+            TextWrapping="Wrap" />
         <Label
             Name="labelUsername"
-            Height="17"
-            Margin="90,123,0,0"
+            Height="20"
+            Margin="90,120,0,0"
             Padding="0,0,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Username"
+            Content="Tên đăng nhập"
             FontSize="14" />
         <PasswordBox
             Name="passwordboxPassword"
@@ -59,7 +60,8 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
-            GotFocus="passwordboxPassword_GotFocus" FontSize="14" />
+            FontSize="14"
+            GotFocus="passwordboxPassword_GotFocus" />
         <Label
             Name="labelPassword"
             Height="17"
@@ -69,11 +71,11 @@
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Password"
+            Content="Mật khẩu"
             FontSize="14" />
         <Button
             Name="buttonLogin"
-            Width="58"
+            Width="78"
             Height="25"
             Margin="0,255,0,0"
             Padding="0,0,0,0"
@@ -82,32 +84,35 @@
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             Click="buttonLogin_Click"
-            Content="Login" FontSize="14" />
+            Content="Đăng nhập"
+            FontSize="14" />
         <Button
             Name="buttonSignUp"
-            Width="58"
+            Width="78"
             Height="25"
             Margin="0,290,0,0"
             Padding="0,0,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Click="buttonSignUp_Click"
-            Content="Sign Up" FontSize="14" />
+            Content="Đăng ký"
+            FontSize="14" />
         <Button
             x:Name="buttonBack"
-            Width="58"
+            Width="78"
             Height="23"
             Margin="0,290,0,0"
             Padding="0,0,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Click="buttonBack_Click"
-            Content="Back"
-            Visibility="Collapsed" FontSize="14" />
+            Content="Hủy"
+            FontSize="14"
+            Visibility="Collapsed" />
         <TextBox
             Name="textboxHelp"
             Width="276"
-            Height="76"
+            Height="106"
             Margin="0,334,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
@@ -115,11 +120,12 @@
             BorderThickness="0,0,0,0"
             Cursor="Arrow"
             Focusable="False"
+            FontSize="14"
             Foreground="Gray"
             IsReadOnly="True"
             IsTabStop="False"
             IsUndoEnabled="False"
             Text=""
-            TextWrapping="Wrap" FontSize="14" />
+            TextWrapping="Wrap" />
     </Grid>
 </Window>

@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ClothesStoreManagement {
     /// <summary>
@@ -26,6 +17,7 @@ namespace ClothesStoreManagement {
         MainWindow mainWindow = (MainWindow) Application.Current.MainWindow;
         SqlConnection connection = new SqlConnection();
         DataRow[] data = null;
+
         private void accountWindow_ContentRendered( object sender, EventArgs e ) {
             ConnectToDatabase();
         }
@@ -45,7 +37,6 @@ namespace ClothesStoreManagement {
                 }
             }
         }
-
         private void UpdateData() {
             string GetTableQuery = "select * from Users";
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(GetTableQuery, connection);
@@ -55,109 +46,115 @@ namespace ClothesStoreManagement {
             data = new DataRow[dataTable.Rows.Count];
             dataTable.Rows.CopyTo(data, 0);
         }
-
         private bool CheckLogIn( string username, string password ) {
             if (data == null)
                 return false;
             UpdateData(); // get latest data
-            string id = username + password;
+            string id = username + Convert.ToBase64String(Encoding.UTF8.GetBytes(password));
             foreach (var item in data) {
-                if (id == item[0].ToString())
-                    return true;
+                if (username == item[1].ToString()) {
+                    if (id == item[0].ToString())
+                        return true;
+                    else {
+                        MessageBox.Show("Nhập sai mật khẩu", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return false;
+                    }
+                }
             }
+            MessageBox.Show("Tài khoản này không tồn tại.\nHãy đăng ký.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             return false;
         }
-
         private void buttonLogin_Click( object sender, RoutedEventArgs e ) {
-            if (textboxUsername.Text == string.Empty || textboxUsername.Text == "Username" || passwordboxPassword.Password == string.Empty) {
-                MessageBox.Show("username or password is empty");
+            if (textboxUsername.Text == string.Empty || textboxUsername.Text == "Username") {
+                MessageBox.Show("Tên đăng nhập không được để trống", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            if (passwordboxPassword.Password == string.Empty) {
+                MessageBox.Show("Mật khẩu không được để trống", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
             if (CheckLogIn(textboxUsername.Text, passwordboxPassword.Password)) {
                 mainWindow.LoggedInState(true, textboxUsername.Text);
                 this.Close();
             }
-            else {
-                MessageBox.Show("Account doesn't exist.");
-            }
         }
-
         private void EnableLogInMode() {
             buttonLogin.IsEnabled = true;
             buttonSignUp.Margin = new Thickness(0, 290, 0, 0);
             buttonBack.Visibility = Visibility.Collapsed;
             textboxUsername.Text = "Username";
             passwordboxPassword.Password = string.Empty;
-            this.Title = "Login";
-            labelTitle.Content = "USER LOGIN";
+            this.Title = "Đăng nhập";
+            labelTitle.Content = "ĐĂNG NHẬP";
             textboxHelp.Visibility = Visibility.Collapsed;
             textboxUsername.Focus();
         }
-
         private void EnableSignUpMode() {
             buttonLogin.IsEnabled = false;
             buttonSignUp.Margin = new Thickness(0, 255, 0, 0);
             buttonBack.Visibility = Visibility.Visible;
             textboxUsername.Text = "Username";
             passwordboxPassword.Password = string.Empty;
-            this.Title = "Sign Up";
-            labelTitle.Content = "SIGN UP";
+            this.Title = "Đăng ký";
+            labelTitle.Content = "ĐĂNG KÝ";
             textboxHelp.Text = string.Empty;
             textboxHelp.Visibility = Visibility.Visible;
             textboxUsername.Focus();
         }
-
         private void buttonBack_Click( object sender, RoutedEventArgs e ) {
             if (!buttonLogin.IsEnabled) {
                 EnableLogInMode();
             }
         }
-
         private void buttonSignUp_Click( object sender, RoutedEventArgs e ) {
             // before: Margin = "0,290,0,0"
             // after: Margin="0,255,0,0"
-            if (buttonLogin.IsEnabled) { // redirect to sign up
-                EnableSignUpMode();
+            try {
+                if (buttonLogin.IsEnabled) { // redirect to sign up
+                    EnableSignUpMode();
+                }
+                else { // is signing up
+                    if (!Utils.IsUsernameValid(textboxUsername.Text, data)) {
+                        textboxUsername.Focus();
+                        return;
+                    }
+                    if (!Utils.IsPasswordValid(passwordboxPassword.Password)) {
+                        passwordboxPassword.Focus();
+                        return;
+                    }
+                    // base64 to base string length ratio: 4*[base.length / 3]
+                    string encodedPassword = Convert.ToBase64String(Encoding.UTF8.GetBytes(passwordboxPassword.Password));
+                    string id = textboxUsername.Text + encodedPassword;
+                    string insertStatement = "insert into Users (ID,Username,Password) values " +
+                        "(N'" + id + "'," +
+                        "N'" + textboxUsername.Text + "'," +
+                        "N'" + encodedPassword + "')";
+                    new SqlCommand(insertStatement, connection).ExecuteNonQuery();
+                    EnableLogInMode();
+                }
             }
-            else { // is signing up
-                if (!Utils.IsUsernameValid(textboxUsername.Text, data)) {
-                    textboxUsername.Focus();
-                    return;
-                }
-                if (!Utils.IsPasswordValid(passwordboxPassword.Password)) {
-                    passwordboxPassword.Focus();
-                    return;
-                }
-                string id = textboxUsername.Text + passwordboxPassword.Password;
-                string insertStatement = "insert into Users (ID,Username,Password) values " +
-                    "(N'" + id + "'," +
-                    "N'" + textboxUsername.Text + "'," +
-                    "N'" + passwordboxPassword.Password + "')";
-                new SqlCommand(insertStatement, connection).ExecuteNonQuery();
-                EnableLogInMode();
+            catch (Exception) {
+                MessageBox.Show("Đã xảy ra lỗi khi đăng ký.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-
         private void textboxUsername_GotFocus( object sender, RoutedEventArgs e ) {
             if (textboxUsername.Text == "Username") {
                 textboxUsername.Foreground = new SolidColorBrush(Colors.Black);
                 textboxUsername.Text = string.Empty;
             }
-            textboxHelp.Text = "Username has less than 75 characters.";
+            textboxHelp.Text = "Tên đăng nhập không chứa quá 75 ký tự";
         }
-
         private void textboxUsername_LostFocus( object sender, RoutedEventArgs e ) {
             if (textboxUsername.Text == string.Empty) {
                 textboxUsername.Foreground = new SolidColorBrush(Colors.Gray);
                 textboxUsername.Text = "Username";
             }
         }
-
         private void passwordboxPassword_GotFocus( object sender, RoutedEventArgs e ) {
-            textboxHelp.Text = "Password has between 8 and 30 characters.\n" +
-                               "Password contains atleast:\n" +
-                               @" - A special character: ~`!@#$%^&*()_-+={[}]|\:;'<,>.?/" + $"{'"'}\n" +
-                               " - A number: 0-9";
+            textboxHelp.Text = "Mật khẩu phải chứa từ 8 đến 30 ký tự.\n" +
+                               "Mật khẩu phải chứa:\n" +
+                               @" - 1 ký tự đặc biệt: ~`!@#$%^&*()_-+={[}]|\:;'<,>.?/" + $"{'"'}\n" +
+                               " - 1 chữ số: 0-9";
         }
     }
 }

@@ -18,7 +18,7 @@
     <Grid
         x:Name="grid"
         Width="800"
-        Height="450">
+        Height="450" Margin="-2,-6,2,-10">
         <DataGrid
             x:Name="dataView"
             Margin="10,222,10,10"
@@ -35,12 +35,12 @@
             SelectionChanged="comboBoxSelectTable_SelectionChanged" />
         <Label
             Name="labelChooseTable"
-            Margin="565,183,0,0"
+            Margin="639,164,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Chọn Bảng" />
+            Content="Chọn Bảng" Padding="0,0,0,0" />
         <TextBox
             Name="textboxMaChatLieu"
             Width="120"
@@ -493,7 +493,7 @@
         <Button
             Name="buttonDelete"
             Width="64"
-            Margin="402,187,0,0"
+            Margin="419,187,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="ActionButton_Click"
@@ -501,7 +501,7 @@
         <Button
             x:Name="buttonModify"
             Width="64"
-            Margin="215,187,0,0"
+            Margin="232,187,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="ActionButton_Click"
@@ -509,7 +509,7 @@
         <Button
             x:Name="buttonInsert"
             Width="64"
-            Margin="27,187,0,0"
+            Margin="44,187,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="ActionButton_Click"
@@ -517,7 +517,7 @@
         <Button
             x:Name="buttonConfirm"
             Width="64"
-            Margin="120,187,0,0"
+            Margin="137,187,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="EditingButton_Click"
@@ -525,15 +525,15 @@
         <Button
             x:Name="buttonCancel"
             Width="64"
-            Margin="308,187,0,0"
+            Margin="325,187,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="EditingButton_Click"
             Content="Hủy" />
         <Button
             x:Name="buttonConnect"
-            Width="64"
-            Margin="493,187,0,0"
+            Width="81"
+            Margin="515,187,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="buttonConnect_Click"
@@ -541,7 +541,7 @@
         <Button
             x:Name="buttonDisconnect"
             Width="81"
-            Margin="484,187,0,0"
+            Margin="515,187,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="buttonDisconnect_Click"

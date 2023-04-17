@@ -16,7 +16,7 @@ namespace ClothesStoreManagement {
         public string currentUsername = string.Empty;
 
         private void mainWindow_Loaded( object sender, RoutedEventArgs e ) {
-            LoggedInState(false, "Not logged in");
+            LoggedInState(false, "Chưa đăng nhập");
             buttonLogin.IsEnabled = true;
             buttonLogin.Visibility = Visibility.Visible;
         }
@@ -31,11 +31,9 @@ namespace ClothesStoreManagement {
             currentUsername = username;
             labelAccountInfo.Content = username;
         }
-
         private void buttonLogOut_Click( object sender, RoutedEventArgs e ) {
-            LoggedInState(false, "Not logged in");
+            LoggedInState(false, "Chưa đăng nhập");
         }
-
         private void buttonManageAccount_Click( object sender, RoutedEventArgs e ) {
             if (!isLoggedIn)
                 return;
@@ -59,7 +57,6 @@ namespace ClothesStoreManagement {
                 MessageBox.Show(ex.ToString());
             }
         }
-
         private void buttonLogin_Click( object sender, RoutedEventArgs e ) {
             try {
                 loginWindow = new LoginWindow {
@@ -71,7 +68,6 @@ namespace ClothesStoreManagement {
                 MessageBox.Show(ex.ToString());
             }
         }
-
         private void mainWindow_Closing( object sender, System.ComponentModel.CancelEventArgs e ) {
             foreach (Window window in Application.Current.Windows)
                 if (window != Application.Current.MainWindow)

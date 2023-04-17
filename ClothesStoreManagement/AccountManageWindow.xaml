@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:ClothesStoreManagement"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Name="accountManageWindow"
-    Title="Account Management"
+    Title="Quản lý tài khoản"
     Width="360"
     Height="450"
     ContentRendered="accountManageWindow_ContentRendered"
@@ -22,8 +22,8 @@
         <Label
             x:Name="labelAccountInfo"
             Width="340"
-            Height="65"
-            Margin="0,46,0,0"
+            Height="46"
+            Margin="0,29,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
@@ -41,7 +41,7 @@
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             Click="buttonDelete_Click"
-            Content="Delete Account"
+            Content="Xóa tài khoản"
             FontSize="14" />
         <Button
             x:Name="buttonModifyPassword"
@@ -54,7 +54,7 @@
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             Click="buttonModifyPassword_Click"
-            Content="Modify Password"
+            Content="Thay đổi mật khẩu"
             FontSize="14" />
         <Button
             x:Name="buttonModifyUsername"
@@ -67,7 +67,7 @@
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             Click="buttonModifyUsername_Click"
-            Content="Modify Username"
+            Content="Thay đổi tên"
             FontSize="14" />
         <TextBox
             x:Name="textboxUsername"
@@ -86,7 +86,7 @@
         <TextBox
             x:Name="textboxHelp"
             Width="276"
-            Height="76"
+            Height="106"
             Margin="0,334,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
@@ -94,24 +94,26 @@
             BorderThickness="0,0,0,0"
             Cursor="Arrow"
             Focusable="False"
+            FontSize="14"
             Foreground="Gray"
             IsReadOnly="True"
             IsTabStop="False"
             IsUndoEnabled="False"
             Text=""
-            TextWrapping="Wrap" FontSize="14" />
+            TextWrapping="Wrap" />
         <PasswordBox
             x:Name="passwordboxPassword"
             Width="180"
             Height="28"
-            Margin="0,162,0,0"
+            Margin="0,176,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
-            GotFocus="passwordboxPassword_GotFocus" FontSize="14" />
+            FontSize="14"
+            GotFocus="passwordboxPassword_GotFocus" />
         <Button
             x:Name="buttonConfirm"
-            Width="66"
+            Width="76"
             Height="25"
             Margin="0,225,0,0"
             Padding="0,0,0,0"
@@ -120,11 +122,11 @@
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             Click="buttonConfirm_Click"
-            Content="Modify"
+            Content="Xác nhận"
             FontSize="14" />
         <Button
             x:Name="buttonCancel"
-            Width="66"
+            Width="76"
             Height="25"
             Margin="0,260,0,0"
             Padding="0,0,0,0"
@@ -133,7 +135,32 @@
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             Click="buttonCancel_Click"
-            Content="Cancel"
+            Content="Hủy"
             FontSize="14" />
+        <PasswordBox
+            x:Name="passwordboxPasswordOld"
+            Width="180"
+            Height="28"
+            Margin="0,116,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            FontSize="14" />
+        <Label
+            Name="labelOldPassword"
+            Margin="90,95,0,0"
+            Padding="0,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            Content="Mật khẩu cũ" />
+        <Label
+            Name="labelNewPassword"
+            Margin="90,155,0,0"
+            Padding="0,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            Content="Mật khẩu mới" />
     </Grid>
 </Window>

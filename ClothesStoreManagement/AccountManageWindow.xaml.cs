@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -23,8 +24,14 @@ namespace ClothesStoreManagement {
 
         private void accountManageWindow_Loaded( object sender, RoutedEventArgs e ) {
             labelAccountInfo.Content = currentUser = mainWindow.currentUsername;
+            HideModifyMenu();
+        }
+        private void HideModifyMenu() {
             textboxUsername.Visibility = Visibility.Collapsed;
             passwordboxPassword.Visibility = Visibility.Collapsed;
+            passwordboxPasswordOld.Visibility = Visibility.Collapsed;
+            labelNewPassword.Visibility = Visibility.Collapsed;
+            labelOldPassword.Visibility = Visibility.Collapsed;
             buttonConfirm.Visibility = Visibility.Collapsed;
             buttonCancel.Visibility = Visibility.Collapsed;
             textboxHelp.Visibility = Visibility.Collapsed;
@@ -47,7 +54,6 @@ namespace ClothesStoreManagement {
                 }
             }
         }
-
         private void GetUserData() {
             string GetTableQuery = "select * from Users";
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(GetTableQuery, connection);
@@ -70,33 +76,34 @@ namespace ClothesStoreManagement {
                     else
                         bt.Visibility = Visibility.Visible;
                 }
+            textboxHelp.Text = string.Empty;
             if (isModifying) {
                 if (isModifyingUsername) {
                     textboxUsername.Visibility = Visibility.Visible;
                     textboxUsername.Focus();
                 }
                 else {
+                    passwordboxPasswordOld.Visibility = Visibility.Visible;
                     passwordboxPassword.Visibility = Visibility.Visible;
-                    passwordboxPassword.Focus();
+                    labelNewPassword.Visibility = Visibility.Visible;
+                    labelOldPassword.Visibility = Visibility.Visible;
+                    passwordboxPasswordOld.Focus();
                 }
                 buttonConfirm.Visibility = Visibility.Visible;
                 buttonCancel.Visibility = Visibility.Visible;
                 textboxHelp.Visibility = Visibility.Visible;
             }
             else {
-                textboxUsername.Visibility = Visibility.Collapsed;
-                passwordboxPassword.Visibility = Visibility.Collapsed;
-                buttonConfirm.Visibility = Visibility.Collapsed;
-                buttonCancel.Visibility = Visibility.Collapsed;
-                textboxHelp.Visibility = Visibility.Collapsed;
+                HideModifyMenu();
+                textboxUsername.Text = "Username";
+                passwordboxPassword.Password = string.Empty;
+                passwordboxPasswordOld.Password = string.Empty;
             }
         }
-
         private void buttonModifyUsername_Click( object sender, RoutedEventArgs e ) {
             isModifyingUsername = true;
             ModifyMode(true);
         }
-
         private void buttonModifyPassword_Click( object sender, RoutedEventArgs e ) {
             isModifyingUsername = false;
             ModifyMode(true);
@@ -116,13 +123,22 @@ namespace ClothesStoreManagement {
                     new SqlCommand(updateStatement, connection).ExecuteNonQuery();
                 }
                 else {
-                    string newPassword = passwordboxPassword.Password;
-                    if (!Utils.IsPasswordValid(newPassword)) {
+                    if (passwordboxPasswordOld.Password != DecodePassword(userData[2].ToString())) {
+                        MessageBox.Show("Nhập sai mật khẩu cũ", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        passwordboxPasswordOld.Focus();
+                        return;
+                    }
+                    if (!Utils.IsPasswordValid(passwordboxPassword.Password)) {
                         passwordboxPassword.Focus();
                         return;
                     }
-                    string newID = userData[1] + newPassword;
-                    string updateStatement = $"update Users set ID=N'{newID}',Username=N'{userData[1]}',Password=N'{newPassword}' where ID=N'{userData[0]}'";
+                    string encodedPassword = Convert.ToBase64String(Encoding.UTF8.GetBytes(passwordboxPassword.Password));
+                    if (encodedPassword == userData[2].ToString()) {
+                        MessageBox.Show("Mật khẩu mới trùng với mật khẩu cũ", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                    string newID = userData[1] + encodedPassword;
+                    string updateStatement = $"update Users set ID=N'{newID}',Username=N'{userData[1]}',Password=N'{encodedPassword}' where ID=N'{userData[0]}'";
                     new SqlCommand(updateStatement, connection).ExecuteNonQuery();
                 }
                 GetUserData();
@@ -135,18 +151,17 @@ namespace ClothesStoreManagement {
         private void buttonCancel_Click( object sender, RoutedEventArgs e ) {
             ModifyMode(false);
         }
-
         private void buttonDelete_Click( object sender, RoutedEventArgs e ) {
-            if (MessageBox.Show("Delete this account?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+            if (MessageBox.Show("Bạn chắc chắn muốn xóa tài khoản này?", "Xóa tài khoản", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
                 return;
             try {
                 string deleteStatement = $"delete from Users where ID=N'{userData[0]}'";
                 new SqlCommand(deleteStatement, connection).ExecuteNonQuery();
             }
-            catch (Exception ex) {
-                MessageBox.Show(ex.ToString());
+            catch (Exception) {
+                MessageBox.Show("Đã xảy ra lỗi khi xóa tài khoản.\nHãy thử lại sau.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            mainWindow.LoggedInState(false, "Not logged in");
+            mainWindow.LoggedInState(false, "Chưa đăng nhập");
             Close();
         }
         private void textboxUsername_GotFocus( object sender, RoutedEventArgs e ) {
@@ -154,22 +169,26 @@ namespace ClothesStoreManagement {
                 textboxUsername.Foreground = new SolidColorBrush(Colors.Black);
                 textboxUsername.Text = string.Empty;
             }
-            textboxHelp.Text = "Username has less than 75 characters.";
+            textboxHelp.Text = "Tên đăng nhập không chứa quá 75 ký tự";
         }
-
         private void textboxUsername_LostFocus( object sender, RoutedEventArgs e ) {
             if (textboxUsername.Text == string.Empty) {
                 textboxUsername.Foreground = new SolidColorBrush(Colors.Gray);
                 textboxUsername.Text = "Username";
             }
         }
-
         private void passwordboxPassword_GotFocus( object sender, RoutedEventArgs e ) {
-            textboxHelp.Text = "Password has between 8 and 30 characters.\n" +
-                               "Password contains atleast:\n" +
-                               @" - A special character: ~`!@#$%^&*()_-+={[}]|\:;'<,>.?/" + $"{'"'}\n" +
-                               " - A number: 0-9";
+            textboxHelp.Text = "Mật khẩu phải chứa từ 8 đến 30 ký tự.\n" +
+                               "Mật khẩu phải chứa:\n" +
+                               @" - 1 ký tự đặc biệt: ~`!@#$%^&*()_-+={[}]|\:;'<,>.?/" + $"{'"'}\n" +
+                               " - 1 chữ số: 0-9";
         }
-
+        private string DecodePassword( string encodedPassword ) {
+            byte[] passwordBytes = Convert.FromBase64String(encodedPassword);
+            Decoder utf8Decoder = new UTF8Encoding().GetDecoder();
+            char[] decodedPassword = new char[utf8Decoder.GetCharCount(passwordBytes, 0, passwordBytes.Length)];
+            utf8Decoder.GetChars(passwordBytes, 0, passwordBytes.Length, decodedPassword, 0);
+            return new string(decodedPassword);
+        }
     }
 }

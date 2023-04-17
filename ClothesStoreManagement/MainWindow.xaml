@@ -23,14 +23,15 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="buttonToDatabase_Click"
-            Content="To Database" />
-        <Label
-            Width="190"
-            Height="107"
-            Margin="87,181,0,0"
+            Content="Mở CSDL" />
+        <TextBlock
+            Width="177"
+            Height="153"
+            Margin="145,144,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Put Text or whatever here" />
+            FontSize="20"
+            TextWrapping="Wrap"><Run Text="Phần mềm quản lý:" /><LineBreak /><Run Text=" - Hàng hóa" /><LineBreak /><Run Text=" - Giao dịch" /><LineBreak /><Run Text=" - Nhân viên" /><LineBreak /><Run Text=" - Khách hàng" /></TextBlock>
         <Button
             x:Name="buttonLogin"
             Width="86"
@@ -39,17 +40,19 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="buttonLogin_Click"
-            Content="Login" />
+            Content="Đăng nhập" />
         <Label
             Name="labelAccountInfo"
             Width="346"
-            Height="37"
-            Margin="420,102,0,0"
+            Height="40"
+            Margin="420,99,0,0"
+            Padding="0,0,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Not logged in" FontSize="16" />
+            Content="Chưa đăng nhập"
+            FontSize="20" />
         <Button
             x:Name="buttonLogOut"
             Width="86"
@@ -58,7 +61,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="buttonLogOut_Click"
-            Content="Log Out" />
+            Content="Đăng xuất" />
         <Button
             x:Name="buttonManageAccount"
             Width="86"
@@ -67,6 +70,6 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="buttonManageAccount_Click"
-            Content="Account" />
+            Content="Tài khoản" />
     </Grid>
 </Window>

@@ -86,35 +86,39 @@ namespace ClothesStoreManagement {
         }
         public static bool IsUsernameValid( string username, DataRow[] data ) {
             if (username == string.Empty || username == "Username") {
-                MessageBox.Show("username is empty");
+                MessageBox.Show("Tên đăng nhập không được để trống", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
             if (username.Length > 75) {
-                MessageBox.Show("username too long");
+                MessageBox.Show("Tên đăng nhập quá dài", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
             foreach (var item in data)
                 if (username == item[1].ToString()) {
-                    MessageBox.Show("used username");
+                    MessageBox.Show("Tên này đã có người sử dụng", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                     return false;
                 }
             return true;
         }
         public static bool IsPasswordValid( string password ) { // for signing up
+            if (password == string.Empty) {
+                MessageBox.Show("Mật khẩu không được để trống", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                return false;
+            }
             if (password.Length < 8) {
-                MessageBox.Show("password too short");
+                MessageBox.Show("Mật khẩu quá ngắn", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
             if (password.Length > 30) {
-                MessageBox.Show("password too long");
+                MessageBox.Show("Mật khẩu quá dài", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
             if (password.IndexOfAny(new char[] { '~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '{', '[', '}', ']', '|', '\\', ':', ';', '\'', '"', '<', ',', '>', '.', '?', '/' }) == -1) {
-                MessageBox.Show("Must contain special character");
+                MessageBox.Show("Mật khẩu phải chứa ký tự đặc biệt", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
             if (password.IndexOfAny(new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' }) == -1) {
-                MessageBox.Show("Must contain number");
+                MessageBox.Show("Mật khẩu phải chứa số", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
             return true;
