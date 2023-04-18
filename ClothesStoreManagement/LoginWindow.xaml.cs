@@ -33,7 +33,7 @@ namespace ClothesStoreManagement {
             catch (Exception) {
                 if (connection.State != ConnectionState.Open) {
                     MessageBox.Show("Không thể kết nối với Cơ sở dữ liệu.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                    Close();
                 }
             }
         }
