@@ -36,10 +36,7 @@
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             FontSize="14"
-            Foreground="Gray"
             GotFocus="textboxUsername_GotFocus"
-            LostFocus="textboxUsername_LostFocus"
-            Text="Username"
             TextWrapping="Wrap" />
         <Label
             Name="labelUsername"

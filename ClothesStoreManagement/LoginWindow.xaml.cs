@@ -65,7 +65,7 @@ namespace ClothesStoreManagement {
             return false;
         }
         private void buttonLogin_Click( object sender, RoutedEventArgs e ) {
-            if (textboxUsername.Text == string.Empty || textboxUsername.Text == "Username") {
+            if (textboxUsername.Text == string.Empty) {
                 MessageBox.Show("Tên đăng nhập không được để trống", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
@@ -82,7 +82,7 @@ namespace ClothesStoreManagement {
             buttonLogin.IsEnabled = true;
             buttonSignUp.Margin = new Thickness(0, 290, 0, 0);
             buttonBack.Visibility = Visibility.Collapsed;
-            textboxUsername.Text = "Username";
+            textboxUsername.Text = string.Empty;
             passwordboxPassword.Password = string.Empty;
             this.Title = "Đăng nhập";
             labelTitle.Content = "ĐĂNG NHẬP";
@@ -93,7 +93,7 @@ namespace ClothesStoreManagement {
             buttonLogin.IsEnabled = false;
             buttonSignUp.Margin = new Thickness(0, 255, 0, 0);
             buttonBack.Visibility = Visibility.Visible;
-            textboxUsername.Text = "Username";
+            textboxUsername.Text = string.Empty;
             passwordboxPassword.Password = string.Empty;
             this.Title = "Đăng ký";
             labelTitle.Content = "ĐĂNG KÝ";
@@ -138,17 +138,7 @@ namespace ClothesStoreManagement {
             }
         }
         private void textboxUsername_GotFocus( object sender, RoutedEventArgs e ) {
-            if (textboxUsername.Text == "Username") {
-                textboxUsername.Foreground = new SolidColorBrush(Colors.Black);
-                textboxUsername.Text = string.Empty;
-            }
             textboxHelp.Text = "Tên đăng nhập không chứa quá 75 ký tự";
-        }
-        private void textboxUsername_LostFocus( object sender, RoutedEventArgs e ) {
-            if (textboxUsername.Text == string.Empty) {
-                textboxUsername.Foreground = new SolidColorBrush(Colors.Gray);
-                textboxUsername.Text = "Username";
-            }
         }
         private void passwordboxPassword_GotFocus( object sender, RoutedEventArgs e ) {
             textboxHelp.Text = "Mật khẩu phải chứa từ 8 đến 30 ký tự.\n" +

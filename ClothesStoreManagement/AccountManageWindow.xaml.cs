@@ -95,7 +95,7 @@ namespace ClothesStoreManagement {
             }
             else {
                 HideModifyMenu();
-                textboxUsername.Text = "Username";
+                textboxUsername.Text = string.Empty;
                 passwordboxPassword.Password = string.Empty;
                 passwordboxPasswordOld.Password = string.Empty;
             }
@@ -165,17 +165,7 @@ namespace ClothesStoreManagement {
             Close();
         }
         private void textboxUsername_GotFocus( object sender, RoutedEventArgs e ) {
-            if (textboxUsername.Text == "Username") {
-                textboxUsername.Foreground = new SolidColorBrush(Colors.Black);
-                textboxUsername.Text = string.Empty;
-            }
             textboxHelp.Text = "Tên đăng nhập không chứa quá 75 ký tự";
-        }
-        private void textboxUsername_LostFocus( object sender, RoutedEventArgs e ) {
-            if (textboxUsername.Text == string.Empty) {
-                textboxUsername.Foreground = new SolidColorBrush(Colors.Gray);
-                textboxUsername.Text = "Username";
-            }
         }
         private void passwordboxPassword_GotFocus( object sender, RoutedEventArgs e ) {
             textboxHelp.Text = "Mật khẩu phải chứa từ 8 đến 30 ký tự.\n" +
