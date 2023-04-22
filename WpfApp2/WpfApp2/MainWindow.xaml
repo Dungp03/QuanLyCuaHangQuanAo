@@ -1,0 +1,144 @@
+﻿<Window
+    x:Class="WpfApp2.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfApp2"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Quản lý cửa hàng quần áo"
+    Width="800"
+    Height="500"
+    Icon="76025ab26f0205cb97d206e9df3b20d5.jpg"
+    mc:Ignorable="d">
+    <Grid Background="LavenderBlush">
+        <TextBlock
+            Width="554"
+            Margin="146,114,93.6,318.4"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="28"
+            FontWeight="SemiBold"
+            Text="  QUẢN LÝ CỬA HÀNG BÁN QUẦN ÁO" />
+        <Menu
+            Width="Auto"
+            VerticalAlignment="Top"
+            Background="Lavender">
+            <MenuItem
+                x:Name="mnfile"
+                FontSize="16"
+                Header="Trang chủ">
+                <MenuItem
+                    Click="MenuItem_Click"
+                    FontSize="16"
+                    Header="Thoát" />
+
+
+            </MenuItem>
+            <MenuItem
+                x:Name="mndanhmuc"
+                FontSize="16"
+                Header="Danh mục">
+                <MenuItem
+                    x:Name="mnchatlieu"
+                    Click="mnchatlieu_Click"
+                    FontSize="16"
+                    Header="Chất liệu" />
+                <MenuItem
+                    x:Name="mnhanvien"
+                    Click="mnhanvien_Click"
+                    FontSize="16"
+                    Header="Nhân viên" />
+                <MenuItem
+                    x:Name="mnhanghoa"
+                    Click="mnhanghoa_Click"
+                    FontSize="16"
+                    Header="Hàng hóa" />
+                <MenuItem
+                    x:Name="mnkhachhang"
+                    Click="mnkhachhang_Click"
+                    FontSize="16"
+                    Header="Khách hàng" />
+            </MenuItem>
+            <MenuItem
+                x:Name="mnhoadon"
+                FontSize="16"
+                Header="Hóa đơn">
+                <MenuItem
+                    x:Name="mnhoadonban"
+                    Click="mnhoadonban_Click"
+                    FontSize="16"
+                    Header="Hóa đơn bán" />
+            </MenuItem>
+            <MenuItem
+                x:Name="mntimkiem"
+                FontSize="16"
+                Header="Tìm kiếm">
+                <MenuItem
+                    x:Name="mnhientimkiem"
+                    Click="mnhientimkiem_Click"
+                    FontSize="16"
+                    Header="Hóa đơn" />
+                <MenuItem
+                    x:Name="mnhang"
+                    Click="mnhang_Click"
+                    FontSize="16"
+                    Header="Hàng" />
+                <MenuItem
+                    x:Name="mntimkiemkhachhang"
+                    Click="mntimkiemkhachhang_Click"
+                    FontSize="16"
+                    Header="Khách hàng" />
+
+            </MenuItem>
+            <MenuItem
+                x:Name="mnbaocao"
+                FontSize="16"
+                Header="Báo cáo">
+                <MenuItem
+                    x:Name="mnhangton"
+                    FontSize="16"
+                    Header="Hàng tồn" />
+                <MenuItem
+                    x:Name="mndoanhthu"
+                    FontSize="16"
+                    Header="Doanh thu" />
+            </MenuItem>
+            <MenuItem
+                x:Name="mntrogiup"
+                FontSize="16"
+                Header="Trợ giúp">
+                <MenuItem
+                    x:Name="mnhientrogiup"
+                    Click="mnhientrogiup_Click"
+                    FontSize="16"
+                    Header="Trợ giúp" />
+
+            </MenuItem>
+            <Grid Width="57" Height="36" />
+
+        </Menu>
+        <Label
+            Width="128"
+            Height="50"
+            Margin="638,420,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="@Copyright nhom 1"
+            FontStyle="Oblique" />
+        <Image
+            Width="202"
+            Height="145"
+            Margin="146,246,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Source="ch.jpg" />
+        <Image
+            Width="200"
+            Height="145"
+            Margin="465,246,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Source="ch1.jpg" />
+    </Grid>
+</Window>
+

@@ -1,0 +1,91 @@
+﻿<Window
+    x:Class="WpfApp2.timkiemhoadon"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfApp2"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="frm_tkhd"
+    Title="Tìm Kiếm Hóa Đơn"
+    Width="800"
+    Height="450"
+    FontSize="16"
+    Loaded="frm_tkhd_Loaded"
+    mc:Ignorable="d">
+    <Grid Background="LavenderBlush">
+        <DataGrid
+            x:Name="grdttkhd"
+            Width="566"
+            Height="257"
+            Margin="0,163,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" />
+        <Label
+            Width="111"
+            Height="35"
+            Margin="34,52,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Mã hóa đơn" />
+        <TextBox
+            x:Name="mahoadon"
+            Width="240"
+            Height="35"
+            Margin="174,52,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            TextWrapping="Wrap" />
+        <Button
+            x:Name="timkiem"
+            Width="142"
+            Height="35"
+            Margin="610,198,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="LightPink"
+            Click="timkiem_Click"
+            Content="Tìm kiếm" />
+        <Button
+            x:Name="dong"
+            Width="142"
+            Height="42"
+            Margin="610,347,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="LightPink"
+            Click="dong_Click"
+            Content="Đóng" />
+        <Label
+            Width="433"
+            Height="41"
+            Margin="70,122,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Nhập mã vào hóa đơn để hiển thị thông tin chi tiết"
+            FontFamily="10"
+            FontStyle="Italic"
+            Foreground="Red" />
+        <Label
+            Width="207"
+            Height="81"
+            Margin="545,77,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Tìm kiếm hóa đơn"
+            FontSize="22"
+            FontWeight="DemiBold"
+            Foreground="Black" />
+        <Button
+            x:Name="thoattk"
+            Width="142"
+            Height="43"
+            Margin="610,268,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="LightPink"
+            Click="thoattk_Click"
+            Content="Thoát tìm kiếm"
+            RenderTransformOrigin="0.472,1.45" />
+
+    </Grid>
+</Window>

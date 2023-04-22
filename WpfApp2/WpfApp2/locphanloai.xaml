@@ -1,0 +1,61 @@
+﻿<Window
+    x:Class="WpfApp2.Window2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfApp2"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Window2"
+    Width="800"
+    Height="450"
+    Closed="Window_Closed"
+    mc:Ignorable="d">
+    <Grid>
+        <DataGrid
+            x:Name="grdtpl"
+            Width="789"
+            Height="261"
+            Margin="5,149,-0.4,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" />
+        <ComboBox
+            x:Name="phanloai"
+            Width="157"
+            Height="38"
+            Margin="152,76,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            SelectionChanged="phanloai_SelectionChanged">
+            <ComboBoxItem
+                Width="144"
+                HorizontalAlignment="Left"
+                Content="Mã Hàng" />
+            <ComboBoxItem
+                Width="144"
+                HorizontalAlignment="Left"
+                Content="Chất liệu" />
+            <ComboBoxItem
+                Width="144"
+                HorizontalAlignment="Left"
+                Content="Phân loại hàng" />
+        </ComboBox>
+        <Label
+            Width="65"
+            Height="39"
+            Margin="82,76,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Lọc"
+            FontSize="18" />
+        <Label
+            Width="325"
+            Height="38"
+            Margin="202,22,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            Content="Lọc phân loại hàng" />
+
+
+    </Grid>
+</Window>
