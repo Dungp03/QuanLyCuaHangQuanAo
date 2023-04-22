@@ -6,22 +6,22 @@
     xmlns:local="clr-namespace:ClothesStoreManagement"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Name="databaseWindow"
-    WindowStartupLocation="CenterOwner"
     Title="Cơ Sở Dữ Liệu"
-    Width="800"
-    Height="450"
+    Width="1020"
+    Height="500"
     ContentRendered="Window_ContentRendered"
     Loaded="Window_Loaded"
     ResizeMode="CanMinimize"
     SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Grid
         x:Name="grid"
-        Width="800"
-        Height="450" Margin="-2,-6,2,-10">
+        Width="1020"
+        Height="500">
         <DataGrid
             x:Name="dataView"
-            Margin="10,222,10,10"
+            Margin="10,250,10,10"
             d:ItemsSource="{d:SampleData ItemCount=2}"
             CanUserResizeColumns="False"
             IsReadOnly="True"
@@ -29,18 +29,20 @@
         <ComboBox
             Name="comboBoxSelectTable"
             Width="120"
-            Margin="639,185,0,0"
+            Margin="866,212,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             SelectionChanged="comboBoxSelectTable_SelectionChanged" />
         <Label
             Name="labelChooseTable"
-            Margin="639,164,0,0"
+            Height="22"
+            Margin="803,212,0,0"
+            Padding="0,0,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            Content="Chọn Bảng" Padding="0,0,0,0" />
+            Content="Chọn Bảng" />
         <TextBox
             Name="textboxMaChatLieu"
             Width="120"
@@ -492,40 +494,45 @@
             TextWrapping="Wrap" />
         <Button
             Name="buttonDelete"
-            Width="64"
-            Margin="419,187,0,0"
+            Width="81"
+            Height="25"
+            Margin="792,130,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="ActionButton_Click"
             Content="Xóa" />
         <Button
             x:Name="buttonModify"
-            Width="64"
-            Margin="232,187,0,0"
+            Width="81"
+            Height="25"
+            Margin="792,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="ActionButton_Click"
             Content="Sửa" />
         <Button
             x:Name="buttonInsert"
-            Width="64"
-            Margin="44,187,0,0"
+            Width="81"
+            Height="25"
+            Margin="792,20,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="ActionButton_Click"
             Content="Thêm" />
         <Button
             x:Name="buttonConfirm"
-            Width="64"
-            Margin="137,187,0,0"
+            Width="81"
+            Height="25"
+            Margin="792,20,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="EditingButton_Click"
             Content="Xác Nhận" />
         <Button
             x:Name="buttonCancel"
-            Width="64"
-            Margin="325,187,0,0"
+            Width="81"
+            Height="25"
+            Margin="792,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="EditingButton_Click"
@@ -533,7 +540,8 @@
         <Button
             x:Name="buttonConnect"
             Width="81"
-            Margin="515,187,0,0"
+            Height="25"
+            Margin="905,20,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="buttonConnect_Click"
@@ -541,10 +549,20 @@
         <Button
             x:Name="buttonDisconnect"
             Width="81"
-            Margin="515,187,0,0"
+            Height="25"
+            Margin="905,75,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="buttonDisconnect_Click"
             Content="Ngắt Kết Nối" />
+        <Button
+            x:Name="buttonSearch"
+            Width="81"
+            Height="25"
+            Margin="905,130,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="buttonSearch_Click"
+            Content="Tìm kiếm" />
     </Grid>
 </Window>

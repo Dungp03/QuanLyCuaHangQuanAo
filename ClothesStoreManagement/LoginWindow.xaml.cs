@@ -65,6 +65,7 @@ namespace ClothesStoreManagement {
             return false;
         }
         private void buttonLogin_Click( object sender, RoutedEventArgs e ) {
+            textboxUsername.Text = textboxUsername.Text.Trim();
             if (textboxUsername.Text == string.Empty) {
                 MessageBox.Show("Tên đăng nhập không được để trống", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
@@ -81,6 +82,8 @@ namespace ClothesStoreManagement {
         private void EnableLogInMode() {
             buttonLogin.IsEnabled = true;
             buttonSignUp.Margin = new Thickness(0, 290, 0, 0);
+            buttonSignUp.IsDefault = false;
+            buttonLogin.IsDefault = true;
             buttonBack.Visibility = Visibility.Collapsed;
             textboxUsername.Text = string.Empty;
             passwordboxPassword.Password = string.Empty;
@@ -92,6 +95,8 @@ namespace ClothesStoreManagement {
         private void EnableSignUpMode() {
             buttonLogin.IsEnabled = false;
             buttonSignUp.Margin = new Thickness(0, 255, 0, 0);
+            buttonSignUp.IsDefault = true;
+            buttonLogin.IsDefault = false;
             buttonBack.Visibility = Visibility.Visible;
             textboxUsername.Text = string.Empty;
             passwordboxPassword.Password = string.Empty;
@@ -114,6 +119,7 @@ namespace ClothesStoreManagement {
                     EnableSignUpMode();
                 }
                 else { // is signing up
+                    textboxUsername.Text = textboxUsername.Text.Trim();
                     if (!Utils.IsUsernameValid(textboxUsername.Text, data)) {
                         textboxUsername.Focus();
                         return;
@@ -145,6 +151,9 @@ namespace ClothesStoreManagement {
                                "Mật khẩu phải chứa:\n" +
                                @" - 1 ký tự đặc biệt: ~`!@#$%^&*()_-+={[}]|\:;'<,>.?/" + $"{'"'}\n" +
                                " - 1 chữ số: 0-9";
+        }
+        private void loginWindow_Closed( object sender, EventArgs e ) {
+            mainWindow.loginWindow = null;
         }
     }
 }

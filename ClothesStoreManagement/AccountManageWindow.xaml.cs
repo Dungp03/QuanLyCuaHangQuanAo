@@ -111,7 +111,7 @@ namespace ClothesStoreManagement {
         private void buttonConfirm_Click( object sender, RoutedEventArgs e ) {
             try {
                 if (isModifyingUsername) {
-                    string newUsername = textboxUsername.Text;
+                    string newUsername = textboxUsername.Text.Trim();
                     if (!Utils.IsUsernameValid(newUsername, data)) {
                         textboxUsername.Focus();
                         return;

@@ -14,7 +14,6 @@ namespace ClothesStoreManagement {
         }
 
         public SqlConnection connection = new SqlConnection();
-        private MainWindow mainWindow = (MainWindow) Application.Current.MainWindow;
         private Table? CurrentTable = null;
         private bool IsNew = false;
 
@@ -25,8 +24,12 @@ namespace ClothesStoreManagement {
         }
         private void Window_ContentRendered( object sender, EventArgs e ) {
             ConnectToDatabase();
-            foreach (Table table in Enum.GetValues(typeof(Table)))
-                comboBoxSelectTable.Items.Add(table);
+            comboBoxSelectTable.Items.Add("Chất liệu");
+            comboBoxSelectTable.Items.Add("Chi tiết hóa đơn");
+            comboBoxSelectTable.Items.Add("Hóa đơn bán");
+            comboBoxSelectTable.Items.Add("Khách hàng");
+            comboBoxSelectTable.Items.Add("Nhân viên");
+            comboBoxSelectTable.Items.Add("Sản phẩm");
             LoadData();
             Utils.DisableAllFields();
         }
@@ -37,8 +40,9 @@ namespace ClothesStoreManagement {
             connection.Close();
             Utils.HideAllMenu();
             Utils.HideButtons();
-            buttonConnect.Visibility = Visibility.Visible;
             buttonConnect.IsEnabled = true;
+            buttonDisconnect.IsEnabled = false;
+            buttonSearch.Visibility = Visibility.Collapsed;
             comboBoxSelectTable.IsEnabled = false;
             comboBoxSelectTable.SelectedIndex = -1;
             dataView.ItemsSource = null;
@@ -49,17 +53,15 @@ namespace ClothesStoreManagement {
             try {
                 connection.Open();
                 if (connection.State == ConnectionState.Open) {
-                    buttonConnect.Visibility = Visibility.Collapsed;
                     buttonConnect.IsEnabled = false;
-                    buttonDisconnect.Visibility = Visibility.Visible;
                     buttonDisconnect.IsEnabled = true;
                     comboBoxSelectTable.IsEnabled = true;
+                    buttonSearch.Visibility = Visibility.Visible;
                 }
             }
             catch (Exception) {
                 if (connection.State != ConnectionState.Open) {
                     MessageBox.Show("Không thể kết nối với Cơ sở dữ liệu.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Information);
-                    buttonConnect.Visibility = Visibility.Visible;
                     comboBoxSelectTable.IsEnabled = false;
                 }
             }
@@ -75,6 +77,7 @@ namespace ClothesStoreManagement {
             DataSet dataSet = new DataSet();
             sqlDataAdapter.Fill(dataSet);
             DataTable dataTable = dataSet.Tables[0];
+            //MessageBox.Show(dataTable.Rows[0][0].ToString());
             dataView.ItemsSource = dataTable.DefaultView;
             // stretch table to fit datagrid
             foreach (var column in dataView.Columns) {
@@ -82,7 +85,6 @@ namespace ClothesStoreManagement {
             }
         }
         private void comboBoxSelectTable_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
-            //MessageBox.Show(Table.KhachHang.ToString() );
             if (comboBoxSelectTable.SelectedIndex == -1)
                 return;
             Utils.ChangeButtonState(false);
@@ -139,6 +141,17 @@ namespace ClothesStoreManagement {
             Utils.ChangeButtonState(false);
             Utils.DisableAllFields();
             IsNew = false;
+        }
+        private void buttonSearch_Click( object sender, RoutedEventArgs e ) {
+            try {
+                SearchWindow searchWindow = new SearchWindow {
+                    Owner = this,
+                };
+                searchWindow.ShowDialog();
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

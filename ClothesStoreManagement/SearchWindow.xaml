@@ -1,0 +1,58 @@
+﻿<Window
+    x:Class="ClothesStoreManagement.SearchWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClothesStoreManagement"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="SearchWindow"
+    Width="1020"
+    Height="500"
+    ResizeMode="CanMinimize"
+    SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d" Loaded="Window_Loaded" ContentRendered="Window_ContentRendered">
+    <Grid Width="1020" Height="500">
+        <DataGrid
+            x:Name="dataView"
+            Margin="10,250,10,10"
+            d:ItemsSource="{d:SampleData ItemCount=2}"
+            CanUserResizeColumns="False"
+            IsReadOnly="True" />
+        <ComboBox
+            x:Name="comboBoxSelectSearch"
+            Width="120"
+            Margin="34,60,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            SelectionChanged="comboBoxSelectSearch_SelectionChanged" />
+        <Button
+            x:Name="buttonConnect"
+            Width="81"
+            Height="25"
+            Margin="905,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="buttonConnect_Click"
+            Content="Kết Nối" />
+        <Button
+            x:Name="buttonDisconnect"
+            Width="81"
+            Height="25"
+            Margin="905,75,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Click="buttonDisconnect_Click"
+            Content="Ngắt Kết Nối" />
+        <Label
+            x:Name="labelChooseData"
+            Height="22"
+            Margin="34,33,0,0"
+            Padding="0,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Content="Chọn Dữ Liệu" />
+    </Grid>
+</Window>

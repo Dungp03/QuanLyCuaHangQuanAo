@@ -21,15 +21,18 @@ namespace ClothesStoreManagement {
             buttonLogin.Visibility = Visibility.Visible;
         }
         public void LoggedInState( bool _isLoggedIn, string username ) {
-            isLoggedIn = _isLoggedIn;
-            buttonToDatabase.IsEnabled = _isLoggedIn;
-            buttonLogOut.IsEnabled = _isLoggedIn;
-            buttonLogOut.Visibility = _isLoggedIn ? Visibility.Visible : Visibility.Collapsed;
-            buttonManageAccount.IsEnabled = _isLoggedIn;
-            buttonManageAccount.Visibility = _isLoggedIn ? Visibility.Visible : Visibility.Collapsed;
-            buttonLogin.IsEnabled = !_isLoggedIn;
-            currentUsername = username;
-            labelAccountInfo.Content = username;
+            isLoggedIn
+                = buttonToDatabase.IsEnabled
+                = buttonToDatabase.IsDefault
+                = buttonLogOut.IsEnabled
+                = buttonManageAccount.IsEnabled
+                = _isLoggedIn;
+            buttonLogOut.Visibility = buttonManageAccount.Visibility
+                = _isLoggedIn ? Visibility.Visible : Visibility.Collapsed;
+            buttonLogin.IsEnabled
+                = buttonLogin.IsDefault
+                = !_isLoggedIn;
+            currentUsername = (string) ( labelAccountInfo.Content = username );
         }
         private void buttonLogOut_Click( object sender, RoutedEventArgs e ) {
             LoggedInState(false, "Chưa đăng nhập");
