@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Controls;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
+using System.Windows.Controls;
+
 namespace WpfApp2 {
     /// <summary>fv=
     /// Interaction logic for nhanvien.xaml
@@ -29,23 +30,20 @@ namespace WpfApp2 {
             grdtnv.ItemsSource = dataTable.DefaultView;
         }
 
-        private void frm_nhanvien_Loaded( object sender, RoutedEventArgs e ) {
-            ConnectionStr = @"Data Source=.\PHUONGNGU;Initial Catalog=qlchh;Integrated Security=True;";
-            conn.ConnectionString = ConnectionStr;
-            conn.Open();
-
-            napdulieu();
-        }
-
         private void nv_them_Click( object sender, RoutedEventArgs e ) {
-            string sqlStr = "";
-            string selectedContent = ( gt.SelectedItem as ComboBoxItem ).Content.ToString();
+            try {
+                string sqlStr = "";
 
-            sqlStr = "Insert Into tblnhanvien(MaNhanVien,TenNhanVien,GioiTinh,DiaChi,DienThoai,NgaySinh)values('" + manv.Text + "','" +
-            tennv.Text + "','" + selectedContent + "','" + diachi.Text + "','" + sodt.Text + "','" + ngaysinh.Text + "')";
-            SqlCommand cmd = new SqlCommand(sqlStr, conn);
-            cmd.ExecuteNonQuery();
-            napdulieu();
+
+                sqlStr = "Insert Into tblnhanvien(MaNhanVien,TenNhanVien,GioiTinh,DiaChi,DienThoai,NgaySinh)values('" + manv.Text + "','" +
+                tennv.Text + "','" + gt.Text + "','" + diachi.Text + "','" + sodt.Text + "','" + ngaysinh.Text + "')";
+                SqlCommand cmd = new SqlCommand(sqlStr, conn);
+                cmd.ExecuteNonQuery();
+                napdulieu();
+            }
+            catch (Exception) {
+                MessageBox.Show("Không hợp lệ, nhập lại!!!");
+            }
             lammoi_Click(sender, e);
         }
 
@@ -100,16 +98,18 @@ namespace WpfApp2 {
                 ID = row[0].ToString();
                 manv.Text = row[0].ToString();
                 tennv.Text = row[1].ToString();
-                ComboBoxItem selected = gt.SelectedItem as ComboBoxItem;
-                if (selected != null) {
+                /*ComboBoxItem selected = gt.SelectedItem as ComboBoxItem;
+                if (selected != null)
+                {
                     // Thiết lập giá trị của ComboBoxItem
                     selected.Content = row[2].ToString();
-                }
+                }*/
+                gt.Text = row[2].ToString();
                 diachi.Text = row[3].ToString();
                 sodt.Text = row[4].ToString();
                 ngaysinh.Text = row[5].ToString();
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("ERROR");
             }
         }
@@ -126,16 +126,17 @@ namespace WpfApp2 {
                 cmd.ExecuteNonQuery();
                 napdulieu();
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("ERROR");
             }
         }
 
         private void lammoi_Click( object sender, RoutedEventArgs e ) {
-            string selectedContent = "";
-            if (gt.SelectedItem is ComboBoxItem comboBoxItem) {
-                selectedContent = comboBoxItem.Content.ToString();
-            }
+            // string selectedContent = "";
+            /*   if (gt.SelectedItem is ComboBoxItem comboBoxItem)
+               {
+                   selectedContent = comboBoxItem.Content.ToString();
+               } */
             manv.Text = "";
             tennv.Text = "";
             gt.Text = "";
@@ -143,5 +144,14 @@ namespace WpfApp2 {
             diachi.Text = "";
             ngaysinh.Text = "";
         }
+
+        private void frm_nhanvien_Loaded_1( object sender, RoutedEventArgs e ) {
+            ConnectionStr = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True;";
+            conn.ConnectionString = ConnectionStr;
+            conn.Open();
+
+            napdulieu();
+        }
     }
 }
+

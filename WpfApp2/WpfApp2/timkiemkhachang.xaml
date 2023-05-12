@@ -29,7 +29,8 @@
             Height="232"
             Margin="0,188,0,0"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top" />
+            VerticalAlignment="Top"
+            IsReadOnly="True" />
         <Label
             Width="183"
             Height="35"

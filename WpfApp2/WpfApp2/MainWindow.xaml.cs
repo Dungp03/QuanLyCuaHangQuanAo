@@ -56,11 +56,11 @@ namespace WpfApp2 {
             if (result == MessageBoxResult.Yes) {
                 // Thực hiện hành động khi người dùng chọn Yes
                 this.Close();
+                Environment.Exit(0);
             }
             else {
                 // Thực hiện hành động khi người dùng chọn No
             }
-            Environment.Exit(0);
         }
 
         private void mnhientrogiup_Click( object sender, RoutedEventArgs e ) {
@@ -68,6 +68,18 @@ namespace WpfApp2 {
             trogiup tg = new trogiup();
             tg.Show();
             this.Close();
+        }
+
+
+        private void mnhangton_Click( object sender, RoutedEventArgs e ) {
+            hangton ht = new hangton();
+            ht.ShowDialog();
+
+        }
+        private void mndoanhso_Click( object sender, RoutedEventArgs e ) {
+            doanhso ht = new doanhso();
+            ht.ShowDialog();
+
         }
     }
 }

@@ -11,6 +11,7 @@
     Height="450"
     FontSize="14"
     Loaded="frm_hoadon_Loaded"
+    SizeToContent="WidthAndHeight"
     mc:Ignorable="d">
     <Grid Background="LavenderBlush">
         <DataGrid
@@ -20,81 +21,82 @@
             Margin="0,247,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
+            IsReadOnly="True"
             SelectionChanged="grdthd_SelectionChanged" />
         <Label
-            Width="91"
-            Height="27"
+            Width="120"
+            Height="35"
             Margin="10,10,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Mã hóa đơn" />
         <Label
-            Width="73"
-            Height="25"
-            Margin="10,57,0,0"
+            Width="120"
+            Height="35"
+            Margin="10,59,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Ngày bán" />
         <Label
-            Width="96"
-            Height="42"
-            Margin="10,103,0,0"
+            Width="120"
+            Height="35"
+            Margin="0,105,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Tên nhân viên" />
         <Label
-            Width="73"
-            Height="42"
+            Width="120"
+            Height="35"
             Margin="10,150,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Mã hàng" />
         <Label
-            Width="73"
-            Height="27"
+            Width="120"
+            Height="35"
             Margin="10,197,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Số lượng" />
         <Label
-            Width="100"
-            Height="42"
+            Width="120"
+            Height="35"
             Margin="294,14,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Tên khách hàng" />
         <Label
-            Width="84"
-            Height="25"
-            Margin="294,103,0,0"
+            Width="120"
+            Height="35"
+            Margin="294,56,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="SDT" />
         <Label
-            Width="105"
-            Height="26"
-            Margin="294,60,0,0"
+            Width="120"
+            Height="35"
+            Margin="294,103,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Địa chỉ" />
         <Label
-            Width="76"
-            Height="46"
-            Margin="223,146,0,0"
+            Width="120"
+            Height="35"
+            Margin="274,151,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Tên hàng" />
         <Label
-            Width="64"
-            Height="42"
-            Margin="490,150,0,0"
+            Width="120"
+            Height="35"
+            Margin="274,197,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Đơn giá" />
         <Label
-            Width="87"
-            Height="45"
-            Margin="223,197,0,0"
+            Width="120"
+            Height="35"
+            Margin="508,196,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Thành tiền" />
@@ -121,7 +123,7 @@
         <Button
             x:Name="hd_xoa"
             Width="64"
-            Height="38"
+            Height="33"
             Margin="696,306,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -131,9 +133,9 @@
             RenderTransformOrigin="0.541,0.773" />
         <Button
             x:Name="hd_dong"
-            Width="64"
-            Height="35"
-            Margin="599,364,0,0"
+            Width="161"
+            Height="33"
+            Margin="599,359,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Background="LightPink"
@@ -142,122 +144,139 @@
             RenderTransformOrigin="-0.251,0.668" />
         <TextBox
             x:Name="hd_mahd"
-            Width="153"
-            Height="27"
+            Width="120"
+            Height="35"
             Margin="106,14,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
-        <TextBox
+        <DatePicker
             x:Name="hd_ngay"
-            Width="153"
-            Height="25"
-            Margin="106,61,0,0"
+            Width="120"
+            Height="35"
+            Margin="106,60,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            TextWrapping="Wrap" />
+            SelectedDateChanged="hd_ngay_SelectedDateChanged" />
+
         <TextBox
             x:Name="hd_nhanvien"
-            Width="153"
-            Height="27"
+            Width="120"
+            Height="35"
             Margin="106,103,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
         <TextBox
             x:Name="hd_tenkh"
-            Width="178"
-            Height="23"
-            Margin="399,14,0,0"
+            Width="120"
+            Height="35"
+            Margin="418,14,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
         <TextBox
             x:Name="sdt"
-            Width="178"
-            Height="25"
-            Margin="399,105,0,0"
+            Width="120"
+            Height="35"
+            Margin="418,56,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
         <TextBox
             x:Name="hd_diachi"
-            Width="178"
-            Height="27"
-            Margin="399,59,0,0"
+            Width="120"
+            Height="35"
+            Margin="418,102,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
         <TextBox
             x:Name="hd_mahang"
-            Width="128"
-            Height="22"
-            Margin="90,150,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            TextWrapping="Wrap" />
-        <TextBox
-            x:Name="hd_sl"
-            Width="128"
-            Height="25"
-            Margin="90,197,0,0"
+            Width="120"
+            Height="35"
+            Margin="106,151,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
         <TextBox
             x:Name="hd_tenhang"
-            Width="170"
-            Height="22"
-            Margin="299,150,0,0"
+            Width="120"
+            Height="35"
+            Margin="355,150,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
+        <TextBox
+            x:Name="hd_sl"
+            Width="120"
+            Height="35"
+            Margin="106,207,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            TextWrapping="Wrap" />
+
         <TextBox
             x:Name="hd_dongia"
-            Width="130"
-            Height="22"
-            Margin="590,150,0,0"
+            Width="120"
+            Height="35"
+            Margin="355,200,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            TextWrapping="Wrap" />
+            RenderTransformOrigin="0.5,0.5"
+            TextChanged="hd_dongia_TextChanged"
+            TextWrapping="Wrap">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform Angle="-0.133" />
+                    <TranslateTransform />
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
         <TextBox
             x:Name="hd_thanhtien"
-            Width="165"
-            Height="25"
-            Margin="299,197,0,0"
+            Width="131"
+            Height="40"
+            Margin="622,194,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            TextWrapping="Wrap" />
+            RenderTransformOrigin="0.5,0.5"
+            TextWrapping="Wrap">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform Angle="0.104" />
+                    <TranslateTransform />
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
         <Label
-            Width="87"
-            Height="27"
-            Margin="490,197,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Tổng tiền"
-            RenderTransformOrigin="-0.1,2.938" />
-        <TextBox
-            x:Name="hd_tong"
-            Width="130"
-            Height="27"
-            Margin="590,195,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            TextWrapping="Wrap" />
-        <Label
-            Width="170"
-            Height="44"
-            Margin="599,57,0,0"
+            Width="172"
+            Height="70"
+            Margin="596,74,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Thông tin hóa đơn"
             FontSize="16"
             FontStyle="Normal"
-            FontWeight="Bold" />
+            FontWeight="Bold"
+            RenderTransformOrigin="0.5,0.5">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform Angle="0.249" />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
         <Button
             x:Name="hd_lammoi"
             Width="64"
-            Height="40"
+            Height="33"
             Margin="599,304,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"

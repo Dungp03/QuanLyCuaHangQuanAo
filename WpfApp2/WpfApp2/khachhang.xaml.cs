@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Controls;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace WpfApp2 {
     /// <summary>
@@ -30,7 +30,7 @@ namespace WpfApp2 {
         }
 
         private void Window_Loaded( object sender, RoutedEventArgs e ) {
-            ConnectionStr = @"Data Source=.\PHUONGNGU;Initial Catalog=qlchh;Integrated Security=True;";
+            ConnectionStr = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True;";
             conn.ConnectionString = ConnectionStr;
             conn.Open();
 
@@ -45,7 +45,7 @@ namespace WpfApp2 {
                 cmd.ExecuteNonQuery();
                 napdulieu();
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("Không hợp lệ, nhập lại!!!");
             }
             kh_lammoi_Click(sender, e);
@@ -59,7 +59,7 @@ namespace WpfApp2 {
                 cmd.ExecuteNonQuery();
                 napdulieu();
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("ERROR!!!");
             }
             kh_lammoi_Click(sender, e);
@@ -73,7 +73,7 @@ namespace WpfApp2 {
                 cmd.ExecuteNonQuery();
                 napdulieu();
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("ERROR!!!");
             }
         }
@@ -108,7 +108,7 @@ namespace WpfApp2 {
                 kh_dc.Text = row[2].ToString();
                 kh_sdt.Text = row[3].ToString();
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("ERROR!!!");
             }
         }

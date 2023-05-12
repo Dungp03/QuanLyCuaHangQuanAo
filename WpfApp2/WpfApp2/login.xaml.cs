@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Input;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
+using System.Windows.Input;
+
 namespace WpfApp2 {
     /// <summary>
     /// Interaction logic for login.xaml
@@ -10,15 +11,13 @@ namespace WpfApp2 {
     public partial class login : Window {
         SqlConnection conn = new SqlConnection();
         string ConnectionStrin = "";
-        DataTable dataTable = null;
+
         public login() {
             InitializeComponent();
         }
 
-
-
         private void dangnhap_Click( object sender, RoutedEventArgs e ) {
-            ConnectionStrin = @"Data Source=.\PHUONGNGU;Initial Catalog=qlchh;Integrated Security=True;";
+            ConnectionStrin = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True;";
             conn.ConnectionString = ConnectionStrin;
             if (conn.State == ConnectionState.Closed) {
                 conn.Open();

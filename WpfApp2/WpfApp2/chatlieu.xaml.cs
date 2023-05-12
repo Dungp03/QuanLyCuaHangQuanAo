@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Controls;
 using System.Data;
 using System.Data.SqlClient;
-
+using System.Windows;
+using System.Windows.Controls;
 
 namespace WpfApp2 {
     /// <summary>
@@ -32,7 +31,7 @@ namespace WpfApp2 {
         }
 
         private void frm_chatlieu_Loaded( object sender, RoutedEventArgs e ) {
-            ConnectionStrin = @"Data Source=.\PHUONGNGU;Initial Catalog=qlchh;Integrated Security=True;";
+            ConnectionStrin = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True;";
             conn.ConnectionString = ConnectionStrin;
             conn.Open();
 
@@ -48,9 +47,10 @@ namespace WpfApp2 {
                 cmd.ExecuteNonQuery();
                 napdulieu();
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("Mã chất liệu không hợp lệ, nhập lại!!!");
             }
+            bt_lammoi_Click(sender, e);
 
         }
 
@@ -63,9 +63,10 @@ namespace WpfApp2 {
                 cmd.ExecuteNonQuery();
                 napdulieu();
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("ERROR!!!");
             }
+            bt_lammoi_Click(sender, e);
         }
 
         private void bt_xoa_Click( object sender, RoutedEventArgs e ) {
@@ -76,9 +77,11 @@ namespace WpfApp2 {
                 cmd.ExecuteNonQuery();
                 napdulieu();
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("ERROR!!!");
             }
+            bt_lammoi_Click(sender, e);
+
         }
 
 
@@ -104,7 +107,7 @@ namespace WpfApp2 {
                 txt_machatlieu.Text = row[0].ToString();
                 txt_tenchatlieu.Text = row[1].ToString();
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("ERROR!!!");
             }
         }

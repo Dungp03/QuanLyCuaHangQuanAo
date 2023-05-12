@@ -1,14 +1,14 @@
-﻿using System.Windows;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
+
 namespace WpfApp2 {
     /// <summary>
     /// Interaction logic for timkiemhang.xaml
     /// </summary>
     public partial class timkiemhang : Window {
-        SqlConnection conn = new SqlConnection();
+        readonly SqlConnection conn = new SqlConnection();
         string ConnectionStrin = "";
-        string selectedID = "";
         DataTable dataTable = null;
         public timkiemhang() {
             InitializeComponent();
@@ -19,7 +19,7 @@ namespace WpfApp2 {
             if (conn.State != ConnectionState.Open) {
                 return;
             }
-            string sqlStr = "Select * from tblhang";
+            string sqlStr = "Select MaHang, TenHang,MaChatLieu, SoLuong, DonGiaNhap, DonGiaBan, GhiChu,CONVERT(varchar, ngaynhap, 103) AS ngaynhap from tblhang";
             SqlDataAdapter adapter = new SqlDataAdapter(sqlStr, conn);
             DataSet dataSet = new DataSet();
             adapter.Fill(dataSet, "tblhang");
@@ -28,7 +28,7 @@ namespace WpfApp2 {
         }
 
         private void Window_Loaded( object sender, RoutedEventArgs e ) {
-            ConnectionStrin = @"Data Source=.\PHUONGNGU;Initial Catalog=qlchh;Integrated Security=True;";
+            ConnectionStrin = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True;";
             conn.ConnectionString = ConnectionStrin;
             conn.Open();
 

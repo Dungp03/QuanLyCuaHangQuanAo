@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Controls;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
+using System.Windows.Controls;
+
 namespace WpfApp2 {
     /// <summary>
     /// Interaction logic for hanghoa.xaml
@@ -20,7 +21,7 @@ namespace WpfApp2 {
             if (conn.State != ConnectionState.Open) {
                 return;
             }
-            string sqlStr = "Select * from tblhang";
+            string sqlStr = "Select MaHang, TenHang,MaChatLieu, SoLuong, DonGiaNhap, DonGiaBan, GhiChu,CONVERT(varchar, ngaynhap, 103) AS ngaynhap from tblhang";
             SqlDataAdapter adapter = new SqlDataAdapter(sqlStr, conn);
             DataSet dataSet = new DataSet();
             adapter.Fill(dataSet, "tblhang");
@@ -31,14 +32,14 @@ namespace WpfApp2 {
         private void h_them_Click( object sender, RoutedEventArgs e ) {
             try {
                 string sqlStr = "";
-                sqlStr = "Insert Into tblhang(MaHang, TenHang,MaChatLieu, SoLuong, DonGiaNhap, DonGiaBan, GhiChu)values" +
+                sqlStr = "Insert Into tblhang(MaHang, TenHang,MaChatLieu, SoLuong, DonGiaNhap, DonGiaBan, GhiChu,ngaynhap)values" +
                     "('" + mahang.Text + "','" + tenhang.Text + "', '" + machatlieu.Text + "'" +
-                    ",'" + soluong.Text + "','" + dongianhap.Text + "','" + dongia.Text + "','" + ghichu.Text + "')";
+                    ",'" + soluong.Text + "','" + dongianhap.Text + "','" + dongia.Text + "','" + ghichu.Text + "','" + ngaynhap.SelectedDate + "')";
                 SqlCommand cmd = new SqlCommand(sqlStr, conn);
                 cmd.ExecuteNonQuery();
                 napdulieu();
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("Không hợp lệ, nhập lại!!!");
             }
             h_lammoi_Click(sender, e);
@@ -47,12 +48,12 @@ namespace WpfApp2 {
         private void h_sua_Click( object sender, RoutedEventArgs e ) {
             try {
                 string sqlStr = "";
-                sqlStr = "Update tblhang Set MaHang ='" + mahang.Text + "', TenHang = '" + tenhang.Text + "', MaChatLieu = '" + machatlieu.Text + "', SoLuong = '" + soluong.Text + "', DonGiaNhap = '" + dongianhap.Text + "', DonGiaBan = '" + dongia.Text + "',GhiChu = '" + ghichu.Text + "' where MaHang = '" + selectedID + "'";
+                sqlStr = "Update tblhang Set MaHang ='" + mahang.Text + "', TenHang = '" + tenhang.Text + "', MaChatLieu = '" + machatlieu.Text + "', SoLuong = '" + soluong.Text + "', DonGiaNhap = '" + dongianhap.Text + "', DonGiaBan = '" + dongia.Text + "',GhiChu = '" + ghichu.Text + "',ngaynhap = '" + ngaynhap.SelectedDate + "' where MaHang = '" + selectedID + "'";
                 SqlCommand cmd = new SqlCommand(sqlStr, conn);
                 cmd.ExecuteNonQuery();
                 napdulieu();
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("ERROR!!!");
             }
         }
@@ -65,7 +66,7 @@ namespace WpfApp2 {
                 cmd.ExecuteNonQuery();
                 napdulieu();
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("ERROR!!!");
             }
         }
@@ -78,6 +79,7 @@ namespace WpfApp2 {
             dongianhap.Text = "";
             dongia.Text = "";
             ghichu.Text = "";
+            ngaynhap.Text = "";
 
         }
 
@@ -105,19 +107,35 @@ namespace WpfApp2 {
                 dongianhap.Text = row[4].ToString();
                 dongia.Text = row[5].ToString();
                 ghichu.Text = row[6].ToString();
+                ngaynhap.Text = row[7].ToString();
 
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 MessageBox.Show("ERROR!!!");
             }
         }
 
+        private void addmachatlieu() {
+            string sql = "select ID from tblchatlieu";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read()) {
+                string machatlieuu = reader.GetString(0);
+                string s = machatlieuu.ToString();
+                ComboBoxItem item = new ComboBoxItem();
+                item.Content = s;
+                machatlieu.Items.Add(item);
+            }
+        }
+
         private void frm_hanghoa_Loaded( object sender, RoutedEventArgs e ) {
-            ConnectionStrin = @"Data Source=.\PHUONGNGU;Initial Catalog=qlchh;Integrated Security=True;";
+            ConnectionStrin = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True;";
             conn.ConnectionString = ConnectionStrin;
             conn.Open();
 
             napdulieu();
+            addmachatlieu();
         }
     }
 }

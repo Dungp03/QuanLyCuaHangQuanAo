@@ -58,6 +58,7 @@
             Height="NaN"
             Margin="10,136,9.6,10"
             Background="LightPink"
+            IsReadOnly="True"
             SelectionChanged="grdt_SelectionChanged" />
         <Button
             x:Name="bt_them"

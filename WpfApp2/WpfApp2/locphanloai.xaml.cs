@@ -1,26 +1,41 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Data;
 using System.Data.SqlClient;
 
 
 
-namespace WpfApp2 {
+namespace WpfApp2
+{
     /// <summary>
     /// Interaction logic for Window2.xaml
     /// </summary>
-    public partial class Window2 : Window {
+    public partial class Window2 : Window
+    {
         SqlConnection conn = new SqlConnection();
         string ConnectionStrin = "";
         string selectedID = "";
         DataTable dataTable = null;
-        public Window2() {
+        public Window2()
+        {
             InitializeComponent();
         }
-        private void napdulieu() {
+        private void napdulieu()
+        {
             grdtpl.ItemsSource = null;
-            if (conn.State != ConnectionState.Open) {
+            if (conn.State != ConnectionState.Open)
+            {
                 return;
             }
             string sqlStr = "Select * from tblhang";
@@ -30,11 +45,13 @@ namespace WpfApp2 {
             dataTable = dataSet.Tables["tblhang"];
             grdtpl.ItemsSource = dataTable.DefaultView;
         }
-        private void phanloai_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
+        private void phanloai_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
         }
 
-        private void Window_Closed( object sender, EventArgs e ) {
+        private void Window_Closed(object sender, EventArgs e)
+        {
             ConnectionStrin = @"Data Source=.\PHUONGNGU;Initial Catalog=qlch;Integrated Security=True;";
             conn.ConnectionString = ConnectionStrin;
             conn.Open();

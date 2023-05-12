@@ -58,6 +58,12 @@
     <Compile Include="chatlieu.xaml.cs">
       <DependentUpon>chatlieu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="doanhso.xaml.cs">
+      <DependentUpon>doanhso.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="hangton.xaml.cs">
+      <DependentUpon>hangton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="login.xaml.cs">
       <DependentUpon>login.xaml</DependentUpon>
     </Compile>
@@ -70,13 +76,18 @@
     <Compile Include="timkiemkhachang.xaml.cs">
       <DependentUpon>timkiemkhachang.xaml</DependentUpon>
     </Compile>
-    <Compile Include="locphanloai.xaml.cs">
-      <DependentUpon>locphanloai.xaml</DependentUpon>
-    </Compile>
     <Compile Include="trogiup.xaml.cs">
       <DependentUpon>trogiup.xaml</DependentUpon>
     </Compile>
+    <Page Include="doanhso.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="hanghoa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="hangton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -130,10 +141,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="timkiemkhachang.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="locphanloai.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

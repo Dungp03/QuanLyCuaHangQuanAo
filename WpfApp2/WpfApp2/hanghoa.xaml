@@ -16,7 +16,8 @@
         <DataGrid
             x:Name="grdth"
             Height="NaN"
-            Margin="10,263,191.6,10"
+            Margin="0,247,191.6,10"
+            IsReadOnly="True"
             SelectionChanged="dtgrh_SelectionChanged" />
         <Label
             Width="84"
@@ -35,42 +36,42 @@
         <Label
             Width="89"
             Height="28"
-            Margin="10,125,0,0"
+            Margin="0,125,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Mã chất liệu" />
         <Label
             Width="88"
             Height="34"
-            Margin="283,119,0,0"
+            Margin="283,11,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Đơn giá bán" />
         <Label
             Width="90"
             Height="34"
-            Margin="283,10,0,0"
+            Margin="283,66,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Số lượng" />
         <Label
             Width="102"
             Height="36"
-            Margin="283,64,0,0"
+            Margin="288,125,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Đơn giá nhập" />
         <Label
             Width="78"
             Height="30"
-            Margin="16,193,0,0"
+            Margin="16,182,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Ghi chú" />
         <Button
             x:Name="h_them"
-            Width="80"
-            Height="34"
+            Width="100"
+            Height="35"
             Margin="0,161,39.6,225"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
@@ -79,8 +80,8 @@
             Content="Thêm" />
         <Button
             x:Name="h_sua"
-            Width="80"
-            Height="34"
+            Width="100"
+            Height="35"
             Margin="0,211,39.6,175"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
@@ -89,8 +90,8 @@
             Content="Sửa" />
         <Button
             x:Name="h_xoa"
-            Width="79"
-            Height="34"
+            Width="100"
+            Height="35"
             Margin="0,263,39.6,123"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
@@ -99,8 +100,8 @@
             Content="Xóa" />
         <Button
             x:Name="h_lammoi"
-            Width="79"
-            Height="38"
+            Width="100"
+            Height="35"
             Margin="0,317,39.6,65"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
@@ -109,8 +110,8 @@
             Content="Làm mới" />
         <Button
             x:Name="h_dong"
-            Width="79"
-            Height="38"
+            Width="100"
+            Height="35"
             Margin="0,372,39.6,10"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
@@ -120,7 +121,7 @@
         <TextBox
             x:Name="mahang"
             Width="155"
-            Height="34"
+            Height="36"
             Margin="99,10,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -134,58 +135,76 @@
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
         <TextBox
-            x:Name="machatlieu"
-            Width="155"
-            Height="37"
-            Margin="99,116,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            TextWrapping="Wrap" />
-        <TextBox
             x:Name="dongia"
-            Width="214"
-            Height="35"
-            Margin="388,116,0,0"
+            Width="180"
+            Height="36"
+            Margin="390,10,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
         <TextBox
             x:Name="soluong"
-            Width="214"
-            Height="34"
-            Margin="388,10,0,0"
+            Width="178"
+            Height="36"
+            Margin="392,64,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
         <TextBox
             x:Name="dongianhap"
+            Width="175"
+            Height="36"
+            Margin="395,117,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            TextWrapping="Wrap" />
+        <Label
+            Width="90"
+            Height="42"
+            Margin="288,182,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Ngày nhập" />
+        <DatePicker
+            x:Name="ngaynhap"
             Width="212"
             Height="36"
-            Margin="390,64,0,0"
+            Margin="392,182,0,0"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            TextWrapping="Wrap" />
-        <TextBox
+            VerticalAlignment="Top" />
+        <DataGrid
+            Width="14"
+            Height="0"
+            Margin="556,195,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" />
+        <ComboBox
             x:Name="ghichu"
-            Width="503"
-            Height="42"
-            Margin="99,181,0,0"
+            Width="155"
+            Height="36"
+            Margin="99,182,0,0"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            TextWrapping="Wrap" />
-        <Image
-            x:Name="anh"
-            Width="107"
-            Height="119"
-            Margin="658,29,0,0"
+            VerticalAlignment="Top">
+            <ComboBoxItem HorizontalAlignment="Center" Content="Còn hàng" />
+            <ComboBoxItem HorizontalAlignment="Center" Content="Het hàng" />
+
+        </ComboBox>
+        <ComboBox
+            x:Name="machatlieu"
+            Width="155"
+            Height="36"
+            Margin="99,125,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top" />
         <Label
-            Margin="623,10,0,0"
+            Width="190"
+            Height="40"
+            Margin="594,60,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="ảnh"
-            RenderTransformOrigin="0.366,0.373" />
+            Content="Danh mục hàng hóa"
+            FontSize="19"
+            FontWeight="DemiBold" />
 
     </Grid>
 </Window>

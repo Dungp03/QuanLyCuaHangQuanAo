@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
 
 namespace WpfApp2 {
     /// <summary>
@@ -9,7 +9,6 @@ namespace WpfApp2 {
     public partial class timkiemkhachang : Window {
         SqlConnection conn = new SqlConnection();
         string ConnectionStrin = "";
-        string selectedID = "";
         DataTable dataTable = null;
         public timkiemkhachang() {
             InitializeComponent();
@@ -29,7 +28,7 @@ namespace WpfApp2 {
         }
 
         private void Window_Loaded( object sender, RoutedEventArgs e ) {
-            ConnectionStrin = @"Data Source=.\PHUONGNGU;Initial Catalog=qlchh;Integrated Security=True;";
+            ConnectionStrin = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True;";
             conn.ConnectionString = ConnectionStrin;
             conn.Open();
 

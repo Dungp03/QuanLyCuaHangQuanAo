@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
 
 namespace WpfApp2 {
     /// <summary>
@@ -19,7 +19,7 @@ namespace WpfApp2 {
             if (conn.State != ConnectionState.Open) {
                 return;
             }
-            string sqlStr = "Select * from tblhoadon";
+            string sqlStr = "Select MaHDBan, TenNhanVien, CONVERT(varchar,NgayBan, 103) AS NgayBan, MaHang,TenHang,TenKhachHang,DiaChi,SDT, SoLuong, DonGia, SoLuong * Dongia AS ThanhTien from tblhoadon";
             SqlDataAdapter adapter = new SqlDataAdapter(sqlStr, conn);
             DataSet dataSet = new DataSet();
             adapter.Fill(dataSet, "tblhoadon");
@@ -28,7 +28,7 @@ namespace WpfApp2 {
         }
 
         private void frm_tkhd_Loaded( object sender, RoutedEventArgs e ) {
-            ConnectionStrin = @"Data Source=.\PHUONGNGU;Initial Catalog=qlchh;Integrated Security=True;";
+            ConnectionStrin = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True;";
             conn.ConnectionString = ConnectionStrin;
             conn.Open();
 
@@ -41,7 +41,7 @@ namespace WpfApp2 {
                 return;
             }
             string sql;
-            sql = "SELECT * FROM tblhoadon WHERE MaHDBan = '" + mahoadon.Text + "'";
+            sql = "Select MaHDBan, TenNhanVien, CONVERT(varchar,NgayBan, 103) AS NgayBan, MaHang,TenHang,TenKhachHang,DiaChi,SDT, SoLuong, DonGia, SoLuong * Dongia AS ThanhTien from tblhoadon where MaHDBan = '" + mahoadon.Text + "'";
             SqlDataAdapter adapter = new SqlDataAdapter(sql, conn);
             DataSet dataSet = new DataSet();
             adapter.Fill(dataSet, "tblhoadon");

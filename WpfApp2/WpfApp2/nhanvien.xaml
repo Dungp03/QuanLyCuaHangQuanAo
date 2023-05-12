@@ -10,60 +10,62 @@
     Width="800"
     Height="450"
     FontSize="16"
-    Loaded="frm_nhanvien_Loaded"
+    Loaded="frm_nhanvien_Loaded_1"
     mc:Ignorable="d">
     <Grid Background="LavenderBlush">
         <DataGrid
             x:Name="grdtnv"
             Width="NaN"
             Height="NaN"
-            Margin="10,136,154.6,10"
+            Margin="10,229,185.6,10"
+            IsReadOnly="True"
             SelectionChanged="grdtnv_SelectionChanged" />
         <Label
-            Width="101"
+            Width="129"
             Height="28"
-            Margin="10,37,0,0"
+            Margin="10,57,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Mã nhân viên" />
         <Label
-            Margin="10,89,0,0"
+            Width="130"
+            Margin="8,115,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Tên nhân viên" />
         <Label
             Width="74"
             Height="42"
-            Margin="278,42,0,0"
+            Margin="357,57,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Giới tính" />
         <Label
-            Width="74"
+            Width="118"
             Height="32"
-            Margin="278,89,0,0"
+            Margin="357,172,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Địa chỉ" />
         <Label
-            Width="101"
+            Width="118"
             Height="42"
-            Margin="516,42,0,0"
+            Margin="357,115,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Số điện thoại" />
         <Label
-            Width="96"
+            Width="129"
             Height="32"
-            Margin="516,89,0,0"
+            Margin="9,172,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Ngày sinh" />
         <TextBox
             x:Name="manv"
             Width="157"
-            Height="23"
-            Margin="116,40,0,0"
+            Height="26"
+            Margin="177,62,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
@@ -71,31 +73,32 @@
             x:Name="tennv"
             Width="157"
             Height="26"
-            Margin="116,88,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            TextWrapping="Wrap" />
-        <TextBox
-            x:Name="diachi"
-            Width="146"
-            Height="26"
-            Margin="357,89,0,0"
+            Margin="177,121,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
         <TextBox
             x:Name="sodt"
-            Width="152"
-            Height="23"
-            Margin="617,42,0,0"
+            Width="157"
+            Height="26"
+            Margin="498,115,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
         <TextBox
             x:Name="ngaysinh"
-            Width="152"
+            Width="157"
             Height="26"
-            Margin="617,89,0,0"
+            Margin="177,178,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            TextWrapping="Wrap" />
+
+        <TextBox
+            x:Name="diachi"
+            Width="157"
+            Height="26"
+            Margin="498,172,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" />
@@ -133,7 +136,7 @@
             x:Name="nv_dong"
             Width="94"
             Height="32"
-            Margin="0,0,24.6,24"
+            Margin="0,0,24.6,10"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Background="LightPink"
@@ -141,9 +144,9 @@
             Content="Đóng" />
         <ComboBox
             x:Name="gt"
-            Width="146"
-            Height="23"
-            Margin="357,42,0,0"
+            Width="157"
+            Height="26"
+            Margin="498,52,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top">
             <ComboBoxItem
@@ -163,12 +166,21 @@
             x:Name="lammoi"
             Width="94"
             Height="32"
-            Margin="0,0,24.6,78"
+            Margin="0,0,24.6,69"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Background="LightPink"
             Click="lammoi_Click"
             Content="Làm mới" />
+        <Label
+            Width="228"
+            Height="42"
+            Margin="312,10,253.6,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Content="Thông tin nhân viên"
+            FontSize="18"
+            FontWeight="DemiBold" />
 
     </Grid>
 </Window>

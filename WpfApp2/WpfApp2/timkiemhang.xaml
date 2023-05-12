@@ -29,7 +29,8 @@
             Height="245"
             Margin="0,165,0,0"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top" />
+            VerticalAlignment="Top"
+            IsReadOnly="True" />
         <Button
             x:Name="timkiem"
             Width="104"
