@@ -1,24 +1,39 @@
 ﻿using System;
-using System.Data;
-using System.Data.SqlClient;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.Data;
+using System.Data.SqlClient;
 
-namespace WpfApp2 {
+namespace WpfApp2
+{
     /// <summary>
     /// Interaction logic for hangton.xaml
     /// </summary>
-    public partial class hangton : Window {
+    public partial class hangton : Window
+    {
         SqlConnection conn = new SqlConnection();
         string ConnectionStrin = "";
         string selectedID = "";
         DataTable dataTable = null;
-        public hangton() {
+        public hangton()
+        {
             InitializeComponent();
         }
-        private void napdulieu() {
+        private void napdulieu()
+        {
             grdtpl.ItemsSource = null;
-            if (conn.State != ConnectionState.Open) {
+            if (conn.State != ConnectionState.Open)
+            {
                 return;
             }
             string sqlStr = "Select MaHang, TenHang,MaChatLieu, SoLuong, DonGiaNhap, DonGiaBan, GhiChu,CONVERT(varchar, ngaynhap, 103) AS ngaynhap from tblhang";
@@ -28,41 +43,49 @@ namespace WpfApp2 {
             dataTable = dataSet.Tables["tblhang"];
             grdtpl.ItemsSource = dataTable.DefaultView;
         }
-        private void DataGrid_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
-            try {
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
                 if (grdtpl.CurrentItem == null) { return; }
-                DataRowView row = (DataRowView) grdtpl.CurrentItem;
+                DataRowView row = (DataRowView)grdtpl.CurrentItem;
                 selectedID = row[0].ToString();
                 phanloai.Text = row[0].ToString();
             }
-            catch (Exception) {
+            catch (Exception ex)
+            {
                 MessageBox.Show("ERROR!!!");
             }
         }
 
-        private void Window_Loaded( object sender, RoutedEventArgs e ) {
-            ConnectionStrin = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True;";
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ConnectionStrin = @"Data Source=DESKTOP-RU72BJJ\SQLEXPRESS;Initial Catalog=qlchn;Integrated Security=True";
             conn.ConnectionString = ConnectionStrin;
             conn.Open();
 
             napdulieu();
         }
 
-        private void phanloai_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
-            ComboBox comboBox = (ComboBox) sender;
-            ComboBoxItem selectedItem = (ComboBoxItem) comboBox.SelectedItem;
+        private void phanloai_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            ComboBoxItem selectedItem = (ComboBoxItem)comboBox.SelectedItem;
             string ghiChu = selectedItem.Content.ToString();
 
             grdtpl.ItemsSource = null;
-            if (conn.State != ConnectionState.Open) {
+            if (conn.State != ConnectionState.Open)
+            {
                 return;
             }
 
             string sql;
-            if (ghiChu == "Còn Hàng") {
+            if (ghiChu == "Còn Hàng")
+            {
                 sql = "SELECT * FROM tblhang WHERE GhiChu = 'Còn Hàng'";
             }
-            else {
+            else
+            {
                 sql = "SELECT * FROM tblhang WHERE GhiChu = 'Het hàng'";
             }
 
@@ -73,7 +96,8 @@ namespace WpfApp2 {
             grdtpl.ItemsSource = dataTable.DefaultView;
         }
 
-        private void Button_Click( object sender, RoutedEventArgs e ) {
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
             napdulieu();
         }
     }

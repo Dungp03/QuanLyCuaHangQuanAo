@@ -1,22 +1,39 @@
-﻿using System.Data;
-using System.Data.SqlClient;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
-
-namespace WpfApp2 {
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.Data;
+using System.Data.SqlClient;
+namespace WpfApp2
+{
     /// <summary>
     /// Interaction logic for timkiemhang.xaml
     /// </summary>
-    public partial class timkiemhang : Window {
+    public partial class timkiemhang : Window
+    {
         readonly SqlConnection conn = new SqlConnection();
         string ConnectionStrin = "";
+        readonly string selectedID = "";
         DataTable dataTable = null;
-        public timkiemhang() {
+        public timkiemhang()
+        {
             InitializeComponent();
         }
 
-        private void napdulieu() {
+        private void napdulieu()
+        {
             grdttkh.ItemsSource = null;
-            if (conn.State != ConnectionState.Open) {
+            if (conn.State != ConnectionState.Open)
+            {
                 return;
             }
             string sqlStr = "Select MaHang, TenHang,MaChatLieu, SoLuong, DonGiaNhap, DonGiaBan, GhiChu,CONVERT(varchar, ngaynhap, 103) AS ngaynhap from tblhang";
@@ -27,17 +44,21 @@ namespace WpfApp2 {
             grdttkh.ItemsSource = dataTable.DefaultView;
         }
 
-        private void Window_Loaded( object sender, RoutedEventArgs e ) {
-            ConnectionStrin = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True;";
+      
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ConnectionStrin = @"Data Source=.\DESKTOP-RU72BJJ\SQLEXPRESS;Initial Catalog=qlchn;Integrated Security=True;";
             conn.ConnectionString = ConnectionStrin;
             conn.Open();
 
             napdulieu();
         }
 
-        private void timkiem_Click( object sender, RoutedEventArgs e ) {
+        private void timkiem_Click(object sender, RoutedEventArgs e)
+        {
             grdttkh.ItemsSource = null;
-            if (conn.State != ConnectionState.Open) {
+            if (conn.State != ConnectionState.Open)
+            {
                 return;
             }
             string sql;
@@ -46,25 +67,34 @@ namespace WpfApp2 {
             DataSet dataSet = new DataSet();
             adapter.Fill(dataSet, "tblhang");
             dataTable = dataSet.Tables["tblhang"];
-            grdttkh.ItemsSource = dataTable.DefaultView;
-
+            grdttkh.ItemsSource = dataTable.DefaultView; 
+            
 
         }
 
-        private void quaylai_Click( object sender, RoutedEventArgs e ) {
+        private void quaylai_Click(object sender, RoutedEventArgs e)
+        {
             napdulieu();
         }
 
-        private void dong_Click( object sender, RoutedEventArgs e ) {
+        private void dong_Click(object sender, RoutedEventArgs e)
+        {
             MessageBoxResult result = MessageBox.Show("Bạn có chắc chắn muốn thoát không?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (result == MessageBoxResult.Yes) {
+            if (result == MessageBoxResult.Yes)
+            {
                 // Thực hiện hành động khi người dùng chọn Yes
                 this.Close();
             }
-            else {
+            else
+            {
                 // Thực hiện hành động khi người dùng chọn No
             }
+        }
+
+        private void grdth_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

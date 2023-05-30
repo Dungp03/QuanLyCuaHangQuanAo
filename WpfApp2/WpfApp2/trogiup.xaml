@@ -10,6 +10,7 @@
         <TextBox Background="Lavender" FontSize="22" FontWeight="ExtraLight" HorizontalAlignment="Left" Height="91" Margin="85,114,0,0" TextWrapping="Wrap" Text="Sản phẩm vẫn còn một số sai sót, nếu có bất kì vấn đề nào thì liên hệ nhóm 1 để được giải quyết luôn nhé -)))))" VerticalAlignment="Top" Width="421"/>
         <Button Content="Quay lại trang chủ" Background="LightPink" HorizontalAlignment="Left" Height="51" Margin="540,303,0,0" VerticalAlignment="Top" Width="117" Click="Button_Click"/>
         <Image HorizontalAlignment="Left" Height="165" Margin="576,40,0,0" VerticalAlignment="Top" Width="180" Source="76025ab26f0205cb97d206e9df3b20d5.jpg"/>
+        
 
     </Grid>
 </Window>

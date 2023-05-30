@@ -6,18 +6,18 @@
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
         
-        Title="login" Height="450" Width="800">
+        Title="login" Height="450" Width="800" Loaded="frm_login_Loaded">
     <Grid Background="LavenderBlush">
         <Label FontSize="16" FontStyle="Italic" Content="Mã nhân viên" HorizontalAlignment="Left" Height="48" Margin="133,186,0,0" VerticalAlignment="Top" Width="130"/>
         <Label FontSize="16" FontStyle="Italic" Content="Mật khẩu" HorizontalAlignment="Left" Height="42" Margin="133,239,0,0" VerticalAlignment="Top" Width="93"/>
-        <PasswordBox x:Name="mk" HorizontalAlignment="Left" Height="39" Margin="292,237,0,0" VerticalAlignment="Top" Width="279" KeyDown="mk_KeyDown"/>
+        <PasswordBox x:Name="mk" HorizontalAlignment="Left" Height="39" Margin="292,237,0,0" VerticalAlignment="Top" Width="279" KeyDown="mk_KeyDown" VerticalContentAlignment="Center"/>
         <Button BorderBrush="Aquamarine" Background="LightPink" x:Name="dangnhap" Content="Đăng nhập" HorizontalAlignment="Left" Height="47" Margin="340,338,0,0" VerticalAlignment="Top" Width="136" Click="dangnhap_Click"/>
-        <TextBox x:Name="manv" HorizontalAlignment="Left" Height="38" Margin="292,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="279" KeyDown="manv_KeyDown"/>
+        <TextBox x:Name="manv" HorizontalAlignment="Left" Height="38" Margin="292,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="279" KeyDown="manv_KeyDown" VerticalContentAlignment="Center"/>
         <Button x:Name="quenmk" FontStyle="Italic" HorizontalAlignment="Left" Height="23" Margin="551,309,0,0" VerticalAlignment="Top" Width="104" Click="quenmk_Click">
             <TextBlock Text="Quên mật khẩu" TextDecorations="Underline"/>
         </Button>
         <Image HorizontalAlignment="Left" Height="111" Margin="375,33,0,0" VerticalAlignment="Top" Width="280" Source="5087579.png"/>
         <Label Content="ĐĂNG NHẬP" FontStyle="Normal" FontSize="30" HorizontalAlignment="Left" Height="65" Margin="133,67,0,0" VerticalAlignment="Top" Width="227"/>
-
+        
     </Grid>
 </Window>

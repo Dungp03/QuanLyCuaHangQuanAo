@@ -58,11 +58,20 @@
     <Compile Include="chatlieu.xaml.cs">
       <DependentUpon>chatlieu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="chonhang.xaml.cs">
+      <DependentUpon>chonhang.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dathang.xaml.cs">
+      <DependentUpon>dathang.xaml</DependentUpon>
+    </Compile>
     <Compile Include="doanhso.xaml.cs">
       <DependentUpon>doanhso.xaml</DependentUpon>
     </Compile>
     <Compile Include="hangton.xaml.cs">
       <DependentUpon>hangton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="hoadon.xaml.cs">
+      <DependentUpon>hoadon.xaml</DependentUpon>
     </Compile>
     <Compile Include="login.xaml.cs">
       <DependentUpon>login.xaml</DependentUpon>
@@ -79,6 +88,17 @@
     <Compile Include="trogiup.xaml.cs">
       <DependentUpon>trogiup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Window2.xaml.cs">
+      <DependentUpon>Window2.xaml</DependentUpon>
+    </Compile>
+    <Page Include="chonhang.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dathang.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="doanhso.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -88,6 +108,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="hangton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="hoadon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,6 +169,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="trogiup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

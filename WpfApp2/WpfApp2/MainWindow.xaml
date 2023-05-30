@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="Quản lý cửa hàng quần áo" Height="500" Width="800" Icon="76025ab26f0205cb97d206e9df3b20d5.jpg">
-    <Grid Background="LavenderBlush" Margin="0,0,-0.4,-2.6" >
-        <Menu VerticalAlignment="Top" Width="Auto" Background="Lavender" Height="40" Margin="0,0,-0.4,0" >
+        Title="Quản lý cửa hàng quần áo" Height="740" Width="1385.6" Icon="76025ab26f0205cb97d206e9df3b20d5.jpg" WindowState="Maximized" Loaded="Window_Loaded">
+    <Grid Background="LavenderBlush" Margin="0,0,3.2,-1.6" >
+
+        <Menu VerticalAlignment="Top" Width="Auto" Background="Lavender" Height="40" Grid.ColumnSpan="3" >
             <MenuItem x:Name="mnfile" Header="Trang chủ"  FontSize="16">
                 <MenuItem Header="Thoát" Click="MenuItem_Click" FontSize="16">
                 </MenuItem>
@@ -40,10 +41,70 @@
 
 
         </Menu>
-        <Label Content="@Copyright nhom 1" FontStyle="Oblique" HorizontalAlignment="Right" Height="27" Margin="0,0,-0.4,0.4" VerticalAlignment="Bottom" Width="118"/>
-        <Image Margin="120,241,500,104" Source="ch.jpg" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-        <Image Margin="500,241,120,104" Source="ch1.jpg" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-        <Label Content="QUẢN LÍ CỬA HÀNG BÁN QUẦN ÁO NAM" Margin="150,102,129,0" VerticalAlignment="Top" Width="515" Height="59" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" FontWeight="Bold" FontFamily="UD Digi Kyokasho NP-B"/>
+        <Label Content="@Copyright nhom 1" FontStyle="Oblique" HorizontalAlignment="Left" Height="27" Margin="1167,0,0,10" VerticalAlignment="Bottom" Width="118"/>
+        <Label Content="QUẢN LÍ CỬA HÀNG BÁN QUẦN ÁO " Margin="211,51,91,0" VerticalAlignment="Top" Height="59" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" FontWeight="Bold" />
+        <TextBlock HorizontalAlignment="Left" Height="22" FontStyle="Italic" Foreground="Black" TextDecorations="Underline" Margin="889,104,0,0" TextWrapping="Wrap" Text="Đơn giản - Dễ dàng - Tiết kiệm thời gian" VerticalAlignment="Top" Width="228"/>
+        <DataGrid x:Name="grdthd" Margin="62,482,806,53" SelectionChanged="grdthd_SelectionChanged" MouseDoubleClick="grdthd_MouseDoubleClick"/>
+        <Label Content="Mã hóa đơn" HorizontalAlignment="Center" Height="35" Margin="59,160,1206,0" VerticalAlignment="Top" Width="111"/>
+        <Label Content="Ngày bán" HorizontalAlignment="Center" Height="35" Margin="50,239,1235,0" VerticalAlignment="Top" Width="91"/>
+        <Label Content="Mã nhân viên" HorizontalAlignment="Center" Height="35" Margin="50,304,1235,0" VerticalAlignment="Top" Width="91" RenderTransformOrigin="0.493,-0.277"/>
+        <Label Content="Mã hàng" HorizontalAlignment="Center" Height="35" Margin="468,303,806,0" VerticalAlignment="Top" Width="102"/>
+        <Label Content="Số lượng" HorizontalAlignment="Center" Height="35" Margin="59,374,1235,0" VerticalAlignment="Top" Width="82"/>
+        <Label Content="Mã Khách hàng" HorizontalAlignment="Center" Height="35" Margin="468,160,797,0" VerticalAlignment="Top" Width="111"/>
+        <Label Content="Tên hàng" HorizontalAlignment="Center" Height="35" Margin="875,303,415,0" VerticalAlignment="Top" Width="86" RenderTransformOrigin="-0.06,1.737"/>
+        <Label Content="Đơn giá" HorizontalAlignment="Center" Height="35" Margin="468,374,797,0" VerticalAlignment="Top" Width="111"/>
+        <Label Content="Thành tiền" HorizontalAlignment="Center" Height="35" Margin="875,374,397,0" VerticalAlignment="Top" Width="104"/>
+        <Button Visibility="Hidden"  Background="LightPink" x:Name="hd_tt" Content="Thanh Toán" Height="33" Margin="0,0,91,170" VerticalAlignment="Bottom" Width="132" RenderTransformOrigin="-0.264,-1.625" HorizontalAlignment="Right" Click="hd_tt_Click"/>
+        <Button Visibility="Hidden" Background="LightPink" x:Name="hd_chon" Content="Chọn hàng" Height="33" Margin="0,0,91,97" VerticalAlignment="Bottom" Width="132" RenderTransformOrigin="-0.251,0.668" HorizontalAlignment="Right" Click="hd_chon_Click"/>
+        <TextBox x:Name="hd_mahd" HorizontalAlignment="Center" Height="35" Margin="230,160,1003.6,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
+        <DatePicker x:Name="hd_ngay" Padding="0" HorizontalAlignment="Center" Height="36" Margin="232,238,1002,0" VerticalAlignment="Top" Width="142"/>
+        <TextBox HorizontalAlignment="Center" Height="35" x:Name="hd_tenhang" Margin="1054,303,125,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="197"/>
+        <TextBox HorizontalAlignment="Center" Height="35" x:Name="hd_sl" Margin="232,374,1002,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="142" TextChanged="hd_sl_TextChanged" />
+
+        <TextBox HorizontalAlignment="Center" IsReadOnly="True" Height="35" x:Name="hd_dongia" Margin="621,373,580,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175" RenderTransformOrigin="0.5,0.5">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.133"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <TextBox HorizontalAlignment="Center" Height="41" Margin="1059,372,126,0" x:Name="hd_thanhtien" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Center">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.104"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <ComboBox HorizontalAlignment="Center" x:Name="hd_mahang" Height="35" Margin="617,303,583,0" VerticalAlignment="Top" Width="176"/>
+        <ComboBox x:Name="hd_nhanvien" HorizontalAlignment="Center" Height="36" Margin="228,303,1002,0" VerticalAlignment="Top" Width="146"/>
+        <TextBox x:Name="hd_makh" HorizontalAlignment="Center" Height="35" Margin="617,158,583,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" />
+        <Label Content="Tên khách hàng" HorizontalAlignment="Center" Height="36" Margin="861,159,382,0" VerticalAlignment="Top" Width="133" RenderTransformOrigin="0.931,0.383"/>
+        <TextBox x:Name="tenkh" HorizontalAlignment="Center" Height="34" Margin="1054,158,125,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="197"/>
+        <TextBox x:Name="sdt" HorizontalAlignment="Center" Height="36" Margin="617,234,583,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"/>
+        <TextBox x:Name="diachi" HorizontalAlignment="Center" Height="35" Margin="1054,235,125,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="197" RenderTransformOrigin="0.542,1.673"/>
+        <Label Content="Số điện thoại" HorizontalAlignment="Center" Height="35" Margin="468,235,788,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Địa chỉ" HorizontalAlignment="Center" Height="35" Margin="875,221,415,0" VerticalAlignment="Top" Width="86"/>
+        <Label x:Name="lbtb" HorizontalAlignment="Center" Height="35" Margin="-158,413,1323,0" VerticalAlignment="Top" Width="211" HorizontalContentAlignment="Center" Foreground="#FFF32424" RenderTransformOrigin="1.115,1.677"  >
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-20.91"/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Label Content="Tổng: " x:Name="tong"  FontWeight="DemiBold" Foreground="Red" FontStyle="Italic" HorizontalAlignment="Left" Height="38" Margin="88,664,0,0" VerticalAlignment="Top" Width="329"/>
+        <DataGrid x:Name="grdth" HorizontalAlignment="Left" Height="177" Margin="617,482,0,0" VerticalAlignment="Top" Width="500" SelectionChanged="DataGrid_SelectionChanged" MouseDoubleClick="grdth_MouseDoubleClick"/>
+        <Button Content="Bỏ qua" x:Name="boqua" HorizontalAlignment="Left" Height="35" Margin="848,432,0,0" VerticalAlignment="Top" Width="86" Visibility="Hidden" Click="boqua_Click"/>
+        <Button Content="Mua" x:Name="mua" HorizontalAlignment="Left" Height="35" Margin="848,432,0,0" VerticalAlignment="Top" Width="86" RenderTransformOrigin="1.452,0.557" Click="mua_Click"/>
+        <Label Content="Nhấp đúp chuột để xóa hàng" Foreground="Red" FontStyle="Italic" HorizontalAlignment="Left" Height="35" Margin="62,449,0,0" VerticalAlignment="Top" Width="286"/>
     </Grid>
 </Window>
     

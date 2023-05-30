@@ -1,0 +1,33 @@
+﻿<Window x:Class="WpfApp2.dathang"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2"
+        mc:Ignorable="d"
+        Title="dathang" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid Background="LavenderBlush">
+        <DataGrid x:Name="grdthd" HorizontalAlignment="Left" Height="220" Margin="10,200,0,0" VerticalAlignment="Top" Width="557" SelectionChanged="grdthd_SelectionChanged"/>
+        <Label Content="Mã HD" HorizontalAlignment="Left" Height="33" Margin="22,27,0,0" VerticalAlignment="Top" Width="71"/>
+        <Label Content="Ngày bán" HorizontalAlignment="Left" Height="33" Margin="22,75,0,0" VerticalAlignment="Top" Width="71"/>
+        <Label Content="Mã KH" HorizontalAlignment="Left" Height="33" Margin="334,23,0,0" VerticalAlignment="Top" Width="61" RenderTransformOrigin="0.532,0.82"/>
+        <Label Content="Tên KH" HorizontalAlignment="Left" Height="27" Margin="334,82,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.407,0.673"/>
+        <TextBox x:Name="mahd" HorizontalAlignment="Left" Height="33" Margin="110,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="139"/>
+        <TextBox x:Name="makh" HorizontalAlignment="Left" Height="33" Margin="395,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145"/>
+        <ComboBox x:Name="nv" HorizontalAlignment="Left" Margin="110,142,0,0" VerticalAlignment="Top" Width="139" RenderTransformOrigin="0.53,1.42" Height="37"/>
+        <DatePicker HorizontalAlignment="Left" Height="33" Margin="110,82,0,0" VerticalAlignment="Top" Width="145"/>
+        <TextBox x:Name="tenkh" HorizontalAlignment="Left" Height="33" Margin="395,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145"/>
+        <Label Content="Địa chỉ" HorizontalAlignment="Left" Height="29" Margin="576,27,0,0" VerticalAlignment="Top" Width="56"/>
+        <Label Content="SĐT" HorizontalAlignment="Left" Height="27" Margin="576,81,0,0" VerticalAlignment="Top" Width="42"/>
+        <TextBox x:Name="diachi" HorizontalAlignment="Left" Height="33" Margin="639,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145"/>
+        <TextBox x:Name="sdt" HorizontalAlignment="Left" Height="33" Margin="639,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145"/>
+        <Label Content="Nhân viên" HorizontalAlignment="Left" Height="33" Margin="22,127,0,0" VerticalAlignment="Top" Width="71"/>
+        <Button Content="Thêm" x:Name="them" HorizontalAlignment="Left" Height="28" Margin="639,200,0,0" VerticalAlignment="Top" Width="71"/>
+        <Button Content="Sửa" x:Name="sua" HorizontalAlignment="Left" Height="25" Margin="639,258,0,0" VerticalAlignment="Top" Width="71"/>
+        <Button Content="Xóa" x:Name="xoa" HorizontalAlignment="Left" Height="30" Margin="639,309,0,0" VerticalAlignment="Top" Width="71"/>
+        <Button Content="Thoát" x:Name="thoat" HorizontalAlignment="Left" Height="27" Margin="639,365,0,0" VerticalAlignment="Top" Width="71"/>
+        <Label Content="Tổng tiền" Foreground="Red" FontStyle="Italic" HorizontalAlignment="Left" Height="27" Margin="395,148,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="0.568,0.969"/>
+        <TextBox x:Name="tong" HorizontalAlignment="Left" Height="33" Margin="487,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145"/>
+
+    </Grid>
+</Window>

@@ -1,78 +1,21 @@
-﻿<Window
-    x:Class="WpfApp2.doanhso"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:WpfApp2"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="doanhso"
-    Width="800"
-    Height="450"
-    Loaded="Window_Loaded"
-    mc:Ignorable="d">
+﻿<Window x:Class="WpfApp2.doanhso"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2"
+        mc:Ignorable="d"
+        Title="doanhso" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid Background="LavenderBlush">
-        <DataGrid
-            x:Name="grdtds"
-            Width="569"
-            Height="237"
-            Margin="0,115,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            IsReadOnly="True"
-            SelectionChanged="grdtds_SelectionChanged" />
-        <Label
-            Width="88"
-            Height="32"
-            Margin="71,63,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Chọn tháng"
-            FontSize="14"
-            FontWeight="DemiBold" />
-        <TextBox
-            x:Name="tongDS"
-            Width="210"
-            Height="35"
-            Margin="227,375,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            TextWrapping="Wrap" />
-        <Label
-            Width="141"
-            Height="35"
-            Margin="71,375,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Tổng doanh thu"
-            FontSize="14"
-            FontStyle="Italic" />
-        <Calendar
-            x:Name="ngay"
-            Width="207"
-            Height="32"
-            Margin="180,63,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Background="Lavender"
-            SelectedDatesChanged="ngay_SelectedDatesChanged" />
-        <Label
-            Width="387"
-            Height="35"
-            Margin="265,23,141.6,0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Content="Doanh số theo từng tháng hoặc từng năm"
-            FontSize="18"
-            FontWeight="Bold" />
-        <Button
-            Width="136"
-            Height="35"
-            Margin="626,375,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="Button_Click"
-            Content="Trở về"
-            FontStyle="Italic" />
+        <DataGrid x:Name="grdtds" Height="NaN" Margin="0,166,224.6,67" Width="NaN" SelectionChanged="grdtds_SelectionChanged"/>
+        <Label Content="Chọn tháng/năm" FontWeight="DemiBold" FontSize="14" HorizontalAlignment="Left" Height="32" Margin="53,97,0,0" VerticalAlignment="Top" Width="141"/>
+        <TextBox x:Name="tongDS" HorizontalAlignment="Left" Height="35" Margin="113,0,0,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="166"/>
+        <Label Content="Tổng doanh thu" FontStyle="Italic" FontSize="14" HorizontalAlignment="Left" Height="38" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="134" RenderTransformOrigin="0.121,0.284"/>
+        <Calendar x:Name="ngay" Background="Lavender" HorizontalAlignment="Left" Height="32" Margin="212,97,0,0" VerticalAlignment="Top" Width="207" SelectedDatesChanged="ngay_SelectedDatesChanged"/>
+        <Label Content="Doanh số theo từng tháng hoặc từng năm" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Height="35" Margin="212,36,171.6,0" VerticalAlignment="Top" Width="410"/>
+        <Button Content="Trở về" FontStyle="Italic" HorizontalAlignment="Left" Height="23" Margin="681,0,0,10" VerticalAlignment="Bottom" Width="88" Click="Button_Click"/>
+        <TextBox x:Name="namds" HorizontalAlignment="Left" Height="35" Margin="297,0,0,10" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="174"/>
+        <TextBox x:Name="tongSL" HorizontalAlignment="Left" Height="35" Margin="489,0,0,10" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="174"/>
 
     </Grid>
 </Window>

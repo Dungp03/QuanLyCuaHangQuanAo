@@ -1,129 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Data;
 using System.Data.SqlClient;
-
 
 namespace WpfApp2
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for hoadon.xaml
     /// </summary>
-    /// 
-
-  
-
-    public partial class MainWindow : Window
+    public partial class hoadon : Window
     {
         SqlConnection conn = new SqlConnection();
         string ConnectionStrin = "";
         string selectedID = "";
         DataTable dataTable = null;
-        public MainWindow()
+        public hoadon()
         {
             InitializeComponent();
         }
 
-      
-
-        private void mnchatlieu_Click(object sender, RoutedEventArgs e)
-        {
-            Window1 window1 = new Window1();
-            window1.ShowDialog();
-        }
-
-        private void mnhanvien_Click(object sender, RoutedEventArgs e)
-        {
-            nhanvien nv = new nhanvien();
-            nv.ShowDialog();
-        }
-
-        private void mnhanghoa_Click(object sender, RoutedEventArgs e)
-        {
-            hanghoa hh = new hanghoa();
-            hh.ShowDialog();
-        }
-
-        private void mnkhachhang_Click(object sender, RoutedEventArgs e)
-        {
-            khachhang kh = new khachhang();
-            kh.ShowDialog();
-        }
-
-        private void mnhoadonban_Click(object sender, RoutedEventArgs e)
-        {
-            hoadonbanhang hdbd = new hoadonbanhang();
-            hdbd.ShowDialog();
-        }
-
-        private void mnhientimkiem_Click(object sender, RoutedEventArgs e)
-        {
-            timkiemhoadon tkhd = new timkiemhoadon();
-            tkhd.ShowDialog();
-        }
-
-        private void mnhang_Click(object sender, RoutedEventArgs e)
-        {
-            timkiemhang tkhd = new timkiemhang();
-            tkhd.ShowDialog();
-        }
-
-        private void mntimkiemkhachhang_Click(object sender, RoutedEventArgs e)
-        {
-            timkiemkhachang tkhd = new timkiemkhachang();
-            tkhd.ShowDialog();
-        }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show("Bạn có chắc chắn muốn thoát không?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
-            {
-                // Thực hiện hành động khi người dùng chọn Yes
-                this.Close();
-            }
-            else
-            {
-                // Thực hiện hành động khi người dùng chọn No
-            }
-            Environment.Exit(0);
-        }
-
-        private void mnhientrogiup_Click(object sender, RoutedEventArgs e)
-        {
-           
-            trogiup tg = new trogiup();
-            tg.Show();
-            this.Close();
-        }
-
-
-        private void mnhangton_Click(object sender, RoutedEventArgs e)
-        {
-            hangton ht = new hangton();
-            ht.ShowDialog();
-            
-        }
-        private void mndoanhso_Click(object sender, RoutedEventArgs e)
-        {
-            doanhso ht = new doanhso();
-            ht.ShowDialog();
-            
-        }
-
-        
-
-
-        private void taohd_Click(object sender, RoutedEventArgs e)
-        {
-           
-            hoadon hd = new hoadon();
-            hd.ShowDialog();
-        }
-
-        // hóa đơn
         void napdulieu()
         {
             grdthd.ItemsSource = null;
@@ -164,28 +70,28 @@ namespace WpfApp2
 
         private void grdthd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            try
-            {
-                if (grdthd.CurrentItem == null) { return; }
-                DataRowView row = (DataRowView)grdthd.CurrentItem;
-                selectedID = row[0].ToString();
-                hd_mahang.Text = row[0].ToString();
-                hd_tenhang.Text = row[1].ToString();
-                hd_sl.Text = row[2].ToString();
-                hd_dongia.Text = row[3].ToString();
-                hd_thanhtien.Text = row[4].ToString();
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("ERROR!!!" + ex.Message);
-
-            }
+           
+                try
+                {
+                    if (grdthd.CurrentItem == null) { return; }
+                    DataRowView row = (DataRowView)grdthd.CurrentItem;
+                    selectedID = row[0].ToString();
+                    hd_mahang.Text = row[0].ToString();
+                    hd_tenhang.Text = row[1].ToString();
+                    hd_sl.Text = row[2].ToString();
+                    hd_dongia.Text = row[3].ToString();
+                    hd_thanhtien.Text = row[4].ToString();
 
 
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("ERROR!!!" + ex.Message);
 
+                }
+
+            
+           
         }
         private void addamhang()
         {
@@ -223,7 +129,17 @@ namespace WpfApp2
             }
             reader.Close();
         }
-       
+        private void frm_hoadon_Loaded(object sender, RoutedEventArgs e)
+        {
+            ConnectionStrin = @"Data Source=DESKTOP-RU72BJJ\SQLEXPRESS;Initial Catalog=qlchn;Integrated Security=True";
+            conn.ConnectionString = ConnectionStrin;
+            conn.Open();
+            napdulieu2();
+           // napdulieu();
+            addmanhanvien();
+            addamhang();
+            
+        }
 
         private void naphoadonban()
         {
@@ -269,28 +185,28 @@ namespace WpfApp2
             hd_dongia.Text = "";
             hd_thanhtien.Text = "";
             tong.Content = " ";
-
+            
         }
 
         private void clear()
         {
-
+           
             hd_mahang.Text = "";
             hd_tenhang.Text = "";
             hd_sl.Text = "";
             hd_dongia.Text = "";
             hd_thanhtien.Text = "";
         }
-
+        
         private void hd_chon_Click(object sender, RoutedEventArgs e)
         {
             string sqlStr;
             string mahd = mahoadon;
             try
             {
-                /*string sql = "insert into tblhoadon (MaHDBan) values ('" + mahd + "')";
-                SqlCommand cmd1 = new SqlCommand(sql, conn);
-                cmd1.ExecuteNonQuery();*/
+                 /*string sql = "insert into tblhoadon (MaHDBan) values ('" + mahd + "')";
+                 SqlCommand cmd1 = new SqlCommand(sql, conn);
+                 cmd1.ExecuteNonQuery();*/
                 sqlStr = "insert into tblchon(MaHDBan,MaHang,TenHang,SoLuong,DonGia,ThanhTien) values" +
                         "('" + mahd + "','" + hd_mahang.Text + "', '"
                         + hd_tenhang.Text + "'," + int.Parse(hd_sl.Text) + ", " +
@@ -323,7 +239,7 @@ namespace WpfApp2
 
                 // Xóa nội dung các TextBox sau khi thêm
 
-
+                
 
                 TinhTongThanhTien();
                 clear();
@@ -348,7 +264,7 @@ namespace WpfApp2
 
         }
 
-
+     
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -359,24 +275,51 @@ namespace WpfApp2
                 selectedID = row[0].ToString();
                 hd_mahang.Text = row[0].ToString();
                 hd_tenhang.Text = row[1].ToString();
-
+             
                 hd_dongia.Text = row[5].ToString();
-
+                
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show("ERROR!!!" + ex.Message);
+                MessageBox.Show("ERROR!!!" +ex.Message);
             }
 
         }
 
+        private void grdth_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (grdth.CurrentItem == null) { return; }
+                DataRowView row = (DataRowView)grdth.CurrentItem;
+                selectedID = row[0].ToString();
+                hd_mahang.Text = row[0].ToString();
+                hd_tenhang.Text = row[1].ToString();
+                hd_sl.Text = row[3].ToString();
+                hd_dongia.Text = row[5].ToString();
+                
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR!!!");
+            }
+
+        }
 
         string mahoadon = "";
 
 
         // thêm mã hóa đơn
-        
+        private void luuhd_Click(object sender, RoutedEventArgs e)
+        {
+          /*  mahoadon = TaoMaHoaDon();
+            hd_mahd.Text = mahoadon;
+            string sql = "insert into tblhoadon (MaHDBan) values ('" + mahoadon + "')";
+            SqlCommand cmd1 = new SqlCommand(sql, conn);
+            cmd1.ExecuteNonQuery();*/
+        }
 
         private void hd_sl_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -425,7 +368,7 @@ namespace WpfApp2
             // Hiển thị tổng thành tiền
             tong.Content = "Tổng thành tiền: " + tongThanhTien.ToString("N0") + " VND";
             tongtt = (int)tongThanhTien;
-
+            
             //return tongThanhTien;
         }
         private void TruSoLuongHang()
@@ -463,7 +406,7 @@ namespace WpfApp2
 
 
         int tongtt = 0;
-
+       
         private void tk_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -473,9 +416,12 @@ namespace WpfApp2
         {
             boqua.Visibility = set ? Visibility.Visible : Visibility.Hidden; // nếu đúng thì hiển thị, còn false thì ẩn đi
             hd_chon.Visibility = set ? Visibility.Visible : Visibility.Hidden;
+            hd_sua.Visibility = set ? Visibility.Visible : Visibility.Hidden;
             hd_tt.Visibility = set ? Visibility.Visible : Visibility.Hidden;
-
-            mua.Visibility = !set ? Visibility.Visible : Visibility.Hidden;
+            
+            hd_xoa.Visibility = set ? Visibility.Visible : Visibility.Hidden;
+            hd_lammoi.Visibility = set ? Visibility.Visible : Visibility.Hidden;
+            mua.Visibility = !set? Visibility.Visible: Visibility.Hidden;
         }
 
         private void mua_Click(object sender, RoutedEventArgs e)
@@ -503,18 +449,17 @@ namespace WpfApp2
                 clear1();
                 tongtt = 0;
                 tongThanhTien = 0;
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
+            
         }
 
         // thanh toán
         private void hd_sua_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void hd_tt_Click(object sender, RoutedEventArgs e)
@@ -524,39 +469,36 @@ namespace WpfApp2
             {
                 if (hd_makh.Text != "")
                 {
-                    MessageBoxResult result = MessageBox.Show("Bạn có chắc chắn muốn hoàn tất thanh toán?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        string sqlStr = "insert into tblkhach(KH_MaKhach,KH_TenKhach,KH_DiaChi,KH_DienThoai) values" + "('" + hd_makh.Text + "','" + tenkh.Text + "','" + diachi.Text + "','" + sdt.Text + "')";
-                        SqlCommand cmd = new SqlCommand(sqlStr, conn);
-                        cmd.ExecuteNonQuery();
+                    string sqlStr = "insert into tblkhach(KH_MaKhach,KH_TenKhach,KH_DiaChi,KH_DienThoai) values" + "('" + hd_makh.Text + "','" + tenkh.Text + "','" + diachi.Text + "','" + sdt.Text + "')";
+                    SqlCommand cmd = new SqlCommand(sqlStr, conn);
+                    cmd.ExecuteNonQuery();
 
-                        sqlStr = "update tblhoadon set MaNhanVien = '" + hd_nhanvien.Text + "' , NgayBan = '" + hd_ngay.Text + "',MaKhachHang = '" + hd_makh.Text + "',TenKhachHang ='" + tenkh.Text + "',DiaChi = '" + diachi.Text + "',SDT = '" + sdt.Text + "', TongTien = " + tongtt + " where MaHDBan = '" + mahoadon + "'";
-                        cmd = new SqlCommand(sqlStr, conn);
-                        cmd.ExecuteNonQuery();
-                        setbuttonmua(false);
-                        clear1();
-                        tongtt = 0;
-                        grdthd.ItemsSource = null;
-                    }
+                    sqlStr = "update tblhoadon set MaNhanVien = '" + hd_nhanvien.Text + "' , NgayBan = '" + hd_ngay.Text + "',MaKhachHang = '" + hd_makh.Text + "',TenKhachHang ='" + tenkh.Text + "',DiaChi = '" + diachi.Text + "',SDT = '" + sdt.Text + "', TongTien = "+ tongtt + " where MaHDBan = '" + mahoadon + "'";
+                    cmd = new SqlCommand(sqlStr, conn);
+                    cmd.ExecuteNonQuery();
+                    setbuttonmua(false);
+                    clear1();
+                    tongtt = 0;
+                    grdthd.ItemsSource = null;
+                    MessageBox.Show("Thanh toán thành công");
                 }
                 else
                     MessageBox.Show("Lỗi");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
-
+            
         }
-
+        
         // xóa
-        private void grdthd_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void grdthd_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             try
             {
 
                 if (grdthd.SelectedItem != null)
                 {
-
+                    
                     string sqlStr = "";
                     // Xóa dòng trong DataGrid
                     MessageBoxResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa mặt hàng này?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -564,7 +506,7 @@ namespace WpfApp2
                     if (result == MessageBoxResult.Yes)
                     {
                         // Thực hiện hành động khi người dùng chọn Yes
-
+                        
                         sqlStr = "Delete from tblchon where MaHang ='" + hd_mahang.Text + "'";
                         SqlCommand cmd = new SqlCommand(sqlStr, conn);
                         cmd.ExecuteNonQuery();
@@ -587,14 +529,14 @@ namespace WpfApp2
                         cmd1 = new SqlCommand(sqlStr, conn);
                         cmd1.ExecuteNonQuery();
                     }
-
+                    
                     DataRowView row = (DataRowView)grdthd.CurrentItem;
 
                     // Trừ tổng tiền
                     int a = tongThanhTien;
                     string b = row[4].ToString();
                     tongThanhTien -= int.Parse(row[4].ToString());
-
+                    
 
                     // Hiển thị tổng tiền
                     tong.Content = "Tổng thành tiền: " + tongThanhTien.ToString("N0") + " VND"; // Để định dạng số nguyên thành chuỗi có dấu phân cách hàng nghìn
@@ -619,41 +561,6 @@ namespace WpfApp2
             clear();
         }
 
-        private void grdth_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            try
-            {
-                if (grdth.CurrentItem == null) { return; }
-                DataRowView row = (DataRowView)grdth.CurrentItem;
-                selectedID = row[0].ToString();
-                hd_mahang.Text = row[0].ToString();
-                hd_tenhang.Text = row[1].ToString();
-                hd_sl.Text = row[3].ToString();
-                hd_dongia.Text = row[5].ToString();
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("ERROR!!!");
-            }
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            ConnectionStrin = @"Data Source=DESKTOP-RU72BJJ\SQLEXPRESS;Initial Catalog=qlchn;Integrated Security=True";
-            conn.ConnectionString = ConnectionStrin;
-            conn.Open();
-            napdulieu2();
-            // napdulieu();
-            addmanhanvien();
-            addamhang();
-        }
-
-        // xóa
-
-
-
+      
     }
-
 }
