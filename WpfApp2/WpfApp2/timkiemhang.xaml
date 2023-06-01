@@ -1,21 +1,89 @@
-﻿<Window x:Class="WpfApp2.timkiemhang"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp2"
-        mc:Ignorable="d"
-        Title="timkiemhang" Height="450" Width="800" Loaded="Window_Loaded" FontSize="16">
+﻿<Window
+    x:Class="WpfApp2.timkiemhang"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfApp2"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="timkiemhang"
+    Width="800"
+    Height="450"
+    FontSize="16"
+    Loaded="Window_Loaded"
+    mc:Ignorable="d">
     <Grid Background="LavenderBlush">
-        <Label Content="Nhập mã hàng để hiển thị thông tin chi tiết" FontFamily="10" FontStyle="Italic" Foreground="Red" HorizontalAlignment="Left" Height="41" Margin="137,119,0,0" VerticalAlignment="Top" Width="433"/>
+        <Label
+            Width="433"
+            Height="41"
+            Margin="137,119,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Nhập mã hàng để hiển thị thông tin chi tiết"
+            FontFamily="10"
+            FontStyle="Italic"
+            Foreground="Red" />
 
-        <DataGrid x:Name="grdttkh" HorizontalAlignment="Left" Height="245" Margin="0,165,0,0" VerticalAlignment="Top" Width="570"/>
-        <Button Background="LightPink" x:Name="timkiem" Content="Tìm kiếm" HorizontalAlignment="Left" Height="33" Margin="644,206,0,0" VerticalAlignment="Top" Width="104" Click="timkiem_Click"/>
-        <Button Background="LightPink" x:Name="quaylai" Content="Quay lại" HorizontalAlignment="Left" Height="33" Margin="644,275,0,0" VerticalAlignment="Top" Width="104" Click="quaylai_Click"/>
-        <Button Background="LightPink" x:Name="dong" Content="Đóng" HorizontalAlignment="Left" Height="33" Margin="644,350,0,0" VerticalAlignment="Top" Width="104" Click="dong_Click"/>
-        <TextBox x:Name="mahang" HorizontalAlignment="Left" Height="38" Margin="248,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="202"/>
-        <Label Content="Nhập mã hàng" HorizontalAlignment="Left" Height="38" Margin="49,46,0,0" VerticalAlignment="Top" Width="129"/>
-        <Label Content="Tìm Kiếm Hàng Hóa" FontSize="22" FontWeight="DemiBold" HorizontalAlignment="Left" Height="54" Margin="538,60,0,0" VerticalAlignment="Top" Width="246"/>
+        <DataGrid
+            x:Name="grdttkh"
+            Width="570"
+            Height="245"
+            Margin="0,165,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" />
+        <Button
+            x:Name="timkiem"
+            Width="104"
+            Height="33"
+            Margin="644,206,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="LightPink"
+            Click="timkiem_Click"
+            Content="Tìm kiếm" />
+        <Button
+            x:Name="quaylai"
+            Width="104"
+            Height="33"
+            Margin="644,275,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="LightPink"
+            Click="quaylai_Click"
+            Content="Quay lại" />
+        <Button
+            x:Name="dong"
+            Width="104"
+            Height="33"
+            Margin="644,350,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="LightPink"
+            Click="dong_Click"
+            Content="Đóng" />
+        <TextBox
+            x:Name="mahang"
+            Width="202"
+            Height="38"
+            Margin="248,46,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            TextWrapping="Wrap" />
+        <Label
+            Width="129"
+            Height="38"
+            Margin="49,46,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Nhập mã hàng" />
+        <Label
+            Width="246"
+            Height="54"
+            Margin="538,60,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Tìm Kiếm Hàng Hóa"
+            FontSize="22"
+            FontWeight="DemiBold" />
 
     </Grid>
 </Window>

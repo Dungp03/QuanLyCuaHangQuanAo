@@ -1,40 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
+using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Data;
-using System.Data.SqlClient;
-namespace WpfApp2
-{
+namespace WpfApp2 {
     /// <summary>
     /// Interaction logic for dathang.xaml
     /// </summary>
-    public partial class dathang : Window
-    {
+    public partial class dathang : Window {
         SqlConnection conn = new SqlConnection();
         string ConnectionStrin = "";
         string selectedID = "";
         DataTable dataTable = null;
-        public dathang()
-        {
+        public dathang() {
             InitializeComponent();
         }
 
-        private void napdulieu()
-        {
+        private void napdulieu() {
             grdthd.ItemsSource = null;
             //Kiểm tra xem kết nối đã thực hiện được chưa
-            if (conn.State != ConnectionState.Open)
-            {
+            if (conn.State != ConnectionState.Open) {
                 return;
             }
             //Tạo câu lệnh truy vấn dữ liệu
@@ -53,34 +37,30 @@ namespace WpfApp2
 
         }
 
-        private void grdthd_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        private void grdthd_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
 
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            ConnectionStrin = @"Data Source=DESKTOP-RU72BJJ\SQLEXPRESS;Initial Catalog=qlchn;Integrated Security=True";
+        private void Window_Loaded( object sender, RoutedEventArgs e ) {
+            ConnectionStrin = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True";
             conn.ConnectionString = ConnectionStrin;
             conn.Open();
 
             napdulieu();
-            
+
             addmanhanvien();
         }
 
-      
 
 
 
-        private void addmanhanvien()
-        {
+
+        private void addmanhanvien() {
             string sql = "select MaNhanVien from tblnhanvien";
             SqlCommand cmd = new SqlCommand(sql, conn);
             SqlDataReader reader = cmd.ExecuteReader();
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 string mnv = reader.GetString(0);
                 string s = mnv.ToString();
                 ComboBoxItem item = new ComboBoxItem();

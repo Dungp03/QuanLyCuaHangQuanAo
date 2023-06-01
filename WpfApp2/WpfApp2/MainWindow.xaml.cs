@@ -1,135 +1,115 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Controls;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
+using System.Windows.Controls;
 
 
-namespace WpfApp2
-{
+namespace WpfApp2 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
 
-  
 
-    public partial class MainWindow : Window
-    {
+
+    public partial class MainWindow : Window {
         SqlConnection conn = new SqlConnection();
         string ConnectionStrin = "";
         string selectedID = "";
         DataTable dataTable = null;
-        public MainWindow()
-        {
+        public MainWindow() {
             InitializeComponent();
         }
 
-      
 
-        private void mnchatlieu_Click(object sender, RoutedEventArgs e)
-        {
+
+        private void mnchatlieu_Click( object sender, RoutedEventArgs e ) {
             Window1 window1 = new Window1();
             window1.ShowDialog();
         }
 
-        private void mnhanvien_Click(object sender, RoutedEventArgs e)
-        {
+        private void mnhanvien_Click( object sender, RoutedEventArgs e ) {
             nhanvien nv = new nhanvien();
             nv.ShowDialog();
         }
 
-        private void mnhanghoa_Click(object sender, RoutedEventArgs e)
-        {
+        private void mnhanghoa_Click( object sender, RoutedEventArgs e ) {
             hanghoa hh = new hanghoa();
             hh.ShowDialog();
         }
 
-        private void mnkhachhang_Click(object sender, RoutedEventArgs e)
-        {
+        private void mnkhachhang_Click( object sender, RoutedEventArgs e ) {
             khachhang kh = new khachhang();
             kh.ShowDialog();
         }
 
-        private void mnhoadonban_Click(object sender, RoutedEventArgs e)
-        {
+        private void mnhoadonban_Click( object sender, RoutedEventArgs e ) {
             hoadonbanhang hdbd = new hoadonbanhang();
             hdbd.ShowDialog();
         }
 
-        private void mnhientimkiem_Click(object sender, RoutedEventArgs e)
-        {
+        private void mnhientimkiem_Click( object sender, RoutedEventArgs e ) {
             timkiemhoadon tkhd = new timkiemhoadon();
             tkhd.ShowDialog();
         }
 
-        private void mnhang_Click(object sender, RoutedEventArgs e)
-        {
+        private void mnhang_Click( object sender, RoutedEventArgs e ) {
             timkiemhang tkhd = new timkiemhang();
             tkhd.ShowDialog();
         }
 
-        private void mntimkiemkhachhang_Click(object sender, RoutedEventArgs e)
-        {
+        private void mntimkiemkhachhang_Click( object sender, RoutedEventArgs e ) {
             timkiemkhachang tkhd = new timkiemkhachang();
             tkhd.ShowDialog();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
+        private void MenuItem_Click( object sender, RoutedEventArgs e ) {
             MessageBoxResult result = MessageBox.Show("Bạn có chắc chắn muốn thoát không?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (result == MessageBoxResult.Yes)
-            {
+            if (result == MessageBoxResult.Yes) {
                 // Thực hiện hành động khi người dùng chọn Yes
                 this.Close();
             }
-            else
-            {
+            else {
                 // Thực hiện hành động khi người dùng chọn No
             }
             Environment.Exit(0);
         }
 
-        private void mnhientrogiup_Click(object sender, RoutedEventArgs e)
-        {
-           
+        private void mnhientrogiup_Click( object sender, RoutedEventArgs e ) {
+
             trogiup tg = new trogiup();
             tg.Show();
             this.Close();
         }
 
 
-        private void mnhangton_Click(object sender, RoutedEventArgs e)
-        {
+        private void mnhangton_Click( object sender, RoutedEventArgs e ) {
             hangton ht = new hangton();
             ht.ShowDialog();
-            
+
         }
-        private void mndoanhso_Click(object sender, RoutedEventArgs e)
-        {
+        private void mndoanhso_Click( object sender, RoutedEventArgs e ) {
             doanhso ht = new doanhso();
             ht.ShowDialog();
-            
+
         }
 
-        
 
 
-        private void taohd_Click(object sender, RoutedEventArgs e)
-        {
-           
+
+        private void taohd_Click( object sender, RoutedEventArgs e ) {
+
             hoadon hd = new hoadon();
             hd.ShowDialog();
         }
 
         // hóa đơn
-        void napdulieu()
-        {
+        void napdulieu() {
             grdthd.ItemsSource = null;
             //Kiểm tra xem kết nối đã thực hiện được chưa
-            if (conn.State != ConnectionState.Open)
-            {
+            if (conn.State != ConnectionState.Open) {
                 return;
             }
             //Tạo câu lệnh truy vấn dữ liệu
@@ -147,11 +127,9 @@ namespace WpfApp2
             grdthd.ItemsSource = dataTable.DefaultView;
         }
 
-        void napdulieu2()
-        {
+        void napdulieu2() {
             grdth.ItemsSource = null;
-            if (conn.State != ConnectionState.Open)
-            {
+            if (conn.State != ConnectionState.Open) {
                 return;
             }
             string sqlStr = "Select MaHang, TenHang,MaChatLieu, SoLuong, DonGiaNhap, DonGiaBan, GhiChu,CONVERT(varchar, ngaynhap, 103) AS ngaynhap from tblhang";
@@ -162,13 +140,11 @@ namespace WpfApp2
             grdth.ItemsSource = dataTable.DefaultView;
         }
 
-        private void grdthd_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        private void grdthd_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
 
-            try
-            {
+            try {
                 if (grdthd.CurrentItem == null) { return; }
-                DataRowView row = (DataRowView)grdthd.CurrentItem;
+                DataRowView row = (DataRowView) grdthd.CurrentItem;
                 selectedID = row[0].ToString();
                 hd_mahang.Text = row[0].ToString();
                 hd_tenhang.Text = row[1].ToString();
@@ -178,8 +154,7 @@ namespace WpfApp2
 
 
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show("ERROR!!!" + ex.Message);
 
             }
@@ -187,14 +162,12 @@ namespace WpfApp2
 
 
         }
-        private void addamhang()
-        {
+        private void addamhang() {
             string sql = "select MaHang from tblhang";
             SqlCommand cmd = new SqlCommand(sql, conn);
             SqlDataReader reader = cmd.ExecuteReader();
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 string machatlieuu = reader.GetString(0);
                 string s = machatlieuu.ToString();
                 ComboBoxItem item = new ComboBoxItem();
@@ -207,14 +180,12 @@ namespace WpfApp2
 
 
 
-        private void addmanhanvien()
-        {
+        private void addmanhanvien() {
             string sql = "select MaNhanVien from tblnhanvien";
             SqlCommand cmd = new SqlCommand(sql, conn);
             SqlDataReader reader = cmd.ExecuteReader();
 
-            while (reader.Read())
-            {
+            while (reader.Read()) {
                 string mnv = reader.GetString(0);
                 string s = mnv.ToString();
                 ComboBoxItem item = new ComboBoxItem();
@@ -223,30 +194,22 @@ namespace WpfApp2
             }
             reader.Close();
         }
-       
-
-        private void naphoadonban()
-        {
-
-            string sqlStr = "Select MaNhanVien,CONVERT(varchar, NgayBan, 103) AS NgayBan,MaKhachHang,TenKhachHang,DiaChi,SDT from tblhoadon";
 
 
+        private void naphoadonban() {
         }
 
-        private string TaoMaHoaDon()
-        {
+        private string TaoMaHoaDon() {
             string maHoaDon = "";
             Random rand = new Random();
             bool trungMa;
-            do
-            {
+            do {
                 trungMa = false;
                 maHoaDon = "HD" + rand.Next(0, 99999).ToString();
                 string sqlStr = "SELECT MaHDBan FROM tblhoadon WHERE MaHDBan = '" + maHoaDon + "'";
                 SqlCommand cmd = new SqlCommand(sqlStr, conn);
                 SqlDataReader dta = cmd.ExecuteReader();
-                if (dta.Read())
-                {
+                if (dta.Read()) {
                     trungMa = true;
                 }
                 dta.Close();
@@ -254,8 +217,7 @@ namespace WpfApp2
             return maHoaDon;
         }
 
-        private void clear1()
-        {
+        private void clear1() {
             hd_mahd.Text = "";
             hd_nhanvien.Text = "";
             hd_ngay.Text = "";
@@ -272,8 +234,7 @@ namespace WpfApp2
 
         }
 
-        private void clear()
-        {
+        private void clear() {
 
             hd_mahang.Text = "";
             hd_tenhang.Text = "";
@@ -282,12 +243,10 @@ namespace WpfApp2
             hd_thanhtien.Text = "";
         }
 
-        private void hd_chon_Click(object sender, RoutedEventArgs e)
-        {
+        private void hd_chon_Click( object sender, RoutedEventArgs e ) {
             string sqlStr;
             string mahd = mahoadon;
-            try
-            {
+            try {
                 /*string sql = "insert into tblhoadon (MaHDBan) values ('" + mahd + "')";
                 SqlCommand cmd1 = new SqlCommand(sql, conn);
                 cmd1.ExecuteNonQuery();*/
@@ -298,8 +257,7 @@ namespace WpfApp2
                 SqlCommand cmd = new SqlCommand(sqlStr, conn);
                 cmd.ExecuteNonQuery();
 
-                if (conn.State != ConnectionState.Open)
-                {
+                if (conn.State != ConnectionState.Open) {
                     return;
                 }
                 TruSoLuongHang();
@@ -330,15 +288,13 @@ namespace WpfApp2
 
                 mahd = "";
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show("Lỗi: " + ex.Message);
             }
 
         }
 
-        private void hd_them_Click(object sender, RoutedEventArgs e)
-        {
+        private void hd_them_Click( object sender, RoutedEventArgs e ) {
             string sqlStr;
             sqlStr = "select MaHDBan from tblHDBan where MaHDBan=N'" + hd_mahd.Text + "'";
             sqlStr = "insert into tblkhach(KH_MaKhach,KH_TenKhach,KH_DiaChi,KH_DienThoai) values" + "('" + hd_makh.Text + "','" + tenkh.Text + "','" + diachi.Text + "','" + sdt.Text + "');" + "insert into tblhoadon(MaHDBan, MaNhanVien,NgayBan,MaKhachHang,TenKhachHang,DiaChi) values" +
@@ -350,12 +306,10 @@ namespace WpfApp2
 
 
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
+        private void DataGrid_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
+            try {
                 if (grdth.CurrentItem == null) { return; }
-                DataRowView row = (DataRowView)grdth.CurrentItem;
+                DataRowView row = (DataRowView) grdth.CurrentItem;
                 selectedID = row[0].ToString();
                 hd_mahang.Text = row[0].ToString();
                 hd_tenhang.Text = row[1].ToString();
@@ -364,8 +318,7 @@ namespace WpfApp2
 
 
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show("ERROR!!!" + ex.Message);
             }
 
@@ -376,33 +329,26 @@ namespace WpfApp2
 
 
         // thêm mã hóa đơn
-        
 
-        private void hd_sl_TextChanged(object sender, TextChangedEventArgs e)
-        {
+
+        private void hd_sl_TextChanged( object sender, TextChangedEventArgs e ) {
             hd_chon.IsEnabled = true;
-            if (hd_dongia.Text != "" && hd_sl.Text != "")
-            {
-                hd_thanhtien.Text = (int.Parse(hd_sl.Text) * int.Parse(hd_dongia.Text)).ToString();
+            if (hd_dongia.Text != "" && hd_sl.Text != "") {
+                hd_thanhtien.Text = ( int.Parse(hd_sl.Text) * int.Parse(hd_dongia.Text) ).ToString();
 
             }
             ComboBoxItem item = hd_mahang.SelectedItem as ComboBoxItem;
-            if (hd_mahang.SelectedItem != null)
-            {
+            if (hd_mahang.SelectedItem != null) {
                 string sqlStr = "select SoLuong from tblhang where MaHang = '" + item.Content.ToString() + "'";
                 SqlCommand cmd = new SqlCommand(sqlStr, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    if (reader.GetInt32(0) == 0)
-                    {
+                if (reader.Read()) {
+                    if (reader.GetInt32(0) == 0) {
                         lbtb.Content = "Hết hàng, vui lòng chọn sản phẩm khác";
                         hd_chon.IsEnabled = false;
                     }
-                    else if (hd_sl.Text != "")
-                    {
-                        if (reader.GetInt32(0) < int.Parse(hd_sl.Text))
-                        {
+                    else if (hd_sl.Text != "") {
+                        if (reader.GetInt32(0) < int.Parse(hd_sl.Text)) {
                             lbtb.Content = "Trong kho chỉ còn " + reader.GetInt32(0).ToString() + " sản phẩm";
                             hd_chon.IsEnabled = false;
                         }
@@ -410,28 +356,24 @@ namespace WpfApp2
                 }
                 reader.Close();
             }
-            if (hd_sl.Text == "")
-            {
+            if (hd_sl.Text == "") {
                 lbtb.Content = "";
             }
         }
 
         int tongThanhTien = 0;
-        private void TinhTongThanhTien()
-        {
+        private void TinhTongThanhTien() {
 
             tongThanhTien += int.Parse(hd_thanhtien.Text);
 
             // Hiển thị tổng thành tiền
             tong.Content = "Tổng thành tiền: " + tongThanhTien.ToString("N0") + " VND";
-            tongtt = (int)tongThanhTien;
+            tongtt = tongThanhTien;
 
             //return tongThanhTien;
         }
-        private void TruSoLuongHang()
-        {
-            try
-            {
+        private void TruSoLuongHang() {
+            try {
                 // lấy nội dung bên trong
                 ComboBoxItem item = hd_mahang.SelectedItem as ComboBoxItem;
                 string sqlStr = "select SoLuong from tblhang where MaHang = '" + item.Content.ToString() + "'";
@@ -439,9 +381,8 @@ namespace WpfApp2
                 SqlCommand cmd = new SqlCommand(sqlStr, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
 
-                if (reader.Read())
-                {
-                    sqlStr = "Update tblhang set SoLuong  = " + (reader.GetInt32(0) - int.Parse(hd_sl.Text)) + " where MaHang = '" + item.Content.ToString() + "'";
+                if (reader.Read()) {
+                    sqlStr = "Update tblhang set SoLuong  = " + ( reader.GetInt32(0) - int.Parse(hd_sl.Text) ) + " where MaHang = '" + item.Content.ToString() + "'";
                 }
                 reader.Close();
 
@@ -455,8 +396,7 @@ namespace WpfApp2
                 reader1.Close();
             }
 
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show("Lỗi: " + ex.Message);
             }
         }
@@ -464,13 +404,11 @@ namespace WpfApp2
 
         int tongtt = 0;
 
-        private void tk_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        private void tk_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
 
         }
 
-        private void setbuttonmua(bool set)
-        {
+        private void setbuttonmua( bool set ) {
             boqua.Visibility = set ? Visibility.Visible : Visibility.Hidden; // nếu đúng thì hiển thị, còn false thì ẩn đi
             hd_chon.Visibility = set ? Visibility.Visible : Visibility.Hidden;
             hd_tt.Visibility = set ? Visibility.Visible : Visibility.Hidden;
@@ -478,8 +416,7 @@ namespace WpfApp2
             mua.Visibility = !set ? Visibility.Visible : Visibility.Hidden;
         }
 
-        private void mua_Click(object sender, RoutedEventArgs e)
-        {
+        private void mua_Click( object sender, RoutedEventArgs e ) {
             setbuttonmua(true);
             mahoadon = TaoMaHoaDon();
             hd_mahd.Text = mahoadon;
@@ -488,45 +425,37 @@ namespace WpfApp2
             cmd1.ExecuteNonQuery();
         }
 
-        private void boqua_Click(object sender, RoutedEventArgs e)
-        {
+        private void boqua_Click( object sender, RoutedEventArgs e ) {
             setbuttonmua(false);
             string sql = "delete from tblchon where MaHDBan = '" + mahoadon + "'";
             SqlCommand cmd = new SqlCommand(sql, conn);
             cmd.ExecuteNonQuery();
             sql = "delete from tblhoadon where MaHDBan = '" + mahoadon + "'";
             grdthd.ItemsSource = null;
-            try
-            {
+            try {
                 SqlCommand cmd1 = new SqlCommand(sql, conn);
                 cmd1.ExecuteNonQuery();
                 clear1();
                 tongtt = 0;
                 tongThanhTien = 0;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
 
         }
 
         // thanh toán
-        private void hd_sua_Click(object sender, RoutedEventArgs e)
-        {
+        private void hd_sua_Click( object sender, RoutedEventArgs e ) {
 
         }
 
-        private void hd_tt_Click(object sender, RoutedEventArgs e)
-        {
+        private void hd_tt_Click( object sender, RoutedEventArgs e ) {
 
-            try
-            {
-                if (hd_makh.Text != "")
-                {
+            try {
+                if (hd_makh.Text != "") {
                     MessageBoxResult result = MessageBox.Show("Bạn có chắc chắn muốn hoàn tất thanh toán?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                    if (result == MessageBoxResult.Yes)
-                    {
+                    if (result == MessageBoxResult.Yes) {
                         string sqlStr = "insert into tblkhach(KH_MaKhach,KH_TenKhach,KH_DiaChi,KH_DienThoai) values" + "('" + hd_makh.Text + "','" + tenkh.Text + "','" + diachi.Text + "','" + sdt.Text + "')";
                         SqlCommand cmd = new SqlCommand(sqlStr, conn);
                         cmd.ExecuteNonQuery();
@@ -549,28 +478,23 @@ namespace WpfApp2
         }
 
         // xóa
-        private void grdthd_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            try
-            {
+        private void grdthd_MouseDoubleClick( object sender, System.Windows.Input.MouseButtonEventArgs e ) {
+            try {
 
-                if (grdthd.SelectedItem != null)
-                {
+                if (grdthd.SelectedItem != null) {
 
                     string sqlStr = "";
                     // Xóa dòng trong DataGrid
                     MessageBoxResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa mặt hàng này?", "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-                    if (result == MessageBoxResult.Yes)
-                    {
+                    if (result == MessageBoxResult.Yes) {
                         // Thực hiện hành động khi người dùng chọn Yes
 
                         sqlStr = "Delete from tblchon where MaHang ='" + hd_mahang.Text + "'";
                         SqlCommand cmd = new SqlCommand(sqlStr, conn);
                         cmd.ExecuteNonQuery();
                     }
-                    else
-                    {
+                    else {
                         // Thực hiện hành động khi người dùng chọn No
                     }
 
@@ -580,15 +504,14 @@ namespace WpfApp2
                     SqlCommand cmd1 = new SqlCommand(sqlStr, conn);
                     SqlDataReader reader = cmd1.ExecuteReader();
 
-                    if (reader.Read())
-                    {
-                        sqlStr = "Update tblhang set SoLuong  = " + (reader.GetInt32(0) + int.Parse(hd_sl.Text)) + " where MaHang = '" + hd_mahang.Text + "'";
+                    if (reader.Read()) {
+                        sqlStr = "Update tblhang set SoLuong  = " + ( reader.GetInt32(0) + int.Parse(hd_sl.Text) ) + " where MaHang = '" + hd_mahang.Text + "'";
                         reader.Close();
                         cmd1 = new SqlCommand(sqlStr, conn);
                         cmd1.ExecuteNonQuery();
                     }
 
-                    DataRowView row = (DataRowView)grdthd.CurrentItem;
+                    DataRowView row = (DataRowView) grdthd.CurrentItem;
 
                     // Trừ tổng tiền
                     int a = tongThanhTien;
@@ -598,7 +521,7 @@ namespace WpfApp2
 
                     // Hiển thị tổng tiền
                     tong.Content = "Tổng thành tiền: " + tongThanhTien.ToString("N0") + " VND"; // Để định dạng số nguyên thành chuỗi có dấu phân cách hàng nghìn
-                    tongtt = (int)tongThanhTien;
+                    tongtt = tongThanhTien;
                     // cập nhật lại datagrid
                     string selectSql = "SELECT MaHang, TenHang, SoLuong, Dongia, SoLuong * Dongia AS ThanhTien FROM tblchon WHERE MaHDBan = '" + mahoadon + "'";
                     SqlDataAdapter adapter = new SqlDataAdapter(selectSql, conn);
@@ -612,19 +535,16 @@ namespace WpfApp2
 
 
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show("ERROR!!!" + ex.Message);
             }
             clear();
         }
 
-        private void grdth_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            try
-            {
+        private void grdth_MouseDoubleClick( object sender, System.Windows.Input.MouseButtonEventArgs e ) {
+            try {
                 if (grdth.CurrentItem == null) { return; }
-                DataRowView row = (DataRowView)grdth.CurrentItem;
+                DataRowView row = (DataRowView) grdth.CurrentItem;
                 selectedID = row[0].ToString();
                 hd_mahang.Text = row[0].ToString();
                 hd_tenhang.Text = row[1].ToString();
@@ -633,15 +553,13 @@ namespace WpfApp2
 
 
             }
-            catch (Exception ex)
-            {
+            catch (Exception) {
                 MessageBox.Show("ERROR!!!");
             }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            ConnectionStrin = @"Data Source=DESKTOP-RU72BJJ\SQLEXPRESS;Initial Catalog=qlchn;Integrated Security=True";
+        private void Window_Loaded( object sender, RoutedEventArgs e ) {
+            ConnectionStrin = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True";
             conn.ConnectionString = ConnectionStrin;
             conn.Open();
             napdulieu2();

@@ -1,39 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Data;
 using System.Data.SqlClient;
-namespace WpfApp2
-{
+using System.Windows;
+using System.Windows.Controls;
+namespace WpfApp2 {
     /// <summary>fv=
     /// Interaction logic for nhanvien.xaml
     /// </summary>
-    public partial class nhanvien : Window
-    {
+    public partial class nhanvien : Window {
         SqlConnection conn = new SqlConnection();
         string ConnectionStr = "";
         string ID = "";
         DataTable dataTable = null;
-        public nhanvien()
-        {
+        public nhanvien() {
             InitializeComponent();
         }
 
-        private void napdulieu()
-        {
+        private void napdulieu() {
             grdtnv.ItemsSource = null;
-            if (conn.State != ConnectionState.Open)
-            {
+            if (conn.State != ConnectionState.Open) {
                 return;
             }
             string sqlStr = "Select * from tblnhanvien";
@@ -44,10 +29,8 @@ namespace WpfApp2
             grdtnv.ItemsSource = dataTable.DefaultView;
         }
 
-        private void nv_them_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
+        private void nv_them_Click( object sender, RoutedEventArgs e ) {
+            try {
                 string sqlStr = "";
 
 
@@ -57,8 +40,7 @@ namespace WpfApp2
                 cmd.ExecuteNonQuery();
                 napdulieu();
             }
-            catch (Exception ex)
-            {
+            catch (Exception) {
                 MessageBox.Show("Không hợp lệ, nhập lại!!!");
             }
             lammoi_Click(sender, e);
@@ -76,13 +58,10 @@ namespace WpfApp2
              cmd.ExecuteNonQuery();
              napdulieu();
          }*/
-        private void nv_sua_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
+        private void nv_sua_Click( object sender, RoutedEventArgs e ) {
+            try {
                 string selectedContent = "";
-                if (gt.SelectedItem is ComboBoxItem comboBoxItem)
-                {
+                if (gt.SelectedItem is ComboBoxItem comboBoxItem) {
                     selectedContent = comboBoxItem.Content.ToString();
                 }
 
@@ -105,19 +84,16 @@ namespace WpfApp2
                 // Nạp lại dữ liệu
                 napdulieu();
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show("Đã xảy ra lỗi: " + ex.Message);
             }
-            lammoi_Click(sender,e);
+            lammoi_Click(sender, e);
         }
 
-        private void grdtnv_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
+        private void grdtnv_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
+            try {
                 if (grdtnv.CurrentItem == null) { return; }
-                DataRowView row = (DataRowView)grdtnv.CurrentItem;
+                DataRowView row = (DataRowView) grdtnv.CurrentItem;
                 ID = row[0].ToString();
                 manv.Text = row[0].ToString();
                 tennv.Text = row[1].ToString();
@@ -132,40 +108,34 @@ namespace WpfApp2
                 sodt.Text = row[4].ToString();
                 ngaysinh.Text = row[5].ToString();
             }
-            catch (Exception ex)
-            {
+            catch (Exception) {
                 MessageBox.Show("ERROR");
             }
         }
 
-        private void nv_dong_Click(object sender, RoutedEventArgs e)
-        {
+        private void nv_dong_Click( object sender, RoutedEventArgs e ) {
             this.Close();
         }
 
-        private void nv_xoa_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
+        private void nv_xoa_Click( object sender, RoutedEventArgs e ) {
+            try {
                 string sqlStr = "";
                 sqlStr = "Delete from tblnhanvien where MaNhanVien ='" + ID + "'";
                 SqlCommand cmd = new SqlCommand(sqlStr, conn);
                 cmd.ExecuteNonQuery();
                 napdulieu();
             }
-            catch (Exception ex)
-            {
+            catch (Exception) {
                 MessageBox.Show("ERROR");
             }
         }
 
-        private void lammoi_Click(object sender, RoutedEventArgs e)
-        {
-           // string selectedContent = "";
-         /*   if (gt.SelectedItem is ComboBoxItem comboBoxItem)
-            {
-                selectedContent = comboBoxItem.Content.ToString();
-            } */
+        private void lammoi_Click( object sender, RoutedEventArgs e ) {
+            // string selectedContent = "";
+            /*   if (gt.SelectedItem is ComboBoxItem comboBoxItem)
+               {
+                   selectedContent = comboBoxItem.Content.ToString();
+               } */
             manv.Text = "";
             tennv.Text = "";
             gt.Text = "";
@@ -174,14 +144,13 @@ namespace WpfApp2
             ngaysinh.Text = "";
         }
 
-        private void frm_nhanvien_Loaded_1(object sender, RoutedEventArgs e)
-        {
-            ConnectionStr = @"Data Source=.\DESKTOP-RU72BJJ\SQLEXPRESS;Initial Catalog=qlchn;Integrated Security=True;";
+        private void frm_nhanvien_Loaded_1( object sender, RoutedEventArgs e ) {
+            ConnectionStr = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True;";
             conn.ConnectionString = ConnectionStr;
             conn.Open();
 
             napdulieu();
         }
     }
- }
+}
 

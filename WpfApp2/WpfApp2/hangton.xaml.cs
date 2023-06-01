@@ -1,41 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
+using System.Windows.Controls;
 
-namespace WpfApp2
-{
+namespace WpfApp2 {
     /// <summary>
     /// Interaction logic for hangton.xaml
     /// </summary>
-    public partial class hangton : Window
-    {
+    public partial class hangton : Window {
         SqlConnection conn = new SqlConnection();
-        string ConnectionStrin = "";
-        string selectedID = "";
         DataTable dataTable = null;
-        public hangton()
-        {
+        public hangton() {
             InitializeComponent();
         }
-        private void napdulieu()
-        {
+        private void napdulieu() {
             grdtpl.ItemsSource = null;
             if (conn.State != ConnectionState.Open)
-            {
                 return;
-            }
+
             string sqlStr = "Select MaHang, TenHang,MaChatLieu, SoLuong, DonGiaNhap, DonGiaBan, GhiChu,CONVERT(varchar, ngaynhap, 103) AS ngaynhap from tblhang";
             SqlDataAdapter adapter = new SqlDataAdapter(sqlStr, conn);
             DataSet dataSet = new DataSet();
@@ -43,51 +26,37 @@ namespace WpfApp2
             dataTable = dataSet.Tables["tblhang"];
             grdtpl.ItemsSource = dataTable.DefaultView;
         }
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                if (grdtpl.CurrentItem == null) { return; }
-                DataRowView row = (DataRowView)grdtpl.CurrentItem;
-                selectedID = row[0].ToString();
+        private void DataGrid_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
+            try {
+                if (grdtpl.CurrentItem == null)
+                    return;
+                DataRowView row = (DataRowView) grdtpl.CurrentItem;
                 phanloai.Text = row[0].ToString();
             }
-            catch (Exception ex)
-            {
+            catch (Exception) {
                 MessageBox.Show("ERROR!!!");
             }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            ConnectionStrin = @"Data Source=DESKTOP-RU72BJJ\SQLEXPRESS;Initial Catalog=qlchn;Integrated Security=True";
-            conn.ConnectionString = ConnectionStrin;
+        private void Window_Loaded( object sender, RoutedEventArgs e ) {
+            conn.ConnectionString = @"Data Source=.;Initial Catalog=qlchn;Integrated Security=True";
             conn.Open();
 
             napdulieu();
         }
 
-        private void phanloai_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComboBox comboBox = (ComboBox)sender;
-            ComboBoxItem selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+        private void phanloai_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
+            ComboBox comboBox = (ComboBox) sender;
+            ComboBoxItem selectedItem = (ComboBoxItem) comboBox.SelectedItem;
             string ghiChu = selectedItem.Content.ToString();
 
             grdtpl.ItemsSource = null;
             if (conn.State != ConnectionState.Open)
-            {
                 return;
-            }
 
-            string sql;
-            if (ghiChu == "Còn Hàng")
-            {
-                sql = "SELECT * FROM tblhang WHERE GhiChu = 'Còn Hàng'";
-            }
-            else
-            {
-                sql = "SELECT * FROM tblhang WHERE GhiChu = 'Het hàng'";
-            }
+            string sql = ghiChu == "Còn Hàng"
+                ? "SELECT * FROM tblhang WHERE GhiChu = 'Còn Hàng'"
+                : "SELECT * FROM tblhang WHERE GhiChu = 'Het hàng'";
 
             SqlDataAdapter adapter = new SqlDataAdapter(sql, conn);
             DataSet dataSet = new DataSet();
@@ -96,8 +65,7 @@ namespace WpfApp2
             grdtpl.ItemsSource = dataTable.DefaultView;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+        private void Button_Click( object sender, RoutedEventArgs e ) {
             napdulieu();
         }
     }
